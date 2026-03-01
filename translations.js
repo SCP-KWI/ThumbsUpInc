@@ -31,9 +31,9 @@ const TRANSLATIONS = {
         
         // Buttons
         startButton: 'Start Game',
-        playAgain: 'Play Again',
-        continueButton: 'Continue Playing',
-        viewReflection: 'View Reflection',
+        playAgainButton: 'Play Again',
+        continuePlayingButton: 'Continue Playing',
+        viewReflectionButton: 'View Reflection',
         resumeGame: 'Resume Game',
         openDashboard: '📊 Open Dashboard',
         backToStart: 'Back to Start',
@@ -41,14 +41,12 @@ const TRANSLATIONS = {
         // Welcome Screen
         welcomeTitle: '🎮 Welcome to Thumbs Up Inc.',
         welcomeText: 'You are the algorithm controlling a social media feed. Your goal is to maximize profit while keeping users engaged enough that they don\'t quit.',
-        howToPlay: 'How to Play:',
-        howToPlayItems: [
-            'Use sliders to control what content appears in the feed',
-            'Organic content keeps users happy but earns $0',
-            'Ads and other content generate revenue but affect user wellbeing',
-            'Keep engagement above 20% or the user quits!',
-            'Survive for 10 minutes and unlock all content types'
-        ],
+        howToPlayTitle: 'How to Play:',
+        howToPlay1: 'Use sliders to control what content appears in the feed',
+        howToPlay2: 'Organic content keeps users happy but earns $0',
+        howToPlay3: 'Ads generate revenue but make users unhappy',
+        howToPlay4: 'Keep engagement above 20% or the user quits!',
+        howToPlay5: 'Survive for 10 minutes to win',
         
         // Game Over Screen
         userLeftTitle: '😞 USER HAS LEFT THE PLATFORM!',
@@ -97,14 +95,24 @@ const TRANSLATIONS = {
         
         // Reflection Screen
         reflectionTitle: '💭 Reflection & Real-World Connection',
-        reflectionQuestions: 'Think About:',
-        reflectionQ1: 'How did it feel to prioritize money over user happiness?',
-        reflectionQ2: 'What would a "healthy" social media platform look like?',
-        reflectionQ3: 'Why don\'t real platforms choose to show more organic content?',
-        reflectionQ4: 'Did you feel pressure to enable propaganda or scams? Why?',
-        reflectionQ5: 'How does this compare to your own social media use?',
-        realWorldTitle: '🌍 The Real World',
-        realWorldText: 'Real social media platforms face these exact same pressures. Their algorithms optimize for "engagement" (time on platform) because that\'s how they make money from advertisers.\n\nResearch shows this often makes users unhappy, anxious, or angry - but those emotions keep people scrolling. Many platforms have been criticized for prioritizing profit over wellbeing.\n\nThink about your own social media use: Do you feel better or worse after scrolling? What content do you see most? Who benefits from your attention?'
+        statsTitle: '📊 Your Game Statistics',
+        statsAvgHappiness: '😊 Average Happiness',
+        statsAvgAnger: '😠 Average Anger',
+        statsPostsShown: 'Posts Shown by Content Type',
+        statsContentType: 'Content Type',
+        statsCount: 'Count',
+        statsRevenue: 'Revenue',
+        reflectionQuestion1Title: 'What did you notice?',
+        reflectionQuestion1Text: 'During the game, you had to balance profit against user well-being. What strategies did you use? Did you prioritize money or happiness?',
+        reflectionQuestion2Title: 'Real-World Connection',
+        reflectionQuestion2Text: 'Real social media platforms face similar decisions. They must balance:',
+        reflectionPoint1: 'Advertising revenue vs. user experience',
+        reflectionPoint2: 'Engagement (time on platform) vs. user happiness',
+        reflectionPoint3: 'Viral content vs. quality content',
+        reflectionPoint4: 'Short-term profits vs. long-term trust',
+        reflectionQuestion3Title: 'Think About It',
+        reflectionQuestion3Text: 'How does this game compare to your real social media use? What content do you see most often? How does it make you feel? What responsibility do platforms have to their users?',
+        reflectionConclusion: '<strong>Remember:</strong> Behind every feed is an algorithm making choices. Understanding these choices helps you become a more informed digital citizen.',
     },
     de: {
         // Header
@@ -135,9 +143,9 @@ const TRANSLATIONS = {
         
         // Buttons
         startButton: 'Spiel starten',
-        playAgain: 'Nochmal spielen',
-        continueButton: 'Weiterspielen',
-        viewReflection: 'Reflexion ansehen',
+        playAgainButton: 'Nochmal spielen',
+        continuePlayingButton: 'Weiterspielen',
+        viewReflectionButton: 'Reflexion ansehen',
         resumeGame: 'Spiel fortsetzen',
         openDashboard: '📊 Dashboard öffnen',
         backToStart: 'Zurück zum Start',
@@ -145,14 +153,12 @@ const TRANSLATIONS = {
         // Welcome Screen
         welcomeTitle: '🎮 Willkommen bei Thumbs Up Inc.',
         welcomeText: 'Du bist der Algorithmus, der einen Social-Media-Feed kontrolliert. Dein Ziel ist es, den Profit zu maximieren und die Nutzer engagiert genug zu halten, dass sie nicht aufgeben.',
-        howToPlay: 'Wie man spielt:',
-        howToPlayItems: [
-            'Verwende Schieberegler, um zu kontrollieren, welche Inhalte im Feed erscheinen',
-            'Organische Inhalte halten Nutzer glücklich, verdienen aber $0',
-            'Werbung und andere Inhalte generieren Umsatz, beeinflussen aber das Wohlbefinden',
-            'Halte das Engagement über 20%, oder der Nutzer geht!',
-            'Überlebe 10 Minuten und schalte alle Inhaltstypen frei'
-        ],
+        howToPlayTitle: 'Wie man spielt:',
+        howToPlay1: 'Verwende Schieberegler, um zu kontrollieren, welche Inhalte im Feed erscheinen',
+        howToPlay2: 'Organische Inhalte halten Nutzer glücklich, verdienen aber $0',
+        howToPlay3: 'Werbung generiert Umsatz, macht Nutzer aber unglücklich',
+        howToPlay4: 'Halte das Engagement über 20%, oder der Nutzer geht!',
+        howToPlay5: 'Überlebe 10 Minuten, um zu gewinnen',
         
         // Game Over Screen
         userLeftTitle: '😞 NUTZER HAT DIE PLATTFORM VERLASSEN!',
@@ -201,14 +207,24 @@ const TRANSLATIONS = {
         
         // Reflection Screen
         reflectionTitle: '💭 Reflexion & Realwelt-Verbindung',
-        reflectionQuestions: 'Denk nach über:',
-        reflectionQ1: 'Wie hat es sich angefühlt, Geld über das Glück der Nutzer zu stellen?',
-        reflectionQ2: 'Wie würde eine "gesunde" Social-Media-Plattform aussehen?',
-        reflectionQ3: 'Warum zeigen echte Plattformen nicht mehr organische Inhalte?',
-        reflectionQ4: 'Hast du dich unter Druck gefühlt, Propaganda oder Betrug zu aktivieren? Warum?',
-        reflectionQ5: 'Wie vergleicht sich das mit deiner eigenen Social-Media-Nutzung?',
-        realWorldTitle: '🌍 Die reale Welt',
-        realWorldText: 'Echte Social-Media-Plattformen stehen vor genau denselben Herausforderungen. Ihre Algorithmen optimieren für "Engagement" (Zeit auf der Plattform), weil sie so Geld mit Werbetreibenden verdienen.\n\nForschung zeigt, dass dies Nutzer oft unglücklich, ängstlich oder wütend macht - aber diese Emotionen halten Menschen am Scrollen. Viele Plattformen wurden kritisiert, weil sie Profit über Wohlbefinden stellen.\n\nDenk über deine eigene Social-Media-Nutzung nach: Fühlst du dich besser oder schlechter nach dem Scrollen? Welche Inhalte siehst du am meisten? Wer profitiert von deiner Aufmerksamkeit?'
+        statsTitle: '📊 Deine Spiel-Statistiken',
+        statsAvgHappiness: '😊 Durchschnittliche Freude',
+        statsAvgAnger: '😠 Durchschnittliche Wut',
+        statsPostsShown: 'Gezeigte Posts nach Inhaltstyp',
+        statsContentType: 'Inhaltstyp',
+        statsCount: 'Anzahl',
+        statsRevenue: 'Umsatz',
+        reflectionQuestion1Title: 'Was hast du bemerkt?',
+        reflectionQuestion1Text: 'Während des Spiels musstest du Profit gegen das Wohlbefinden der Nutzer abwägen. Welche Strategien hast du verwendet? Hast du Geld oder Glück priorisiert?',
+        reflectionQuestion2Title: 'Realwelt-Verbindung',
+        reflectionQuestion2Text: 'Echte Social-Media-Plattformen stehen vor ähnlichen Entscheidungen. Sie müssen abwägen:',
+        reflectionPoint1: 'Werbeumsatz vs. Nutzererfahrung',
+        reflectionPoint2: 'Engagement (Zeit auf der Plattform) vs. Nutzerglück',
+        reflectionPoint3: 'Virale Inhalte vs. Qualitätsinhalte',
+        reflectionPoint4: 'Kurzfristige Profite vs. langfristiges Vertrauen',
+        reflectionQuestion3Title: 'Denk darüber nach',
+        reflectionQuestion3Text: 'Wie vergleicht sich dieses Spiel mit deiner echten Social-Media-Nutzung? Welche Inhalte siehst du am häufigsten? Wie fühlt es sich an? Welche Verantwortung haben Plattformen gegenüber ihren Nutzern?',
+        reflectionConclusion: '<strong>Denk daran:</strong> Hinter jedem Feed steht ein Algorithmus, der Entscheidungen trifft. Diese Entscheidungen zu verstehen hilft dir, ein informierterer digitaler Bürger zu werden.',
     }
 };
 

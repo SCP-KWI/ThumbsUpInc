@@ -36,7 +36,9 @@
                 </label>
                 <select id="character-select">
                     <option value="chloe">Chloe</option>
+                    <option value="kitty">Kitty</option>
                     <option value="nick">Nick</option>
+                    <option value="rob">Rob</option>
                 </select>
             </div>
 
@@ -189,8 +191,40 @@
     <div id="reflection-screen" class="modal-overlay hidden">
         <div class="modal-content reflection-modal">
             <h2 data-i18n="reflectionTitle">🤔 Reflection</h2>
-            
+
             <div class="reflection-content">
+                <!-- Game Statistics Section -->
+                <div class="reflection-section">
+                    <h3 data-i18n="statsTitle">📊 Your Game Statistics</h3>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4 data-i18n="statsAvgHappiness">😊 Average Happiness</h4>
+                            <div class="stat-value" id="stats-avg-happiness">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4 data-i18n="statsAvgAnger">😠 Average Anger</h4>
+                            <div class="stat-value" id="stats-avg-anger">-</div>
+                        </div>
+                    </div>
+
+                    <h4 data-i18n="statsPostsShown">Posts Shown by Content Type</h4>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="statsContentType">Content Type</th>
+                                <th data-i18n="statsCount">Count</th>
+                                <th data-i18n="statsRevenue">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reflection-stats-tbody">
+                            <!-- Will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr>
+
                 <div class="reflection-section">
                     <h3 data-i18n="reflectionQuestion1Title">What did you notice?</h3>
                     <p data-i18n="reflectionQuestion1Text" class="reflection-text">

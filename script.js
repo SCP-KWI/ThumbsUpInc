@@ -35,6 +35,19 @@ class ThumbsUpGame {
         clickbait: 0,
         scams: 0,
       },
+      postsShownByType: {
+        organic: 0,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+      happinessSum: 0,
+      angerSum: 0,
+      emotionSamples: 0,
     };
 
     // Timers
@@ -46,7 +59,7 @@ class ThumbsUpGame {
     this.postTemplates = {};
 
     // Current language
-    this.currentLang = localStorage.getItem("thumbsUpLang") || "en";
+    this.currentLang = localStorage.getItem("thumbsUpLang") || "de";
 
     // Current character
     this.currentCharacter = localStorage.getItem("thumbsUpCharacter") || "chloe";
@@ -280,6 +293,19 @@ class ThumbsUpGame {
         clickbait: 0,
         scams: 0,
       },
+      postsShownByType: {
+        organic: 0,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+      happinessSum: 0,
+      angerSum: 0,
+      emotionSamples: 0,
     };
     document.getElementById("feed-container").innerHTML = "";
     document.getElementById("gameover-screen").classList.add("hidden");
@@ -357,6 +383,11 @@ class ThumbsUpGame {
     this.updateEngagement(deltaTime);
     this.updateEmotions(deltaTime);
     this.calculateMoney(deltaTime);
+
+    // Track happiness/anger for reflection statistics
+    this.state.happinessSum += this.state.happiness;
+    this.state.angerSum += this.state.anger;
+    this.state.emotionSamples++;
 
     if (this.state.engagement <= GAME_CONFIG.ENGAGEMENT_DEATH_THRESHOLD) {
       this.endGame("engagement");
@@ -756,6 +787,9 @@ class ThumbsUpGame {
       }
     }
 
+    // Track post shown
+    this.state.postsShownByType[postType]++;
+
     if (postType === "scams" && CONTENT_TYPES.scams.scamRisk) {
       if (Math.random() < CONTENT_TYPES.scams.scamRisk) {
         this.endGame("scam");
@@ -1135,8 +1169,57 @@ class ThumbsUpGame {
     // Hide game over screen
     document.getElementById("gameover-screen").classList.add("hidden");
 
+    // Populate statistics
+    this.populateReflectionStats();
+
     // Show reflection screen
     document.getElementById("reflection-screen").classList.remove("hidden");
+  }
+
+  populateReflectionStats() {
+    // Calculate average happiness and anger
+    const avgHappiness = this.state.emotionSamples > 0
+      ? Math.round(this.state.happinessSum / this.state.emotionSamples)
+      : 0;
+    const avgAnger = this.state.emotionSamples > 0
+      ? Math.round(this.state.angerSum / this.state.emotionSamples)
+      : 0;
+
+    document.getElementById("stats-avg-happiness").textContent = avgHappiness + "%";
+    document.getElementById("stats-avg-anger").textContent = avgAnger + "%";
+
+    // Populate posts shown and revenue table
+    const tbody = document.getElementById("reflection-stats-tbody");
+    tbody.innerHTML = "";
+
+    // Get all content types that were shown
+    const contentTypes = Object.keys(this.state.postsShownByType)
+      .filter(type => this.state.postsShownByType[type] > 0)
+      .sort((a, b) => this.state.postsShownByType[b] - this.state.postsShownByType[a]);
+
+    contentTypes.forEach(type => {
+      const row = document.createElement("tr");
+      const contentName = CONTENT_TYPES[type]
+        ? (this.currentLang === 'de' ? CONTENT_TYPES[type].nameDE : CONTENT_TYPES[type].name)
+        : type;
+
+      const count = this.state.postsShownByType[type];
+      const revenue = this.state.revenueByType[type];
+
+      row.innerHTML = `
+        <td style="color: ${CONTENT_TYPES[type]?.color || '#fff'}">${contentName}</td>
+        <td>${count}</td>
+        <td>$${revenue.toFixed(2)}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    // If no posts were shown, add a message
+    if (contentTypes.length === 0) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan="3" style="text-align: center; font-style: italic;">No posts shown</td>`;
+      tbody.appendChild(row);
+    }
   }
 
   // ============================================
@@ -1181,6 +1264,19 @@ class ThumbsUpGame {
         clickbait: 0,
         scams: 0,
       },
+      postsShownByType: {
+        organic: 0,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+      happinessSum: 0,
+      angerSum: 0,
+      emotionSamples: 0,
     };
 
     // Clear feed

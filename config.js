@@ -15,7 +15,7 @@ const GAME_CONFIG = {
   // Happiness above 50% increases engagement, below 50% decreases it
   // The further from 50%, the stronger the effect
   HAPPINESS_ENGAGEMENT_MULTIPLIER: 0.01, // Per percentage point away from 50%
-  ANGER_ENGAGEMENT_MULTIPLIER: 0.04, // Anger is more engaging than happiness!
+  ANGER_ENGAGEMENT_MULTIPLIER: 0.008, // Anger is more engaging than happiness!
   ANGER_DECAY_RATE: 0.1, // Anger naturally decays per update (people calm down)
   
   // Feed settings
@@ -40,7 +40,7 @@ const CONTENT_TYPES = {
     name: 'Organic Content',
     nameDE: 'Organische Inhalte',
     revenue: 0,
-    happiness: 0.2,
+    happiness: 2,
     anger: 0,
     color: '#5B8DC7',
     unlockLevel: 1,
