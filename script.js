@@ -66,6 +66,18 @@ class ThumbsUpGame {
 
     this.externalTranslations = window.TRANSLATIONS || {};
 
+    // Content type to profile image folder mapping
+    this.profileImageFolders = {
+      organic: 'regular',
+      ads: 'companies',
+      partner: 'sponsored',
+      influencer: 'influencers',
+      viralOrganic: 'viral',
+      propaganda: 'propaganda',
+      clickbait: 'news',
+      scams: 'scammers'
+    };
+
     // Translations
     this.translations = {
       en: {
@@ -770,6 +782,17 @@ class ThumbsUpGame {
   // FEED GENERATION
   // ============================================
 
+  getRandomProfileImage(contentType) {
+    const folder = this.profileImageFolders[contentType];
+    if (!folder) return '';
+
+    // Images are organized as r1-r3 (rows) and c1-c5 (columns)
+    const row = Math.floor(Math.random() * 3) + 1; // 1-3
+    const col = Math.floor(Math.random() * 5) + 1; // 1-5
+
+    return `portraits/${folder}/${folder}_r${row}_c${col}.png`;
+  }
+
   generateFeedPost() {
     if (!this.state.isPlaying) return;
 
@@ -807,12 +830,15 @@ class ThumbsUpGame {
     const post = document.createElement("div");
     post.className = `post ${postType}`;
 
+    // Get random profile image for this content type
+    const profileImagePath = this.getRandomProfileImage(postType);
+
     // PHASE 3: Enhanced post structure
     if (typeof template === "object") {
       // New structure with username, heading, content, image, timestamp
       post.innerHTML = `
             <div class="post-header">
-                <div class="post-avatar"></div>
+                <div class="post-avatar" style="background-image: url('${profileImagePath}');"></div>
                 <div class="post-user">
                     <span class="post-username">${template.username || "User"}</span>
                     <span class="post-timestamp">${template.timestamp || "1h ago"}</span>
