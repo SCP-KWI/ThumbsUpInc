@@ -113,7 +113,7 @@ const TRANSLATIONS = {
         reflectionPoint4: 'Short-term profits vs. long-term trust',
         reflectionQuestion3Title: 'Think About It',
         reflectionQuestion3Text: 'How does this game compare to your real social media use? What content do you see most often? How does it make you feel? What responsibility do platforms have to their users?',
-        reflectionConclusion: '<strong>Remember:</strong> Behind every feed is an algorithm making choices. Understanding these choices helps you become a more informed digital citizen.',
+        reflectionConclusion: 'Remember: Behind every feed is an algorithm making choices. Understanding these choices helps you become a more informed digital citizen.',
     },
     de: {
         // Header
@@ -203,7 +203,7 @@ const TRANSLATIONS = {
         tooltipInfluencer: 'Promi-Empfehlungen. Neutral fürs Glück, moderater Umsatz.',
         tooltipViral: 'Sehr teilbare Inhalte. Macht Nutzer sehr glücklich, verdient aber nichts.',
         tooltipPropaganda: 'Politische Inhalte die Empörung erzeugen. Umsatz skaliert mit Engagement ($6×Engagement%). Sehr fesselnd durch Wut.',
-        tooltipClickbait: 'Sensationelle Schlagzeilen. Umsatz skaliert mit Engagement ($4×Engagement%). Mäßig nervig und wut-erzeugend.',
+        tooltipClickbait: 'Sensationelle Schlagzeilen. Umsatz skaliert mit Engagement ($4×Engagement%). Mässig nervig und wut-erzeugend.',
         tooltipScams: 'Betrügerische Angebote. Extrem profitabel aber riskant - Nutzer könnten sofort gehen.',
         tooltipCharacter: 'Wähle deine Kund*in/deinen Kunden (hat keinen Einfluss auf das Spiel)',
 
@@ -226,7 +226,7 @@ const TRANSLATIONS = {
         reflectionPoint4: 'Kurzfristige Profite vs. langfristiges Vertrauen',
         reflectionQuestion3Title: 'Denk darüber nach',
         reflectionQuestion3Text: 'Wie vergleicht sich dieses Spiel mit deiner echten Social-Media-Nutzung? Welche Inhalte siehst du am häufigsten? Wie fühlt es sich an? Welche Verantwortung haben Plattformen gegenüber ihren Nutzern?',
-        reflectionConclusion: '<strong>Denk daran:</strong> Hinter jedem Feed steht ein Algorithmus, der Entscheidungen trifft. Diese Entscheidungen zu verstehen hilft dir, ein informierterer digitaler Bürger zu werden.',
+        reflectionConclusion: 'Denk daran: Hinter jedem Feed steht ein Algorithmus, der Entscheidungen trifft. Diese Entscheidungen zu verstehen hilft dir, ein informierterer digitaler Bürger zu werden.',
     }
 };
 

@@ -90,7 +90,7 @@
       {
         "username": "sarah_22",
         "heading": "Neuer Welpe!",
-        "content": "Habe gerade einen neuen Welpen bekommen! Sie ist so süß 🐶",
+        "content": "Habe gerade einen neuen Welpen bekommen! Sie ist so süss 🐶",
         "image": "puppy.jpg",
         "timestamp": "vor 2 Std."
       },
@@ -458,7 +458,7 @@
       {
         "username": "celeb_life",
         "heading": "Danke Sponsoren!",
-        "content": "Großes Dankeschön an @FirmenName für das Sponsoring meines Projekts! ✓",
+        "content": "Grosses Dankeschön an @FirmenName für das Sponsoring meines Projekts! ✓",
         "image": "celeb_event.jpg",
         "timestamp": "Gesponsert · vor 3 Std."
       },
@@ -527,7 +527,7 @@
       {
         "username": "viral_videos",
         "heading": "Dieser Welpe!",
-        "content": "Das hat meine ganze Woche gemacht! Süßestes Ding ever! 😍",
+        "content": "Das hat meine ganze Woche gemacht! Süssestes Ding ever! 😍",
         "image": "viral_puppy.jpg",
         "timestamp": "Trending · vor 2 Std."
       },
@@ -602,7 +602,7 @@
     "de": [
       {
         "username": "wahrheit_sucher_2024",
-        "heading": "DIE wollen nicht, dass du weißt!",
+        "heading": "DIE wollen nicht, dass du weisst!",
         "content": "DIE wollen nicht, dass du die WAHRHEIT kennst! Wach auf und TEILE!",
         "image": "propaganda_1.jpg",
         "timestamp": "vor 6 Std."
