@@ -3,8 +3,8 @@
 
 const GAME_CONFIG = {
   // Timer settings
-  GAME_DURATION: 60, // 10 minutes in seconds
-  UPDATE_INTERVAL: 500, // Game loop runs every 100ms
+  GAME_DURATION: 600, // 10 minutes in seconds
+  UPDATE_INTERVAL: 400, // Game loop runs every 100ms
   
   // Engagement mechanics (all values are PER UPDATE TICK, not per second)
   ENGAGEMENT_DECAY_RATE: 0.04, // Base engagement decay per update tick
@@ -51,7 +51,7 @@ const CONTENT_TYPES = {
     name: 'Ads',
     nameDE: 'Werbung',
     revenue: 2,
-    happiness: -5,
+    happiness: -3,
     anger: 0,
     color: '#D4A76A',
     unlockLevel: 1,
@@ -72,8 +72,8 @@ const CONTENT_TYPES = {
   influencer: {
     name: 'Influencer Partnerships',
     nameDE: 'Influencer-Partnerschaften',
-    revenue: 3,
-    happiness: 0,
+    revenue: 1,
+    happiness: 1,
     anger: 0,
     color: '#E89AC7',
     unlockLevel: 3,
@@ -84,7 +84,7 @@ const CONTENT_TYPES = {
     name: 'Viral Organic Content',
     nameDE: 'Virale organische Inhalte',
     revenue: 0,
-    happiness: 8,
+    happiness: 3,
     anger: 0,
     color: '#7FBF7F',
     unlockLevel: 3,
@@ -94,9 +94,9 @@ const CONTENT_TYPES = {
   propaganda: {
     name: 'Propaganda',
     nameDE: 'Propaganda',
-    revenue: 6,
-    happiness: -10,
-    anger: 18,
+    revenue: 3,
+    happiness: -5,
+    anger: 5,
     color: '#C85A54',
     unlockLevel: 4,
     description: 'Political content (high anger = high engagement, very unhappy users)',
@@ -106,8 +106,8 @@ const CONTENT_TYPES = {
     name: 'Clickbait',
     nameDE: 'Clickbait',
     revenue: 3,
-    happiness: -4,
-    anger: 8,
+    happiness: -3,
+    anger: 4,
     color: '#E8A87C',
     unlockLevel: 4,
     description: 'Sensationalized headlines (moderate anger boost)',
@@ -116,7 +116,7 @@ const CONTENT_TYPES = {
   scams: {
     name: 'Scams',
     nameDE: 'Betrug',
-    revenue: 15,
+    revenue: 10,
     happiness: -15,
     anger: 0,
     color: '#8B4646',
@@ -158,7 +158,7 @@ const LEVELS = [
     name: 'Native Advertising',
     nameDE: 'Native Advertising',
     timeThreshold: 90,
-    moneyThreshold: 10,
+    moneyThreshold: 40,
     unlocks: ['partner'],
     popupEN: "Great! Advertisers want to blend in. Sponsored Content looks like real posts but pays you money. Users might not even notice... at first.",
     popupDE: "Super! Werbetreibende wollen sich einfügen. Gesponserte Inhalte sehen aus wie echte Posts, bringen dir aber Geld. Die Nutzer merken es vielleicht nicht mal... am Anfang."
@@ -168,7 +168,7 @@ const LEVELS = [
     name: 'The Influencer Economy',
     nameDE: 'Die Influencer-Wirtschaft',
     timeThreshold: 180,
-    moneyThreshold: 30,
+    moneyThreshold: 100,
     unlocks: ['influencer', 'viralOrganic'],
     popupEN: "Influencers have massive followings. Pay them to promote products. They're neutral for happiness! We've also improved our algorithm to find viral content - but it doesn't pay...",
     popupDE: "Influencer haben riesige Followerzahlen. Bezahle sie, um Produkte zu bewerben. Sie sind neutral fürs Glück! Wir haben auch unseren Algorithmus verbessert, um virale Inhalte zu finden - aber die zahlen nichts..."
@@ -178,7 +178,7 @@ const LEVELS = [
     name: 'The Outrage Machine',
     nameDE: 'Die Empörungsmaschine',
     timeThreshold: 300,
-    moneyThreshold: 50,
+    moneyThreshold: 180,
     unlocks: ['propaganda', 'clickbait'],
     popupEN: "Political groups will pay BIG money to influence opinions. Warning: Users will get angry... but angry users are VERY engaged users.",
     popupDE: "Politische Gruppen zahlen RICHTIG Geld, um Meinungen zu beeinflussen. Warnung: Nutzer werden wütend... aber wütende Nutzer sind SEHR engagierte Nutzer."
@@ -188,7 +188,7 @@ const LEVELS = [
     name: 'Maximum Extraction',
     nameDE: 'Maximale Ausbeutung',
     timeThreshold: 420,
-    moneyThreshold: 70,
+    moneyThreshold: 300,
     unlocks: ['scams'],
     popupEN: "Shady operators want to reach your users. It's risky - 5% chance users quit immediately - but the money is incredible.",
     popupDE: "Zwielichtige Anbieter wollen deine Nutzer erreichen. Es ist riskant - 5% Chance Nutzer gehen sofort - aber das Geld ist unglaublich."

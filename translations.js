@@ -92,7 +92,8 @@ const TRANSLATIONS = {
         tooltipPropaganda: 'Political content designed to create outrage. Very engaging through anger.',
         tooltipClickbait: 'Sensationalized headlines. Moderately annoying and anger-inducing.',
         tooltipScams: 'Fraudulent offers. Extremely profitable but risky - users might quit immediately.',
-        
+        tooltipCharacter: 'Choose your customer (has no influence on the game)',
+
         // Reflection Screen
         reflectionTitle: '💭 Reflection & Real-World Connection',
         statsTitle: '📊 Your Game Statistics',
@@ -204,7 +205,8 @@ const TRANSLATIONS = {
         tooltipPropaganda: 'Politische Inhalte die Empörung erzeugen. Sehr fesselnd durch Wut.',
         tooltipClickbait: 'Sensationelle Schlagzeilen. Mäßig nervig und wut-erzeugend.',
         tooltipScams: 'Betrügerische Angebote. Extrem profitabel aber riskant - Nutzer könnten sofort gehen.',
-        
+        tooltipCharacter: 'Wähle deine Kund*in/deinen Kunden (hat keinen Einfluss auf das Spiel)',
+
         // Reflection Screen
         reflectionTitle: '💭 Reflexion & Realwelt-Verbindung',
         statsTitle: '📊 Deine Spiel-Statistiken',
