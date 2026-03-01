@@ -10,6 +10,7 @@ const TRANSLATIONS = {
         // Panels
         userTitle: 'USER',
         feedTitle: 'FEED PREVIEW',
+        characterLabel: 'Character:',
         
         // Metrics
         engagementLabel: '📊 Engagement:',
@@ -111,6 +112,7 @@ const TRANSLATIONS = {
         // Panels
         userTitle: 'NUTZER',
         feedTitle: 'FEED-VORSCHAU',
+        characterLabel: 'Charakter:',
         
         // Metrics
         engagementLabel: '📊 Engagement:',

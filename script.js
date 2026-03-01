@@ -48,6 +48,9 @@ class ThumbsUpGame {
     // Current language
     this.currentLang = localStorage.getItem("thumbsUpLang") || "en";
 
+    // Current character
+    this.currentCharacter = localStorage.getItem("thumbsUpCharacter") || "chloe";
+
     this.externalTranslations = window.TRANSLATIONS || {};
 
     // Translations
@@ -141,6 +144,10 @@ class ThumbsUpGame {
       .getElementById("language-select")
       .addEventListener("change", (e) => this.switchLanguage(e.target.value));
     document.getElementById("language-select").value = this.currentLang;
+    document
+      .getElementById("character-select")
+      .addEventListener("change", (e) => this.switchCharacter(e.target.value));
+    document.getElementById("character-select").value = this.currentCharacter;
   }
 
   // ============================================
@@ -157,6 +164,12 @@ class ThumbsUpGame {
     ) {
       this.generateSliders();
     }
+  }
+
+  switchCharacter(character) {
+    this.currentCharacter = character;
+    localStorage.setItem("thumbsUpCharacter", character);
+    this.updatePortrait();
   }
 
   applyLanguage() {
@@ -983,18 +996,8 @@ class ThumbsUpGame {
   }
 
   updateAvatar() {
-    const avatar = document.getElementById("avatar");
-    const face = avatar.querySelector(".face");
-
-    if (this.state.happiness >= 60) face.textContent = "😊";
-    else if (this.state.happiness >= 30) face.textContent = "😐";
-    else face.textContent = "😢";
-
-    avatar.classList.remove("engaged-high", "engaged-medium", "engaged-low");
-    if (this.state.engagement >= 60) avatar.classList.add("engaged-high");
-    else if (this.state.engagement >= 30)
-      avatar.classList.add("engaged-medium");
-    else avatar.classList.add("engaged-low");
+    // Avatar is now handled by updatePortrait() in updateAvatarState()
+    // Keeping this method for backwards compatibility
   }
 
   formatMoney(amount) {
@@ -1006,66 +1009,52 @@ class ThumbsUpGame {
   }
 
   // ============================================
-  // ADD NEW METHOD: updateAvatarState
+  // PORTRAIT SYSTEM
   // ============================================
   updateAvatarState() {
+    this.updatePortrait();
+  }
+
+  updatePortrait() {
     const happiness = this.state.happiness;
     const engagement = this.state.engagement;
     const anger = this.state.anger;
 
-    // Update mouth based on happiness
-    const mouthPath = document.getElementById("mouth-path");
-    if (mouthPath) {
-      mouthPath.classList.remove(
-        "very-happy",
-        "happy",
-        "neutral",
-        "sad",
-        "very-sad",
-      );
+    let emotion = "neutral";
 
-      if (happiness >= 80) {
-        mouthPath.classList.add("very-happy");
-        mouthPath.setAttribute("d", "M 85 70 Q 100 80 115 70");
-      } else if (happiness >= 60) {
-        mouthPath.classList.add("happy");
-        mouthPath.setAttribute("d", "M 85 70 Q 100 75 115 70");
-      } else if (happiness >= 40) {
-        mouthPath.classList.add("neutral");
-        mouthPath.setAttribute("d", "M 85 70 L 115 70");
-      } else if (happiness >= 20) {
-        mouthPath.classList.add("sad");
-        mouthPath.setAttribute("d", "M 85 75 Q 100 70 115 75");
-      } else {
-        mouthPath.classList.add("very-sad");
-        mouthPath.setAttribute("d", "M 85 78 Q 100 70 115 78");
-      }
+    // Priority 1: Anger (overrides everything)
+    if (anger >= 70) {
+      emotion = "angry3";
+    } else if (anger >= 50) {
+      emotion = "angry2";
+    } else if (anger >= 30) {
+      emotion = "angry1";
+    }
+    // Priority 2: Boredom (low engagement)
+    else if (engagement <= 30) {
+      emotion = "bored";
+    }
+    // Priority 3: Happiness/Sadness scale
+    else if (happiness >= 90) {
+      emotion = "happy3";
+    } else if (happiness >= 75) {
+      emotion = "happy2";
+    } else if (happiness >= 60) {
+      emotion = "happy1";
+    } else if (happiness >= 40) {
+      emotion = "neutral";
+    } else if (happiness >= 30) {
+      emotion = "sad1";
+    } else if (happiness >= 20) {
+      emotion = "sad2";
+    } else {
+      emotion = "sad3";
     }
 
-    // Update phone distance based on engagement
-    const phoneGroup = document.getElementById("phone-group");
-    if (phoneGroup) {
-      phoneGroup.classList.remove("close", "medium", "far");
-
-      if (engagement >= 70) {
-        phoneGroup.classList.add("close");
-      } else if (engagement >= 40) {
-        phoneGroup.classList.add("medium");
-      } else {
-        phoneGroup.classList.add("far");
-      }
-    }
-
-    // Update anger overlay
-    const angerOverlay = document.getElementById("anger-overlay");
-    if (angerOverlay) {
-      if (anger >= 50) {
-        angerOverlay.classList.add("visible");
-        angerOverlay.setAttribute("opacity", Math.min(anger / 100, 0.7));
-      } else {
-        angerOverlay.classList.remove("visible");
-        angerOverlay.setAttribute("opacity", 0);
-      }
+    // Update portrait image
+    const portrait = document.getElementById("avatar-portrait");
+    if (portrait) {
+      portrait.src = `portraits/${this.currentCharacter}/${emotion}.png`;
     }
   }
 
