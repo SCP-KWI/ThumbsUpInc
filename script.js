@@ -846,7 +846,7 @@ class ThumbsUpGame {
             </div>
             <div class="post-content">
                 ${template.heading ? `<h4 class="post-heading">${template.heading}</h4>` : ""}
-                ${template.image ? `<div class="post-image" data-image="${template.image}"></div>` : ""}
+                ${template.image && template.image.trim() !== '' ? `<img class="post-image" src="posts/${template.image}" alt="">` : ""}
                 <p class="post-text">${template.content}</p>
             </div>
         `;

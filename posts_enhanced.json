@@ -19,14 +19,14 @@
         "username": "alex_sports",
         "heading": "Basketball Anyone?",
         "content": "Anyone want to play basketball later? Meeting at the park at 5pm!",
-        "image": "",
+        "image": "basketball.jpg",
         "timestamp": "1h ago"
       },
       {
         "username": "jenny_student",
         "heading": "Homework Done!",
         "content": "Finally finished my homework! Time to relax 😊",
-        "image": "",
+        "image": "homework.jpg",
         "timestamp": "4h ago"
       },
       {
@@ -54,14 +54,14 @@
         "username": "sunny_day",
         "heading": "Perfect Weather",
         "content": "Loving this weather today! 🌞",
-        "image": "",
+        "image": "hike.jpg",
         "timestamp": "3h ago"
       },
       {
         "username": "weekend_vibes",
         "heading": "Weekend Plans",
         "content": "Can't wait for the weekend! Anyone else?",
-        "image": "",
+        "image": "weekend.jpg",
         "timestamp": "1h ago"
       },
       {
@@ -75,7 +75,7 @@
         "username": "music_lover",
         "heading": "New Song",
         "content": "Discovered an amazing new artist today! 🎵",
-        "image": "",
+        "image": "music.jpg",
         "timestamp": "5h ago"
       },
       {
@@ -105,14 +105,14 @@
         "username": "alex_sports",
         "heading": "Basketball?",
         "content": "Will jemand später Basketball spielen? Treffen im Park um 17 Uhr!",
-        "image": "",
+        "image": "basketball.jpg",
         "timestamp": "vor 1 Std."
       },
       {
         "username": "jenny_student",
         "heading": "Hausaufgaben fertig!",
         "content": "Endlich mit den Hausaufgaben fertig! Zeit zum Entspannen 😊",
-        "image": "",
+        "image": "homework.jpg",
         "timestamp": "vor 4 Std."
       },
       {
@@ -147,7 +147,7 @@
         "username": "weekend_vibes",
         "heading": "Wochenendpläne",
         "content": "Kann das Wochenende kaum erwarten! Ihr auch?",
-        "image": "",
+        "image": "weekend.jpg",
         "timestamp": "vor 1 Std."
       },
       {
@@ -161,7 +161,7 @@
         "username": "music_lover",
         "heading": "Neuer Song",
         "content": "Heute einen erstaunlichen neuen Künstler entdeckt! 🎵",
-        "image": "",
+        "image": "music.jpg",
         "timestamp": "vor 5 Std."
       },
       {
