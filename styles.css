@@ -1108,6 +1108,57 @@ hr {
 }
 
 /* ============================================
+   FOOTER ATTRIBUTION
+   ============================================ */
+
+.footer-attribution {
+    background: var(--white);
+    border-top: 1px solid var(--light-gray);
+    padding: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--dark-gray);
+}
+
+.cc-license-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.cc-badge {
+    height: 31px;
+    width: 88px;
+    border: none;
+    transition: opacity 0.2s ease;
+}
+
+.cc-badge:hover {
+    opacity: 0.8;
+}
+
+.attribution-text {
+    color: var(--dark-gray);
+    font-size: 0.85rem;
+}
+
+.attribution-text a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.attribution-text a:hover {
+    color: var(--secondary-purple);
+    text-decoration: underline;
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 
@@ -1134,34 +1185,50 @@ hr {
     body {
         padding: var(--spacing-xs);
     }
-    
+
     header h1 {
         font-size: 1.5rem;
     }
-    
+
     .panel {
         padding: var(--spacing-sm);
     }
-    
+
     .avatar {
         width: 100px;
         height: 150px;
     }
-    
+
     .avatar .phone {
         font-size: 3.5rem;
     }
-    
+
     .avatar .face {
         font-size: 3rem;
     }
-    
+
     .effects-table {
         font-size: 0.85rem;
     }
-    
+
     .effects-table th,
     .effects-table td {
         padding: var(--spacing-xs);
+    }
+
+    .footer-attribution {
+        flex-direction: column;
+        gap: 6px;
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .cc-badge {
+        height: 24px;
+        width: auto;
+    }
+
+    .attribution-text {
+        font-size: 0.75rem;
     }
 }
