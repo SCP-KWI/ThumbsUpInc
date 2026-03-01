@@ -769,6 +769,10 @@ class ThumbsUpGame {
       }
     }
 
+    // Convert from money per tick to money per second
+    const ticksPerSecond = 1000 / GAME_CONFIG.UPDATE_INTERVAL;
+    moneyPerSec *= ticksPerSecond;
+
     const organicPct = this.state.contentMix.organic;
     let strategy = "";
 

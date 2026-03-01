@@ -103,6 +103,7 @@ header .subtitle {
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 0;
 }
 
 .panel h2 {
@@ -514,7 +515,7 @@ hr {
 
 .right-panel {
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 
 .stats-header {
