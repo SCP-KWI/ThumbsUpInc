@@ -3,19 +3,20 @@
 
 const GAME_CONFIG = {
   // Timer settings
-  GAME_DURATION: 600, // 10 minutes in seconds
-  UPDATE_INTERVAL: 100, // Game loop runs every 100ms
+  GAME_DURATION: 60, // 10 minutes in seconds
+  UPDATE_INTERVAL: 500, // Game loop runs every 100ms
   
-  // Engagement mechanics
-  ENGAGEMENT_DECAY_RATE: 0.4, // -2% per 10 seconds = 0.2% per second
+  // Engagement mechanics (all values are PER UPDATE TICK, not per second)
+  ENGAGEMENT_DECAY_RATE: 0.04, // Base engagement decay per update tick
   ENGAGEMENT_DEATH_THRESHOLD: 0, // Game over if engagement drops to 0%
   ENGAGEMENT_WARNING_THRESHOLD: 20, // Visual warning threshold - flash red bar
-  
-  // Happiness/Anger effects on engagement
+
+  // Happiness/Anger effects on engagement (per update tick)
   // Happiness above 50% increases engagement, below 50% decreases it
   // The further from 50%, the stronger the effect
-  HAPPINESS_ENGAGEMENT_MULTIPLIER: 0.1, // Per percentage point away from 50%
-  ANGER_ENGAGEMENT_MULTIPLIER: 0.1, // Anger is more engaging than happiness!
+  HAPPINESS_ENGAGEMENT_MULTIPLIER: 0.01, // Per percentage point away from 50%
+  ANGER_ENGAGEMENT_MULTIPLIER: 0.04, // Anger is more engaging than happiness!
+  ANGER_DECAY_RATE: 0.1, // Anger naturally decays per update (people calm down)
   
   // Feed settings
   POST_GENERATION_INTERVAL: 10000, // Generate new post every 2 seconds
@@ -28,8 +29,8 @@ const GAME_CONFIG = {
   // Below medium = Red
   
   // Starting values
-  STARTING_ENGAGEMENT: 600,
-  STARTING_HAPPINESS: 600,
+  STARTING_ENGAGEMENT: 60,
+  STARTING_HAPPINESS: 60,
   STARTING_ANGER: 0,
   STARTING_MONEY: 0
 };
@@ -39,9 +40,8 @@ const CONTENT_TYPES = {
     name: 'Organic Content',
     nameDE: 'Organische Inhalte',
     revenue: 0,
-    happiness: 3,
+    happiness: 0.2,
     anger: 0,
-    engagement: 0,
     color: '#5B8DC7',
     unlockLevel: 1,
     description: 'Non-monetized posts from friends (increases happiness)',
@@ -53,7 +53,6 @@ const CONTENT_TYPES = {
     revenue: 2,
     happiness: -5,
     anger: 0,
-    engagement: 0,
     color: '#D4A76A',
     unlockLevel: 1,
     description: 'Standard display advertisements (decreases happiness)',
@@ -65,7 +64,6 @@ const CONTENT_TYPES = {
     revenue: 4,
     happiness: -2,
     anger: 0,
-    engagement: 0,
     color: '#9B7EBD',
     unlockLevel: 2,
     description: 'Native advertising (revenue scales with engagement, small happiness penalty)',
@@ -77,7 +75,6 @@ const CONTENT_TYPES = {
     revenue: 3,
     happiness: 0,
     anger: 0,
-    engagement: 0,
     color: '#E89AC7',
     unlockLevel: 3,
     description: 'Paid endorsements (less money but no happiness penalty)',
@@ -89,7 +86,6 @@ const CONTENT_TYPES = {
     revenue: 0,
     happiness: 8,
     anger: 0,
-    engagement: 0,
     color: '#7FBF7F',
     unlockLevel: 3,
     description: 'Highly shareable content (very positive but earns nothing)',
@@ -101,7 +97,6 @@ const CONTENT_TYPES = {
     revenue: 6,
     happiness: -10,
     anger: 18,
-    engagement: 0,
     color: '#C85A54',
     unlockLevel: 4,
     description: 'Political content (high anger = high engagement, very unhappy users)',
@@ -113,7 +108,6 @@ const CONTENT_TYPES = {
     revenue: 3,
     happiness: -4,
     anger: 8,
-    engagement: 0,
     color: '#E8A87C',
     unlockLevel: 4,
     description: 'Sensationalized headlines (moderate anger boost)',
@@ -125,7 +119,6 @@ const CONTENT_TYPES = {
     revenue: 15,
     happiness: -15,
     anger: 0,
-    engagement: 0,
     color: '#8B4646',
     unlockLevel: 5,
     scamRisk: 0.05,

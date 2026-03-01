@@ -286,6 +286,65 @@ hr {
 }
 
 /* ============================================
+   TOOLTIPS
+   ============================================ */
+
+.info-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--primary-blue);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: bold;
+    cursor: help;
+    margin-left: 4px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.info-icon:hover {
+    background: var(--primary-orange);
+}
+
+/* Tooltip on hover */
+.info-icon[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    background: var(--dark-gray);
+    color: var(--white);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    white-space: normal;
+    width: 250px;
+    font-size: 0.85rem;
+    font-weight: normal;
+    line-height: 1.4;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+/* Tooltip arrow */
+.info-icon[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 2px);
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--dark-gray);
+    z-index: 1001;
+    pointer-events: none;
+}
+
+/* ============================================
    CENTER PANEL - FEED PREVIEW
    ============================================ */
 

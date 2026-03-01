@@ -367,8 +367,8 @@ class ThumbsUpGame {
   }
 
   updateEngagement(deltaTime) {
-    // Base decay: user gets bored over time
-    const decay = GAME_CONFIG.ENGAGEMENT_DECAY_RATE * deltaTime;
+    // Base decay: user gets bored over time (per update tick)
+    const decay = GAME_CONFIG.ENGAGEMENT_DECAY_RATE;
 
     // Happiness effect: centered at 50%
     // Above 50% happiness -> engagement rises
@@ -376,14 +376,14 @@ class ThumbsUpGame {
     // The further from 50%, the stronger the effect
     const happinessDelta = this.state.happiness - 50;
     const happinessEffect =
-      happinessDelta * GAME_CONFIG.HAPPINESS_ENGAGEMENT_MULTIPLIER * deltaTime;
+      happinessDelta * GAME_CONFIG.HAPPINESS_ENGAGEMENT_MULTIPLIER;
 
     // Anger effect: anger is very engaging (outrage keeps them scrolling!)
     // Anger is MORE engaging than happiness - that's the core mechanic
     const angerEffect =
-      this.state.anger * GAME_CONFIG.ANGER_ENGAGEMENT_MULTIPLIER * deltaTime;
+      this.state.anger * GAME_CONFIG.ANGER_ENGAGEMENT_MULTIPLIER;
 
-    // Apply all changes
+    // Apply all changes (per update tick, not per second)
     this.state.engagement += -decay + happinessEffect + angerEffect;
     this.state.engagement = this.clamp(this.state.engagement, 0, 100);
   }
@@ -394,10 +394,11 @@ class ThumbsUpGame {
 
     for (const [type, percentage] of Object.entries(this.state.contentMix)) {
       if (percentage > 0 && CONTENT_TYPES[type]) {
+        // Divide by 10 so config values can be whole numbers
         happinessChange +=
-          (percentage / 100) * CONTENT_TYPES[type].happiness * deltaTime;
+          (percentage / 100) * CONTENT_TYPES[type].happiness / 10;
         angerChange +=
-          (percentage / 100) * CONTENT_TYPES[type].anger * deltaTime;
+          (percentage / 100) * CONTENT_TYPES[type].anger / 10;
       }
     }
 
@@ -406,7 +407,7 @@ class ThumbsUpGame {
 
     // Anger naturally decreases over time (people calm down)
     if (this.state.anger > 0) {
-      this.state.anger -= 1.0 * deltaTime; // Anger decays at 1% per second
+      this.state.anger -= GAME_CONFIG.ANGER_DECAY_RATE; // Anger decays per update
     }
 
     this.state.happiness = this.clamp(this.state.happiness, 0, 100);
@@ -421,7 +422,7 @@ class ThumbsUpGame {
         const engagementMultiplier = this.state.engagement / 100;
 
         const earningsThisTick =
-          revenue * frequency * engagementMultiplier * deltaTime;
+          revenue * frequency * engagementMultiplier;
         this.state.money += earningsThisTick;
         this.state.revenueByType[type] += earningsThisTick;
       }
@@ -491,17 +492,17 @@ class ThumbsUpGame {
       const happinessStr =
         ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
       const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
-      const engagementStr =
-        ct.engagement >= 0 ? "+" + ct.engagement : ct.engagement;
+
+      // Get perView translation
+      const perView = this.externalTranslations[this.currentLang]?.perView || this.translations[this.currentLang]?.perView || "/view";
+
       const effects =
         "💰$" +
         ct.revenue +
-        "/view | 😊" +
+        perView + " | 😊" +
         happinessStr +
         " | 😠" +
-        angerStr +
-        " | 📊" +
-        engagementStr;
+        angerStr;
 
       contentListHTML += `
                 <div class="unlock-content-item">
@@ -568,23 +569,33 @@ class ThumbsUpGame {
       const happinessStr =
         ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
       const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
-      const engagementStr =
-        ct.engagement >= 0 ? "+" + ct.engagement : ct.engagement;
+
+      // Get perView translation
+      const perView = this.externalTranslations[this.currentLang]?.perView || this.translations[this.currentLang]?.perView || "/view";
+
       const effects =
         "💰$" +
         ct.revenue +
-        "/view | 😊" +
+        perView + " | 😊" +
         happinessStr +
         " | 😠" +
-        angerStr +
-        " | 📊" +
-        engagementStr;
+        angerStr;
+
+      // Get tooltip key based on content type
+      // Special case: viralOrganic -> tooltipViral
+      let tooltipKey;
+      if (contentType === "viralOrganic") {
+        tooltipKey = "tooltipViral";
+      } else {
+        tooltipKey = "tooltip" + contentType.charAt(0).toUpperCase() + contentType.slice(1);
+      }
 
       const sliderGroup = document.createElement("div");
       sliderGroup.className = "slider-group";
       sliderGroup.innerHTML = `
                 <label for="${contentType}-slider">
                     <span class="slider-name">${name}</span>
+                    <span class="info-icon" data-tooltip-key="${tooltipKey}">ⓘ</span>
                     <span class="slider-info">${effects}</span>
                 </label>
                 <div class="slider-controls">
@@ -605,6 +616,7 @@ class ThumbsUpGame {
     }
 
     this.updateSliderDisplay();
+    this.initializeTooltips();
   }
 
   updateSlider(type, value) {
@@ -885,7 +897,6 @@ class ThumbsUpGame {
                 <td>$${ct.revenue}</td>
                 <td>${ct.happiness >= 0 ? "+" : ""}${ct.happiness}</td>
                 <td>${ct.anger >= 0 ? "+" : ""}${ct.anger}</td>
-                <td>${ct.engagement >= 0 ? "+" : ""}${ct.engagement}</td>
             `;
       tbody.appendChild(row);
     }

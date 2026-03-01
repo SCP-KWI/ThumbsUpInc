@@ -6,6 +6,7 @@ const TRANSLATIONS = {
         // Header
         title: 'THUMBS UP INC.',
         subtitle: 'Manage the algorithm. Maximize profit. Keep them scrolling.',
+        languageLabel: 'Language:',
         
         // Panels
         userTitle: 'USER',
@@ -26,6 +27,7 @@ const TRANSLATIONS = {
         totalWarning: '⚠️ Cannot exceed 100%',
         strategyTitle: 'Current Strategy:',
         levelLabel: 'Level:',
+        perView: '/view',
         
         // Buttons
         startButton: 'Start Game',
@@ -61,20 +63,20 @@ const TRANSLATIONS = {
         
         // Dashboard
         dashboardTitle: '📊 PERFORMANCE DASHBOARD',
-        totalEarnings: 'Total Earnings',
-        moneyPerMinute: 'Money Per Minute',
-        timeElapsed: 'Time Elapsed',
-        revenueBreakdown: 'Revenue Breakdown',
-        userExperience: 'User Experience',
-        currentHappiness: 'Current Happiness',
-        currentAnger: 'Current Anger',
-        currentEngagement: 'Current Engagement',
-        effectsReference: 'Content Type Effects Reference',
-        contentType: 'Content Type',
-        revenue: 'Revenue',
-        happiness: 'Happiness',
-        anger: 'Anger',
-        engagement: 'Engagement',
+        dashTotalEarnings: '💰 Total Earnings',
+        dashMoneyRate: '💵 Money Per Minute',
+        dashTimeElapsed: '⏱️ Time Elapsed',
+        dashRevenueBreakdown: 'Revenue Breakdown',
+        dashUserExperience: 'User Experience',
+        dashCurrentHappiness: '😊 Current Happiness',
+        dashCurrentAnger: '😠 Current Anger',
+        dashCurrentEngagement: '📊 Current Engagement',
+        dashContentEffects: 'Content Type Effects Reference',
+        tableContentType: 'Content Type',
+        tableRevenue: 'Revenue',
+        tableHappiness: 'Happiness',
+        tableAnger: 'Anger',
+        tableEngagement: 'Engagement',
         
         // Unlock Popup
         newContentUnlocked: '🎉 NEW CONTENT UNLOCKED!',
@@ -108,6 +110,7 @@ const TRANSLATIONS = {
         // Header
         title: 'THUMBS UP INC.',
         subtitle: 'Verwalte den Algorithmus. Maximiere den Profit. Halte sie am Scrollen.',
+        languageLabel: 'Sprache:',
         
         // Panels
         userTitle: 'NUTZER',
@@ -128,6 +131,7 @@ const TRANSLATIONS = {
         totalWarning: '⚠️ Darf 100% nicht überschreiten',
         strategyTitle: 'Aktuelle Strategie:',
         levelLabel: 'Level:',
+        perView: '/Ansicht',
         
         // Buttons
         startButton: 'Spiel starten',
@@ -163,20 +167,20 @@ const TRANSLATIONS = {
         
         // Dashboard
         dashboardTitle: '📊 PERFORMANCE DASHBOARD',
-        totalEarnings: 'Gesamtverdienst',
-        moneyPerMinute: 'Geld pro Minute',
-        timeElapsed: 'Verstrichene Zeit',
-        revenueBreakdown: 'Umsatzaufschlüsselung',
-        userExperience: 'Nutzererfahrung',
-        currentHappiness: 'Aktuelle Freude',
-        currentAnger: 'Aktuelle Wut',
-        currentEngagement: 'Aktuelles Engagement',
-        effectsReference: 'Inhaltstypen-Effekte Referenz',
-        contentType: 'Inhaltstyp',
-        revenue: 'Umsatz',
-        happiness: 'Freude',
-        anger: 'Wut',
-        engagement: 'Engagement',
+        dashTotalEarnings: '💰 Gesamtverdienst',
+        dashMoneyRate: '💵 Geld pro Minute',
+        dashTimeElapsed: '⏱️ Verstrichene Zeit',
+        dashRevenueBreakdown: 'Umsatzaufschlüsselung',
+        dashUserExperience: 'Nutzererfahrung',
+        dashCurrentHappiness: '😊 Aktuelle Freude',
+        dashCurrentAnger: '😠 Aktuelle Wut',
+        dashCurrentEngagement: '📊 Aktuelles Engagement',
+        dashContentEffects: 'Inhaltstypen-Effekte Referenz',
+        tableContentType: 'Inhaltstyp',
+        tableRevenue: 'Umsatz',
+        tableHappiness: 'Freude',
+        tableAnger: 'Wut',
+        tableEngagement: 'Engagement',
         
         // Unlock Popup
         newContentUnlocked: '🎉 NEUER INHALT FREIGESCHALTET!',
@@ -208,7 +212,12 @@ const TRANSLATIONS = {
     }
 };
 
-// Export for use in other files
+// Export for browser (window object)
+if (typeof window !== 'undefined') {
+    window.TRANSLATIONS = TRANSLATIONS;
+}
+
+// Export for Node.js modules
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = TRANSLATIONS;
 }
