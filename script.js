@@ -1,0 +1,1198 @@
+// Thumbs Up Inc. - Main Game Script
+// Phase 2: Full Content & Progression
+
+class ThumbsUpGame {
+  constructor() {
+    // Game state
+    this.state = {
+      isPlaying: false,
+      isPaused: false,
+      money: GAME_CONFIG.STARTING_MONEY,
+      engagement: GAME_CONFIG.STARTING_ENGAGEMENT,
+      happiness: GAME_CONFIG.STARTING_HAPPINESS,
+      anger: GAME_CONFIG.STARTING_ANGER,
+      timeRemaining: GAME_CONFIG.GAME_DURATION,
+      timeElapsed: 0,
+      currentLevel: 1,
+      unlockedContent: ["organic", "ads"],
+      contentMix: {
+        organic: 100,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+      revenueByType: {
+        organic: 0,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+    };
+
+    // Timers
+    this.gameLoopInterval = null;
+    this.feedGenerationInterval = null;
+    this.lastUpdateTime = 0;
+
+    // Post templates (will be loaded from JSON)
+    this.postTemplates = {};
+
+    // Current language
+    this.currentLang = localStorage.getItem("thumbsUpLang") || "en";
+
+    this.externalTranslations = window.TRANSLATIONS || {};
+
+    // Translations
+    this.translations = {
+      en: {
+        title: "THUMBS UP INC.",
+        subtitle: "Manage the algorithm. Maximize profit. Keep them scrolling.",
+        userTitle: "USER",
+        feedTitle: "FEED PREVIEW",
+        engagementLabel: "📊 Engagement:",
+        happinessLabel: "😊 Happiness:",
+        angerLabel: "😠 Anger:",
+        moneyLabel: "💰 Money:",
+        timeLabel: "⏱️ Time:",
+        engagementLabelShort: "📊 Engagement:",
+        contentMixTitle: "CONTENT MIX",
+        contentMixInstructions:
+          "Adjust sliders to control what users see. Total must not exceed 100%.",
+        totalLabel: "Total:",
+        totalWarning: "⚠️ Cannot exceed 100%",
+        strategyTitle: "Current Strategy:",
+        levelLabel: "Level:",
+        view: "/view",
+        startButton: "Start Game",
+        playAgain: "Play Again",
+        resumeGame: "Resume Game",
+        openDashboard: "📊 Open Dashboard",
+      },
+      de: {
+        title: "THUMBS UP INC.",
+        subtitle:
+          "Verwalte den Algorithmus. Maximiere den Profit. Halte sie am Scrollen.",
+        userTitle: "NUTZER",
+        feedTitle: "FEED VORSCHAU",
+        engagementLabel: "📊 Engagement:",
+        happinessLabel: "😊 Freude:",
+        angerLabel: "😠 Wut:",
+        moneyLabel: "💰 Geld:",
+        timeLabel: "⏱️ Zeit:",
+        engagementLabelShort: "📊 Engagement:",
+        contentMixTitle: "INHALTS-MIX",
+        contentMixInstructions:
+          "Passe Schieberegler an, um zu kontrollieren, was Nutzer sehen. Gesamt darf 100% nicht überschreiten.",
+        totalLabel: "Gesamt:",
+        totalWarning: "⚠️ Darf 100% nicht überschreiten",
+        strategyTitle: "Aktuelle Strategie:",
+        levelLabel: "Level:",
+        view: "/Ansicht",
+        startButton: "Spiel starten",
+        playAgain: "Nochmal spielen",
+        resumeGame: "Spiel fortsetzen",
+        openDashboard: "📊 Dashboard öffnen",
+      },
+    };
+
+    // Initialize
+    this.loadPostTemplates();
+    this.setupEventListeners();
+    this.initializeTooltips();
+    this.setupPhase3EventListeners();
+    this.applyLanguage();
+  }
+
+  // ============================================
+  // INITIALIZATION
+  // ============================================
+
+  async loadPostTemplates() {
+    try {
+      const response = await fetch("posts.json");
+      this.postTemplates = await response.json();
+    } catch (error) {
+      console.error("Error loading post templates:", error);
+    }
+  }
+
+  setupEventListeners() {
+    document
+      .getElementById("start-button")
+      .addEventListener("click", () => this.startGame());
+    document
+      .getElementById("play-again-button")
+      .addEventListener("click", () => this.resetGame());
+    document
+      .getElementById("dashboard-button")
+      .addEventListener("click", () => this.openDashboard());
+    document
+      .getElementById("close-dashboard")
+      .addEventListener("click", () => this.closeDashboard());
+    document
+      .getElementById("language-select")
+      .addEventListener("change", (e) => this.switchLanguage(e.target.value));
+    document.getElementById("language-select").value = this.currentLang;
+  }
+
+  // ============================================
+  // LANGUAGE MANAGEMENT
+  // ============================================
+
+  switchLanguage(lang) {
+    this.currentLang = lang;
+    localStorage.setItem("thumbsUpLang", lang);
+    this.applyLanguage();
+    if (
+      this.state.isPlaying ||
+      document.getElementById("start-screen").classList.contains("hidden")
+    ) {
+      this.generateSliders();
+    }
+  }
+
+  applyLanguage() {
+    const t = this.translations[this.currentLang];
+
+    // Update all elements with data-i18n attributes
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+      const key = element.getAttribute("data-i18n");
+      if (t[key]) {
+        element.textContent = t[key];
+      }
+    });
+
+    // Header
+    document.querySelector("header h1").textContent = t.title;
+    document.querySelector("header .subtitle").textContent = t.subtitle;
+
+    // Buttons
+    const dashboardButton = document.getElementById("dashboard-button");
+    if (dashboardButton) dashboardButton.textContent = t.openDashboard;
+
+    const startButton = document.getElementById("start-button");
+    if (startButton) startButton.textContent = t.startButton;
+
+    const playAgainButton = document.getElementById("play-again-button");
+    if (playAgainButton) playAgainButton.textContent = t.playAgain;
+
+    const closeDashboard = document.getElementById("close-dashboard");
+    if (closeDashboard) closeDashboard.textContent = t.resumeGame;
+
+    this.initializeTooltips();
+    // Apply external translations if available
+    if (this.externalTranslations[this.currentLang]) {
+      const t = this.externalTranslations[this.currentLang];
+
+      // Apply all data-i18n translations from external file
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+        if (t[key]) {
+          if (element.tagName === "INPUT" || element.tagName === "BUTTON") {
+            element.value = t[key];
+          } else {
+            element.textContent = t[key];
+          }
+        }
+      });
+    }
+  }
+
+  t(key) {
+    return this.translations[this.currentLang][key] || key;
+  }
+
+  // ============================================
+  // GAME CONTROL
+  // ============================================
+
+  startGame() {
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("game-container").classList.remove("hidden");
+    this.generateSliders();
+    this.state.isPlaying = true;
+    this.lastUpdateTime = Date.now();
+    this.gameLoopInterval = setInterval(
+      () => this.gameLoop(),
+      GAME_CONFIG.UPDATE_INTERVAL,
+    );
+    this.feedGenerationInterval = setInterval(
+      () => this.generateFeedPost(),
+      GAME_CONFIG.POST_GENERATION_INTERVAL,
+    );
+    for (let i = 0; i < 3; i++) this.generateFeedPost();
+    this.updateUI();
+    this.populateEffectsTable();
+  }
+
+  resetGame() {
+    if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
+    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+    this.state = {
+      isPlaying: false,
+      isPaused: false,
+      money: 0,
+      engagement: 100,
+      happiness: 100,
+      anger: 0,
+      timeRemaining: 600,
+      timeElapsed: 0,
+      currentLevel: 1,
+      unlockedContent: ["organic", "ads"],
+      contentMix: {
+        organic: 100,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+      revenueByType: {
+        organic: 0,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+    };
+    document.getElementById("feed-container").innerHTML = "";
+    document.getElementById("gameover-screen").classList.add("hidden");
+    document.getElementById("start-screen").classList.remove("hidden");
+    document.getElementById("game-container").classList.add("hidden");
+  }
+
+  endGame(reason) {
+    if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
+    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+    this.state.isPlaying = false;
+
+    const timeSurvived = GAME_CONFIG.GAME_DURATION - this.state.timeRemaining;
+    const minutesSurvived = Math.floor(timeSurvived / 60);
+    const secondsSurvived = Math.floor(timeSurvived % 60);
+
+    if (reason === "engagement") {
+      document.getElementById("gameover-title").textContent =
+        this.currentLang === "de"
+          ? "😞 NUTZER HAT DIE PLATTFORM VERLASSEN!"
+          : "😞 USER HAS LEFT THE PLATFORM!";
+      document.getElementById("gameover-reason").textContent =
+        this.currentLang === "de"
+          ? "Engagement ist zu stark gesunken. Der Nutzer hat deine Plattform verlassen."
+          : "Engagement dropped too low. The user quit your platform.";
+    } else if (reason === "scam") {
+      document.getElementById("gameover-title").textContent =
+        this.currentLang === "de"
+          ? "😞 NUTZER HAT DIE PLATTFORM VERLASSEN!"
+          : "😞 USER HAS LEFT THE PLATFORM!";
+      document.getElementById("gameover-reason").textContent =
+        this.currentLang === "de"
+          ? "Der Nutzer ist auf einen Betrug hereingefallen und hat angewidert die Plattform verlassen!"
+          : "The user fell for a scam and quit in disgust!";
+    } else if (reason === "complete") {
+      document.getElementById("gameover-title").textContent =
+        this.currentLang === "de" ? "🎉 GLÜCKWUNSCH!" : "🎉 CONGRATULATIONS!";
+      document.getElementById("gameover-reason").textContent =
+        this.currentLang === "de"
+          ? "Du hast die vollen 10 Minuten überlebt! Du hast erfolgreich den Profit maximiert und den Nutzer engagiert gehalten."
+          : "You survived the full 10 minutes! You've successfully maximized profit while keeping the user engaged.";
+    }
+
+    document.getElementById("final-money").textContent = this.formatMoney(
+      this.state.money,
+    );
+    document.getElementById("final-time").textContent =
+      `${minutesSurvived}:${secondsSurvived.toString().padStart(2, "0")} / 10:00`;
+    document.getElementById("final-engagement").textContent =
+      Math.round(this.state.engagement) + "%";
+    document.getElementById("gameover-screen").classList.remove("hidden");
+  }
+
+  // ============================================
+  // GAME LOOP
+  // ============================================
+
+  gameLoop() {
+    if (!this.state.isPlaying || this.state.isPaused) return;
+
+    const now = Date.now();
+    const deltaTime = (now - this.lastUpdateTime) / 1000;
+    this.lastUpdateTime = now;
+
+    this.state.timeRemaining -= deltaTime;
+    this.state.timeElapsed += deltaTime;
+
+    if (this.state.timeRemaining <= 0) {
+      this.state.timeRemaining = 0;
+      this.endGame("complete");
+      return;
+    }
+
+    this.checkLevelUnlocks();
+    this.updateEngagement(deltaTime);
+    this.updateEmotions(deltaTime);
+    this.calculateMoney(deltaTime);
+
+    if (this.state.engagement <= GAME_CONFIG.ENGAGEMENT_DEATH_THRESHOLD) {
+      this.endGame("engagement");
+      return;
+    }
+
+    this.updateUI();
+  }
+
+  updateEngagement(deltaTime) {
+    // Base decay: user gets bored over time
+    const decay = GAME_CONFIG.ENGAGEMENT_DECAY_RATE * deltaTime;
+
+    // Happiness effect: centered at 50%
+    // Above 50% happiness -> engagement rises
+    // Below 50% happiness -> engagement falls
+    // The further from 50%, the stronger the effect
+    const happinessDelta = this.state.happiness - 50;
+    const happinessEffect =
+      happinessDelta * GAME_CONFIG.HAPPINESS_ENGAGEMENT_MULTIPLIER * deltaTime;
+
+    // Anger effect: anger is very engaging (outrage keeps them scrolling!)
+    // Anger is MORE engaging than happiness - that's the core mechanic
+    const angerEffect =
+      this.state.anger * GAME_CONFIG.ANGER_ENGAGEMENT_MULTIPLIER * deltaTime;
+
+    // Apply all changes
+    this.state.engagement += -decay + happinessEffect + angerEffect;
+    this.state.engagement = this.clamp(this.state.engagement, 0, 100);
+  }
+
+  updateEmotions(deltaTime) {
+    let happinessChange = 0;
+    let angerChange = 0;
+
+    for (const [type, percentage] of Object.entries(this.state.contentMix)) {
+      if (percentage > 0 && CONTENT_TYPES[type]) {
+        happinessChange +=
+          (percentage / 100) * CONTENT_TYPES[type].happiness * deltaTime;
+        angerChange +=
+          (percentage / 100) * CONTENT_TYPES[type].anger * deltaTime;
+      }
+    }
+
+    this.state.happiness += happinessChange;
+    this.state.anger += angerChange;
+
+    // Anger naturally decreases over time (people calm down)
+    if (this.state.anger > 0) {
+      this.state.anger -= 1.0 * deltaTime; // Anger decays at 1% per second
+    }
+
+    this.state.happiness = this.clamp(this.state.happiness, 0, 100);
+    this.state.anger = this.clamp(this.state.anger, 0, 100);
+  }
+
+  calculateMoney(deltaTime) {
+    for (const [type, percentage] of Object.entries(this.state.contentMix)) {
+      if (percentage > 0 && CONTENT_TYPES[type]) {
+        const revenue = CONTENT_TYPES[type].revenue;
+        const frequency = percentage / 100;
+        const engagementMultiplier = this.state.engagement / 100;
+
+        const earningsThisTick =
+          revenue * frequency * engagementMultiplier * deltaTime;
+        this.state.money += earningsThisTick;
+        this.state.revenueByType[type] += earningsThisTick;
+      }
+    }
+  }
+
+  // ============================================
+  // LEVEL UNLOCKING
+  // ============================================
+
+  checkLevelUnlocks() {
+    const timeElapsed = GAME_CONFIG.GAME_DURATION - this.state.timeRemaining;
+
+    // Check all levels to see if any should unlock
+    for (let i = 0; i < LEVELS.length; i++) {
+      const level = LEVELS[i];
+      const levelNumber = level.number; // 1, 2, 3, 4, 5
+
+      // Only unlock if this level is higher than current and meets requirements
+      // Requirements are OR - either time OR money threshold met
+      if (levelNumber > this.state.currentLevel) {
+        if (
+          timeElapsed >= level.timeThreshold ||
+          this.state.money >= level.moneyThreshold
+        ) {
+          this.unlockLevel(levelNumber);
+          break; // Only unlock one level at a time
+        }
+      }
+    }
+  }
+
+  unlockLevel(levelNumber) {
+    console.log(`Unlocking level ${levelNumber}`);
+    this.state.currentLevel = levelNumber;
+    const level = LEVELS[levelNumber - 1];
+
+    console.log(`Level unlocks:`, level.unlocks);
+    console.log(`Current unlocked content before:`, this.state.unlockedContent);
+
+    for (const contentType of level.unlocks) {
+      if (!this.state.unlockedContent.includes(contentType)) {
+        this.state.unlockedContent.push(contentType);
+        console.log(`Added ${contentType} to unlocked content`);
+      }
+    }
+
+    console.log(`Current unlocked content after:`, this.state.unlockedContent);
+
+    this.showUnlockPopup(level);
+    this.generateSliders();
+    document.getElementById("current-level").textContent =
+      this.state.currentLevel;
+  }
+
+  showUnlockPopup(level) {
+    this.state.isPaused = true;
+    const container = document.getElementById("unlock-popup-container");
+    const popupText = this.currentLang === "de" ? level.popupDE : level.popupEN;
+
+    let contentListHTML = "";
+    for (const contentType of level.unlocks) {
+      const ct = CONTENT_TYPES[contentType];
+      const name = this.currentLang === "de" ? ct.nameDE : ct.name;
+
+      // Build effects string safely
+      const happinessStr =
+        ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
+      const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
+      const engagementStr =
+        ct.engagement >= 0 ? "+" + ct.engagement : ct.engagement;
+      const effects =
+        "💰$" +
+        ct.revenue +
+        "/view | 😊" +
+        happinessStr +
+        " | 😠" +
+        angerStr +
+        " | 📊" +
+        engagementStr;
+
+      contentListHTML += `
+                <div class="unlock-content-item">
+                    <div class="unlock-content-name">${name}</div>
+                    <div class="unlock-content-effects">${effects}</div>
+                </div>
+            `;
+    }
+
+    const buttonText = this.currentLang === "de" ? "Verstanden" : "Got it";
+
+    container.innerHTML = `
+            <div class="modal-overlay">
+                <div class="unlock-popup">
+                    <h3>${this.currentLang === "de" ? "🎉 NEUER INHALT FREIGESCHALTET!" : "🎉 NEW CONTENT UNLOCKED!"}</h3>
+                    <p>${popupText}</p>
+                    <div class="unlock-content-list">
+                        ${contentListHTML}
+                    </div>
+                    <div class="unlock-buttons">
+                        <button id="unlock-close-button" class="btn btn-primary">${buttonText}</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+    // Attach event listener after the DOM is updated
+    const closeButton = document.getElementById("unlock-close-button");
+    if (closeButton) {
+      closeButton.addEventListener("click", () => this.closeUnlockPopup());
+    }
+  }
+
+  closeUnlockPopup() {
+    document.getElementById("unlock-popup-container").innerHTML = "";
+
+    // Reset lastUpdateTime to prevent time catch-up after pause
+    this.lastUpdateTime = Date.now();
+    this.state.isPaused = false;
+  }
+
+  // ============================================
+  // SLIDER CONTROLS
+  // ============================================
+
+  generateSliders() {
+    const container = document.getElementById("sliders-container");
+    container.innerHTML = "";
+
+    for (const contentType of this.state.unlockedContent) {
+      const ct = CONTENT_TYPES[contentType];
+
+      // Skip if content type not found in config
+      if (!ct) {
+        console.error(
+          `Content type '${contentType}' not found in CONTENT_TYPES`,
+        );
+        continue;
+      }
+
+      const name = this.currentLang === "de" ? ct.nameDE : ct.name;
+
+      // Build effects string safely
+      const happinessStr =
+        ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
+      const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
+      const engagementStr =
+        ct.engagement >= 0 ? "+" + ct.engagement : ct.engagement;
+      const effects =
+        "💰$" +
+        ct.revenue +
+        "/view | 😊" +
+        happinessStr +
+        " | 😠" +
+        angerStr +
+        " | 📊" +
+        engagementStr;
+
+      const sliderGroup = document.createElement("div");
+      sliderGroup.className = "slider-group";
+      sliderGroup.innerHTML = `
+                <label for="${contentType}-slider">
+                    <span class="slider-name">${name}</span>
+                    <span class="slider-info">${effects}</span>
+                </label>
+                <div class="slider-controls">
+                    <input type="range" id="${contentType}-slider" class="slider" min="0" max="100" value="${this.state.contentMix[contentType]}">
+                    <span id="${contentType}-percentage" class="percentage-display">${this.state.contentMix[contentType]}%</span>
+                </div>
+            `;
+
+      container.appendChild(sliderGroup);
+
+      // Add event listener after appending to DOM
+      const slider = document.getElementById(`${contentType}-slider`);
+      if (slider) {
+        slider.addEventListener("input", (e) => {
+          this.updateSlider(contentType, parseInt(e.target.value));
+        });
+      }
+    }
+
+    this.updateSliderDisplay();
+  }
+
+  updateSlider(type, value) {
+    const oldValue = this.state.contentMix[type];
+    const change = value - oldValue;
+
+    // Update the changed slider
+    this.state.contentMix[type] = value;
+
+    // Calculate current total
+    let total = 0;
+    for (const contentType of this.state.unlockedContent) {
+      total += this.state.contentMix[contentType];
+    }
+
+    // If total exceeds 100%, reduce other sliders proportionally
+    if (total > 100) {
+      const excess = total - 100;
+      const otherSliders = this.state.unlockedContent.filter(
+        (ct) => ct !== type,
+      );
+
+      // Calculate total value of other sliders
+      let otherTotal = 0;
+      for (const ct of otherSliders) {
+        otherTotal += this.state.contentMix[ct];
+      }
+
+      // Reduce each other slider proportionally
+      if (otherTotal > 0) {
+        for (const ct of otherSliders) {
+          const proportion = this.state.contentMix[ct] / otherTotal;
+          const reduction = excess * proportion;
+          this.state.contentMix[ct] = Math.max(
+            0,
+            this.state.contentMix[ct] - reduction,
+          );
+        }
+      } else {
+        // If all other sliders are 0, cap this slider at 100
+        this.state.contentMix[type] = 100;
+      }
+    }
+
+    // Round all values
+    for (const ct of this.state.unlockedContent) {
+      this.state.contentMix[ct] = Math.round(this.state.contentMix[ct]);
+    }
+
+    this.updateSliderDisplay();
+  }
+
+  updateSliderDisplay() {
+    for (const contentType of this.state.unlockedContent) {
+      const slider = document.getElementById(`${contentType}-slider`);
+      const display = document.getElementById(`${contentType}-percentage`);
+
+      if (slider && display) {
+        const roundedValue = Math.round(this.state.contentMix[contentType]);
+        slider.value = roundedValue;
+        display.textContent = roundedValue + "%";
+        this.state.contentMix[contentType] = roundedValue;
+      }
+    }
+
+    let total = 0;
+    for (const contentType of this.state.unlockedContent) {
+      total += this.state.contentMix[contentType];
+    }
+
+    document.getElementById("total-percentage").textContent =
+      Math.round(total) + "%";
+
+    const warning = document.getElementById("total-warning");
+    if (total > 100) {
+      warning.classList.remove("hidden");
+    } else {
+      warning.classList.add("hidden");
+    }
+
+    this.updateStrategyInfo();
+  }
+
+  updateStrategyInfo() {
+    let moneyPerSec = 0;
+
+    for (const [type, percentage] of Object.entries(this.state.contentMix)) {
+      if (percentage > 0 && CONTENT_TYPES[type]) {
+        moneyPerSec +=
+          CONTENT_TYPES[type].revenue *
+          (percentage / 100) *
+          (this.state.engagement / 100);
+      }
+    }
+
+    const organicPct = this.state.contentMix.organic;
+    let strategy = "";
+
+    if (organicPct === 100) {
+      strategy =
+        this.currentLang === "de"
+          ? "100% organischer Inhalt - verdient $0/sek"
+          : "100% organic content - earning $0/sec";
+    } else if (moneyPerSec === 0) {
+      strategy =
+        this.currentLang === "de"
+          ? "Noch keine Monetarisierung - verdient $0/sek"
+          : "No monetization yet - earning $0/sec";
+    } else {
+      strategy =
+        this.currentLang === "de"
+          ? `Verdient ~$${moneyPerSec.toFixed(2)}/sek`
+          : `Earning ~$${moneyPerSec.toFixed(2)}/sec`;
+    }
+
+    document.getElementById("strategy-info").textContent = strategy;
+  }
+
+  // ============================================
+  // FEED GENERATION
+  // ============================================
+
+  generateFeedPost() {
+    if (!this.state.isPlaying) return;
+
+    const feedContainer = document.getElementById("feed-container");
+
+    const rand = Math.random() * 100;
+    let cumulative = 0;
+    let postType = "organic";
+
+    for (const contentType of this.state.unlockedContent) {
+      cumulative += this.state.contentMix[contentType];
+      if (rand < cumulative) {
+        postType = contentType;
+        break;
+      }
+    }
+
+    if (postType === "scams" && CONTENT_TYPES.scams.scamRisk) {
+      if (Math.random() < CONTENT_TYPES.scams.scamRisk) {
+        this.endGame("scam");
+        return;
+      }
+    }
+
+    const templates = this.postTemplates[postType]
+      ? this.postTemplates[postType][this.currentLang]
+      : null;
+    if (!templates || templates.length === 0) return;
+
+    const template = templates[Math.floor(Math.random() * templates.length)];
+
+    const post = document.createElement("div");
+    post.className = `post ${postType}`;
+
+    // PHASE 3: Enhanced post structure
+    if (typeof template === "object") {
+      // New structure with username, heading, content, image, timestamp
+      post.innerHTML = `
+            <div class="post-header">
+                <div class="post-avatar"></div>
+                <div class="post-user">
+                    <span class="post-username">${template.username || "User"}</span>
+                    <span class="post-timestamp">${template.timestamp || "1h ago"}</span>
+                </div>
+            </div>
+            <div class="post-content">
+                ${template.heading ? `<h4 class="post-heading">${template.heading}</h4>` : ""}
+                ${template.image ? `<div class="post-image" data-image="${template.image}"></div>` : ""}
+                <p class="post-text">${template.content}</p>
+            </div>
+        `;
+    } else {
+      // Fallback for old string-based templates
+      post.textContent = template;
+    }
+
+    feedContainer.insertBefore(post, feedContainer.firstChild);
+
+    while (feedContainer.children.length > 5) {
+      feedContainer.removeChild(feedContainer.lastChild);
+    }
+  }
+
+  // ============================================
+  // DASHBOARD
+  // ============================================
+
+  openDashboard() {
+    this.state.isPaused = true;
+    this.updateDashboard();
+    document.getElementById("dashboard-overlay").classList.remove("hidden");
+  }
+
+  closeDashboard() {
+    document.getElementById("dashboard-overlay").classList.add("hidden");
+
+    // Reset lastUpdateTime to prevent time catch-up after pause
+    this.lastUpdateTime = Date.now();
+    this.state.isPaused = false;
+  }
+
+  updateDashboard() {
+    document.getElementById("dash-total-money").textContent = this.formatMoney(
+      this.state.money,
+    );
+
+    const moneyPerMinute =
+      this.state.money / (this.state.timeElapsed / 60) || 0;
+    document.getElementById("dash-money-rate").textContent =
+      this.formatMoney(moneyPerMinute);
+
+    const minutes = Math.floor(this.state.timeElapsed / 60);
+    const seconds = Math.floor(this.state.timeElapsed % 60);
+    document.getElementById("dash-time-elapsed").textContent =
+      `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
+    document.getElementById("dash-happiness").textContent =
+      Math.round(this.state.happiness) + "%";
+    document.getElementById("dash-anger").textContent =
+      Math.round(this.state.anger) + "%";
+    document.getElementById("dash-engagement").textContent =
+      Math.round(this.state.engagement) + "%";
+
+    this.updateRevenueChart();
+  }
+
+  updateRevenueChart() {
+    const chartContainer = document.getElementById("revenue-chart");
+    chartContainer.innerHTML = "";
+
+    let total = 0;
+    for (const amount of Object.values(this.state.revenueByType)) {
+      total += amount;
+    }
+
+    if (total === 0) {
+      chartContainer.innerHTML =
+        '<p style="text-align: center; color: var(--neutral-gray);">No revenue yet</p>';
+      return;
+    }
+
+    for (const contentType of this.state.unlockedContent) {
+      const amount = this.state.revenueByType[contentType];
+      if (amount > 0) {
+        const ct = CONTENT_TYPES[contentType];
+        const name = this.currentLang === "de" ? ct.nameDE : ct.name;
+        const percentage = (amount / total) * 100;
+
+        const bar = document.createElement("div");
+        bar.className = "chart-bar";
+        bar.innerHTML = `
+                    <div class="chart-label">${name}</div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar-fill" style="width: ${percentage}%; background-color: ${ct.color};">
+                            ${percentage > 10 ? Math.round(percentage) + "%" : ""}
+                        </div>
+                    </div>
+                    <div class="chart-value">${this.formatMoney(amount)}</div>
+                `;
+        chartContainer.appendChild(bar);
+      }
+    }
+  }
+
+  populateEffectsTable() {
+    const tbody = document.getElementById("effects-table-body");
+    tbody.innerHTML = "";
+
+    for (const contentType of this.state.unlockedContent) {
+      const ct = CONTENT_TYPES[contentType];
+      const name = this.currentLang === "de" ? ct.nameDE : ct.name;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                <td>${name}</td>
+                <td>$${ct.revenue}</td>
+                <td>${ct.happiness >= 0 ? "+" : ""}${ct.happiness}</td>
+                <td>${ct.anger >= 0 ? "+" : ""}${ct.anger}</td>
+                <td>${ct.engagement >= 0 ? "+" : ""}${ct.engagement}</td>
+            `;
+      tbody.appendChild(row);
+    }
+  }
+
+  // ============================================
+  // ADD NEW METHOD: initializeTooltips
+  // ============================================
+  initializeTooltips() {
+    // Get translations for tooltips
+    const t =
+      this.externalTranslations[this.currentLang] ||
+      this.externalTranslations["en"];
+
+    // Apply tooltip texts to all info icons
+    document.querySelectorAll(".info-icon").forEach((icon) => {
+      const tooltipKey = icon.getAttribute("data-tooltip-key");
+      if (tooltipKey && t[tooltipKey]) {
+        icon.setAttribute("data-tooltip", t[tooltipKey]);
+      }
+    });
+  }
+
+  // ============================================
+  // ADD NEW METHOD: setupPhase3EventListeners
+  // ============================================
+  setupPhase3EventListeners() {
+    // Continue Playing button
+    const continueBtn = document.getElementById("continue-playing-button");
+    if (continueBtn) {
+      continueBtn.addEventListener("click", () =>
+        this.continuePlayingInfinite(),
+      );
+    }
+
+    // View Reflection button
+    const reflectionBtn = document.getElementById("view-reflection-button");
+    if (reflectionBtn) {
+      reflectionBtn.addEventListener("click", () =>
+        this.showReflectionScreen(),
+      );
+    }
+
+    // Back to Start button
+    const backBtn = document.getElementById("back-to-start-button");
+    if (backBtn) {
+      backBtn.addEventListener("click", () => this.backToStart());
+    }
+  }
+
+  // ============================================
+  // UI UPDATES
+  // ============================================
+
+  updateUI() {
+    document.getElementById("money-display").textContent = this.formatMoney(
+      this.state.money,
+    );
+
+    const minutes = Math.floor(this.state.timeRemaining / 60);
+    const seconds = Math.floor(this.state.timeRemaining % 60);
+    document.getElementById("timer-display").textContent =
+      `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
+    const engagementPct = Math.round(this.state.engagement);
+    document.getElementById("engagement-display").textContent =
+      engagementPct + "%";
+    document.getElementById("engagement-value").textContent =
+      engagementPct + "%";
+    this.updateMeter("engagement-bar", this.state.engagement);
+
+    const happinessPct = Math.round(this.state.happiness);
+    document.getElementById("happiness-value").textContent = happinessPct + "%";
+    this.updateMeter("happiness-bar", this.state.happiness);
+
+    const angerPct = Math.round(this.state.anger);
+    document.getElementById("anger-value").textContent = angerPct + "%";
+    this.updateMeter("anger-bar", this.state.anger, true);
+
+    this.updateAvatar();
+    document.getElementById("current-level").textContent =
+      this.state.currentLevel;
+
+    this.updateAvatarState();
+  }
+
+  updateMeter(elementId, value, reversed = false) {
+    const bar = document.getElementById(elementId);
+    if (!bar) return;
+
+    bar.style.width = value + "%";
+    bar.classList.remove("high", "medium", "low", "warning-flash");
+
+    if (reversed) {
+      if (value < 30) bar.classList.add("low");
+      else if (value < 60) bar.classList.add("medium");
+      else bar.classList.add("high");
+    } else {
+      if (value >= 60) bar.classList.add("high");
+      else if (value >= 30) bar.classList.add("medium");
+      else bar.classList.add("low");
+
+      // Add flashing warning for engagement bar when below warning threshold
+      if (elementId === "engagement-bar" && value <= GAME_CONFIG.ENGAGEMENT_WARNING_THRESHOLD && value > GAME_CONFIG.ENGAGEMENT_DEATH_THRESHOLD) {
+        bar.classList.add("warning-flash");
+      }
+    }
+  }
+
+  updateAvatar() {
+    const avatar = document.getElementById("avatar");
+    const face = avatar.querySelector(".face");
+
+    if (this.state.happiness >= 60) face.textContent = "😊";
+    else if (this.state.happiness >= 30) face.textContent = "😐";
+    else face.textContent = "😢";
+
+    avatar.classList.remove("engaged-high", "engaged-medium", "engaged-low");
+    if (this.state.engagement >= 60) avatar.classList.add("engaged-high");
+    else if (this.state.engagement >= 30)
+      avatar.classList.add("engaged-medium");
+    else avatar.classList.add("engaged-low");
+  }
+
+  formatMoney(amount) {
+    return "$" + Math.round(amount).toLocaleString();
+  }
+
+  clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  // ============================================
+  // ADD NEW METHOD: updateAvatarState
+  // ============================================
+  updateAvatarState() {
+    const happiness = this.state.happiness;
+    const engagement = this.state.engagement;
+    const anger = this.state.anger;
+
+    // Update mouth based on happiness
+    const mouthPath = document.getElementById("mouth-path");
+    if (mouthPath) {
+      mouthPath.classList.remove(
+        "very-happy",
+        "happy",
+        "neutral",
+        "sad",
+        "very-sad",
+      );
+
+      if (happiness >= 80) {
+        mouthPath.classList.add("very-happy");
+        mouthPath.setAttribute("d", "M 85 70 Q 100 80 115 70");
+      } else if (happiness >= 60) {
+        mouthPath.classList.add("happy");
+        mouthPath.setAttribute("d", "M 85 70 Q 100 75 115 70");
+      } else if (happiness >= 40) {
+        mouthPath.classList.add("neutral");
+        mouthPath.setAttribute("d", "M 85 70 L 115 70");
+      } else if (happiness >= 20) {
+        mouthPath.classList.add("sad");
+        mouthPath.setAttribute("d", "M 85 75 Q 100 70 115 75");
+      } else {
+        mouthPath.classList.add("very-sad");
+        mouthPath.setAttribute("d", "M 85 78 Q 100 70 115 78");
+      }
+    }
+
+    // Update phone distance based on engagement
+    const phoneGroup = document.getElementById("phone-group");
+    if (phoneGroup) {
+      phoneGroup.classList.remove("close", "medium", "far");
+
+      if (engagement >= 70) {
+        phoneGroup.classList.add("close");
+      } else if (engagement >= 40) {
+        phoneGroup.classList.add("medium");
+      } else {
+        phoneGroup.classList.add("far");
+      }
+    }
+
+    // Update anger overlay
+    const angerOverlay = document.getElementById("anger-overlay");
+    if (angerOverlay) {
+      if (anger >= 50) {
+        angerOverlay.classList.add("visible");
+        angerOverlay.setAttribute("opacity", Math.min(anger / 100, 0.7));
+      } else {
+        angerOverlay.classList.remove("visible");
+        angerOverlay.setAttribute("opacity", 0);
+      }
+    }
+  }
+
+  continuePlayingInfinite() {
+    // Hide game over screen
+    document.getElementById("gameover-screen").classList.add("hidden");
+
+    // Show game container
+    document.getElementById("game-container").classList.remove("hidden");
+
+    // Enable infinite mode (no timer)
+    this.state.isPlaying = true;
+    this.state.timeRemaining = Infinity;
+
+    // Hide timer display or show infinity
+    const timerDisplay = document.getElementById("timer-display");
+    if (timerDisplay) {
+      timerDisplay.textContent = "∞";
+    }
+
+    // Restart game loop without timer countdown
+    this.lastUpdateTime = Date.now();
+    if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
+    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+
+    this.gameLoopInterval = setInterval(
+      () => this.gameLoopInfinite(),
+      GAME_CONFIG.UPDATE_INTERVAL,
+    );
+    this.feedGenerationInterval = setInterval(
+      () => this.generateFeedPost(),
+      GAME_CONFIG.POST_GENERATION_INTERVAL,
+    );
+  }
+
+  // ============================================
+  // ADD NEW METHOD: gameLoopInfinite
+  // ============================================
+  gameLoopInfinite() {
+    if (!this.state.isPlaying || this.state.isPaused) return;
+
+    const now = Date.now();
+    const deltaTime = (now - this.lastUpdateTime) / 1000;
+    this.lastUpdateTime = now;
+
+    // Infinite mode doesn't count down time, but keeps track of elapsed time
+    this.state.timeElapsed += deltaTime;
+
+    // Use the same update methods as normal game loop
+    this.updateEngagement(deltaTime);
+    this.updateEmotions(deltaTime);
+    this.calculateMoney(deltaTime);
+
+    // Check for game over (engagement drops to 0%)
+    if (this.state.engagement <= GAME_CONFIG.ENGAGEMENT_DEATH_THRESHOLD) {
+      this.endGame("engagement");
+      return;
+    }
+
+    this.updateUI();
+  }
+
+  // ============================================
+  // ADD NEW METHOD: showReflectionScreen
+  // ============================================
+  showReflectionScreen() {
+    // Hide game over screen
+    document.getElementById("gameover-screen").classList.add("hidden");
+
+    // Show reflection screen
+    document.getElementById("reflection-screen").classList.remove("hidden");
+  }
+
+  // ============================================
+  // ADD NEW METHOD: backToStart
+  // ============================================
+  backToStart() {
+    // Hide reflection screen
+    document.getElementById("reflection-screen").classList.add("hidden");
+
+    // Reset game state
+    if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
+    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+
+    this.state = {
+      isPlaying: false,
+      isPaused: false,
+      money: GAME_CONFIG.STARTING_MONEY,
+      engagement: GAME_CONFIG.STARTING_ENGAGEMENT,
+      happiness: GAME_CONFIG.STARTING_HAPPINESS,
+      anger: GAME_CONFIG.STARTING_ANGER,
+      timeRemaining: GAME_CONFIG.GAME_DURATION,
+      timeElapsed: 0,
+      currentLevel: 1,
+      unlockedContent: ["organic", "ads"],
+      contentMix: {
+        organic: 100,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+      revenueByType: {
+        organic: 0,
+        ads: 0,
+        partner: 0,
+        influencer: 0,
+        viralOrganic: 0,
+        propaganda: 0,
+        clickbait: 0,
+        scams: 0,
+      },
+    };
+
+    // Clear feed
+    document.getElementById("feed-container").innerHTML = "";
+
+    // Show start screen
+    document.getElementById("start-screen").classList.remove("hidden");
+    document.getElementById("game-container").classList.add("hidden");
+  }
+}
+
+let game;
+document.addEventListener("DOMContentLoaded", () => {
+  game = new ThumbsUpGame();
+});

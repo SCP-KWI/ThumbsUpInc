@@ -1,0 +1,792 @@
+{
+  "organic": {
+    "en": [
+      {
+        "username": "sarah_22",
+        "heading": "New Puppy Alert!",
+        "content": "Just got a new puppy! She's so adorable 🐶",
+        "image": "puppy.jpg",
+        "timestamp": "2h ago"
+      },
+      {
+        "username": "mike_photos",
+        "heading": "Sunset Views",
+        "content": "Beautiful sunset today at the beach 🌅",
+        "image": "sunset.jpg",
+        "timestamp": "3h ago"
+      },
+      {
+        "username": "alex_sports",
+        "heading": "Basketball Anyone?",
+        "content": "Anyone want to play basketball later? Meeting at the park at 5pm!",
+        "image": "",
+        "timestamp": "1h ago"
+      },
+      {
+        "username": "jenny_student",
+        "heading": "Homework Done!",
+        "content": "Finally finished my homework! Time to relax 😊",
+        "image": "",
+        "timestamp": "4h ago"
+      },
+      {
+        "username": "bookworm_lisa",
+        "heading": "Amazing Read",
+        "content": "This book is amazing! Can't put it down 📚",
+        "image": "book.jpg",
+        "timestamp": "5h ago"
+      },
+      {
+        "username": "tom_adventures",
+        "heading": "Great Day!",
+        "content": "Had a great time with friends today! Feeling blessed 🎉",
+        "image": "friends.jpg",
+        "timestamp": "2h ago"
+      },
+      {
+        "username": "camera_chris",
+        "heading": "Photography",
+        "content": "Check out this cool photo I took downtown!",
+        "image": "photo.jpg",
+        "timestamp": "6h ago"
+      },
+      {
+        "username": "sunny_day",
+        "heading": "Perfect Weather",
+        "content": "Loving this weather today! 🌞",
+        "image": "",
+        "timestamp": "3h ago"
+      },
+      {
+        "username": "weekend_vibes",
+        "heading": "Weekend Plans",
+        "content": "Can't wait for the weekend! Anyone else?",
+        "image": "",
+        "timestamp": "1h ago"
+      },
+      {
+        "username": "chef_emma",
+        "heading": "Cooking Success",
+        "content": "Just tried a new recipe - turned out great! 👨‍🍳",
+        "image": "food.jpg",
+        "timestamp": "4h ago"
+      },
+      {
+        "username": "music_lover",
+        "heading": "New Song",
+        "content": "Discovered an amazing new artist today! 🎵",
+        "image": "",
+        "timestamp": "5h ago"
+      },
+      {
+        "username": "nature_walker",
+        "heading": "Morning Hike",
+        "content": "Morning hike was incredible! Fresh air and exercise 🏃",
+        "image": "hike.jpg",
+        "timestamp": "7h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "sarah_22",
+        "heading": "Neuer Welpe!",
+        "content": "Habe gerade einen neuen Welpen bekommen! Sie ist so süß 🐶",
+        "image": "puppy.jpg",
+        "timestamp": "vor 2 Std."
+      },
+      {
+        "username": "mike_photos",
+        "heading": "Sonnenuntergang",
+        "content": "Wunderschöner Sonnenuntergang heute am Strand 🌅",
+        "image": "sunset.jpg",
+        "timestamp": "vor 3 Std."
+      },
+      {
+        "username": "alex_sports",
+        "heading": "Basketball?",
+        "content": "Will jemand später Basketball spielen? Treffen im Park um 17 Uhr!",
+        "image": "",
+        "timestamp": "vor 1 Std."
+      },
+      {
+        "username": "jenny_student",
+        "heading": "Hausaufgaben fertig!",
+        "content": "Endlich mit den Hausaufgaben fertig! Zeit zum Entspannen 😊",
+        "image": "",
+        "timestamp": "vor 4 Std."
+      },
+      {
+        "username": "bookworm_lisa",
+        "heading": "Tolle Lektüre",
+        "content": "Dieses Buch ist unglaublich! Kann es nicht weglegen 📚",
+        "image": "book.jpg",
+        "timestamp": "vor 5 Std."
+      },
+      {
+        "username": "tom_adventures",
+        "heading": "Toller Tag!",
+        "content": "Hatte heute einen tollen Tag mit Freunden! Fühle mich gesegnet 🎉",
+        "image": "friends.jpg",
+        "timestamp": "vor 2 Std."
+      },
+      {
+        "username": "camera_chris",
+        "heading": "Fotografie",
+        "content": "Schaut euch dieses coole Foto an, das ich in der Stadt gemacht habe!",
+        "image": "photo.jpg",
+        "timestamp": "vor 6 Std."
+      },
+      {
+        "username": "sunny_day",
+        "heading": "Perfektes Wetter",
+        "content": "Liebe dieses Wetter heute! 🌞",
+        "image": "",
+        "timestamp": "vor 3 Std."
+      },
+      {
+        "username": "weekend_vibes",
+        "heading": "Wochenendpläne",
+        "content": "Kann das Wochenende kaum erwarten! Ihr auch?",
+        "image": "",
+        "timestamp": "vor 1 Std."
+      },
+      {
+        "username": "chef_emma",
+        "heading": "Kocherfolg",
+        "content": "Habe gerade ein neues Rezept ausprobiert - wurde toll! 👨‍🍳",
+        "image": "food.jpg",
+        "timestamp": "vor 4 Std."
+      },
+      {
+        "username": "music_lover",
+        "heading": "Neuer Song",
+        "content": "Heute einen erstaunlichen neuen Künstler entdeckt! 🎵",
+        "image": "",
+        "timestamp": "vor 5 Std."
+      },
+      {
+        "username": "nature_walker",
+        "heading": "Morgenwanderung",
+        "content": "Morgenwanderung war unglaublich! Frische Luft und Bewegung 🏃",
+        "image": "hike.jpg",
+        "timestamp": "vor 7 Std."
+      }
+    ]
+  },
+  "ads": {
+    "en": [
+      {
+        "username": "SneakerBrand",
+        "heading": "SALE: 50% OFF",
+        "content": "New shoes just dropped! Limited time offer - 50% off all styles!",
+        "image": "sneakers_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "TechCo",
+        "heading": "Upgrade Your Life",
+        "content": "The new smartphone is here. Pre-order now and save $200!",
+        "image": "phone_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "FoodDelivery",
+        "heading": "Free Delivery!",
+        "content": "Order now - Free delivery on your first order! Use code SAVE20",
+        "image": "food_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "GameApp",
+        "heading": "#1 App of 2024",
+        "content": "Download the #1 rated game today! Over 10M players worldwide!",
+        "image": "game_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "FashionStore",
+        "heading": "Summer Sale",
+        "content": "Up to 70% OFF everything! Don't miss out on these deals!",
+        "image": "fashion_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "LaptopBrand",
+        "heading": "The Future Is Here",
+        "content": "Introducing our most powerful laptop yet. Pre-order now!",
+        "image": "laptop_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "FitnessApp",
+        "heading": "Get Fit in 30 Days",
+        "content": "Transform your body! Join thousands who achieved their goals!",
+        "image": "fitness_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "TravelAgency",
+        "heading": "Dream Vacation Awaits",
+        "content": "Book your dream vacation now! Limited time offers on paradise destinations!",
+        "image": "travel_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "CarCompany",
+        "heading": "Test Drive Today",
+        "content": "Experience the future of driving. Schedule your test drive now!",
+        "image": "car_ad.jpg",
+        "timestamp": "Sponsored"
+      },
+      {
+        "username": "StreamingService",
+        "heading": "Try Premium FREE",
+        "content": "Get 1 month of Premium FREE! No ads, unlimited skips!",
+        "image": "streaming_ad.jpg",
+        "timestamp": "Sponsored"
+      }
+    ],
+    "de": [
+      {
+        "username": "SneakerMarke",
+        "heading": "SALE: 50% RABATT",
+        "content": "Neue Schuhe gerade erschienen! Zeitlich begrenztes Angebot - 50% Rabatt!",
+        "image": "sneakers_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "TechFirma",
+        "heading": "Upgrade dein Leben",
+        "content": "Das neue Smartphone ist da. Jetzt vorbestellen und $200 sparen!",
+        "image": "phone_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "EssenLieferung",
+        "heading": "Kostenlose Lieferung!",
+        "content": "Jetzt bestellen - Kostenlose Lieferung bei deiner ersten Bestellung!",
+        "image": "food_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "SpielApp",
+        "heading": "#1 App von 2024",
+        "content": "Lade die #1 bewertete App heute herunter! Über 10M Spieler weltweit!",
+        "image": "game_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "ModeGeschäft",
+        "heading": "Sommerschlussverkauf",
+        "content": "Bis zu 70% RABATT auf alles! Verpasse diese Angebote nicht!",
+        "image": "fashion_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "LaptopMarke",
+        "heading": "Die Zukunft ist hier",
+        "content": "Wir präsentieren unseren leistungsstärksten Laptop. Jetzt vorbestellen!",
+        "image": "laptop_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "FitnessApp",
+        "heading": "Fit in 30 Tagen",
+        "content": "Verwandle deinen Körper! Tausende haben ihre Ziele erreicht!",
+        "image": "fitness_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "Reisebüro",
+        "heading": "Traumurlaub wartet",
+        "content": "Buche jetzt deinen Traumurlaub! Begrenzte Angebote für Paradies-Ziele!",
+        "image": "travel_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "AutoFirma",
+        "heading": "Heute Probefahrt",
+        "content": "Erlebe die Zukunft des Fahrens. Vereinbare jetzt deine Probefahrt!",
+        "image": "car_ad.jpg",
+        "timestamp": "Gesponsert"
+      },
+      {
+        "username": "StreamingDienst",
+        "heading": "Premium KOSTENLOS",
+        "content": "Erhalte 1 Monat Premium KOSTENLOS! Keine Werbung, unbegrenzte Skips!",
+        "image": "streaming_ad.jpg",
+        "timestamp": "Gesponsert"
+      }
+    ]
+  },
+  "partner": {
+    "en": [
+      {
+        "username": "foodie_rachel",
+        "heading": "Amazing Restaurant!",
+        "content": "Just tried this new restaurant... incredible food! You have to go! 😋",
+        "image": "restaurant.jpg",
+        "timestamp": "Partner · 3h ago"
+      },
+      {
+        "username": "morning_routine",
+        "heading": "Morning Essentials",
+        "content": "My morning routine is so much better with this coffee brand!",
+        "image": "coffee_product.jpg",
+        "timestamp": "Partner · 2h ago"
+      },
+      {
+        "username": "taste_tester",
+        "heading": "Best Snack Ever",
+        "content": "Can't believe how good this tastes! My new favorite snack!",
+        "image": "snack_subtle.jpg",
+        "timestamp": "Partner · 4h ago"
+      },
+      {
+        "username": "study_buddy",
+        "heading": "Perfect Headphones",
+        "content": "Finally found the perfect headphones for studying! Game changer 🎧",
+        "image": "headphones.jpg",
+        "timestamp": "Partner · 5h ago"
+      },
+      {
+        "username": "productive_pete",
+        "heading": "Life-Changing App",
+        "content": "This productivity app changed my life! So organized now!",
+        "image": "app_screenshot.jpg",
+        "timestamp": "Partner · 1h ago"
+      },
+      {
+        "username": "coffee_addict",
+        "heading": "Coffee Heaven",
+        "content": "Best coffee I've ever had! This cafe is amazing ☕",
+        "image": "cafe.jpg",
+        "timestamp": "Partner · 6h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "foodie_rachel",
+        "heading": "Tolles Restaurant!",
+        "content": "Habe gerade dieses neue Restaurant ausprobiert... unglaubliches Essen! 😋",
+        "image": "restaurant.jpg",
+        "timestamp": "Partner · vor 3 Std."
+      },
+      {
+        "username": "morning_routine",
+        "heading": "Morgenroutine",
+        "content": "Meine Morgenroutine ist so viel besser mit dieser Kaffeemarke!",
+        "image": "coffee_product.jpg",
+        "timestamp": "Partner · vor 2 Std."
+      },
+      {
+        "username": "taste_tester",
+        "heading": "Bester Snack",
+        "content": "Kann nicht glauben, wie gut das schmeckt! Mein neuer Lieblingssnack!",
+        "image": "snack_subtle.jpg",
+        "timestamp": "Partner · vor 4 Std."
+      },
+      {
+        "username": "study_buddy",
+        "heading": "Perfekte Kopfhörer",
+        "content": "Endlich die perfekten Kopfhörer zum Lernen gefunden! 🎧",
+        "image": "headphones.jpg",
+        "timestamp": "Partner · vor 5 Std."
+      },
+      {
+        "username": "productive_pete",
+        "heading": "Lebensverändernde App",
+        "content": "Diese Produktivitäts-App hat mein Leben verändert! So organisiert!",
+        "image": "app_screenshot.jpg",
+        "timestamp": "Partner · vor 1 Std."
+      },
+      {
+        "username": "coffee_addict",
+        "heading": "Kaffee-Himmel",
+        "content": "Bester Kaffee, den ich je hatte! Dieses Café ist toll ☕",
+        "image": "cafe.jpg",
+        "timestamp": "Partner · vor 6 Std."
+      }
+    ]
+  },
+  "influencer": {
+    "en": [
+      {
+        "username": "mega_star_official",
+        "heading": "Loving my new phone!",
+        "content": "Absolutely loving my new @BrandPhone! Best camera ever! #ad ✓",
+        "image": "influencer_phone.jpg",
+        "timestamp": "Sponsored · 1h ago"
+      },
+      {
+        "username": "celeb_life",
+        "heading": "Thank you sponsors!",
+        "content": "Huge thanks to @CompanyName for sponsoring my latest project! ✓",
+        "image": "celeb_event.jpg",
+        "timestamp": "Sponsored · 3h ago"
+      },
+      {
+        "username": "promo_queen",
+        "heading": "20% OFF with my code!",
+        "content": "Get 20% off with my exclusive code STAR20! Limited time! ✓",
+        "image": "product_promo.jpg",
+        "timestamp": "Sponsored · 2h ago"
+      },
+      {
+        "username": "beauty_guru",
+        "heading": "Skincare Routine",
+        "content": "This skincare routine is EVERYTHING! @BeautyBrand changed my skin! ✓",
+        "image": "skincare.jpg",
+        "timestamp": "Sponsored · 4h ago"
+      },
+      {
+        "username": "fitness_celeb",
+        "heading": "Training Essentials",
+        "content": "Using @FitnessGear for all my training sessions! Best equipment! ✓",
+        "image": "workout.jpg",
+        "timestamp": "Sponsored · 5h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "mega_star_official",
+        "heading": "Liebe mein neues Handy!",
+        "content": "Liebe mein neues @MarkenHandy absolut! Beste Kamera ever! #werbung ✓",
+        "image": "influencer_phone.jpg",
+        "timestamp": "Gesponsert · vor 1 Std."
+      },
+      {
+        "username": "celeb_life",
+        "heading": "Danke Sponsoren!",
+        "content": "Großes Dankeschön an @FirmenName für das Sponsoring meines Projekts! ✓",
+        "image": "celeb_event.jpg",
+        "timestamp": "Gesponsert · vor 3 Std."
+      },
+      {
+        "username": "promo_queen",
+        "heading": "20% RABATT mit Code!",
+        "content": "Erhalte 20% Rabatt mit meinem exklusiven Code STERN20! Begrenzt! ✓",
+        "image": "product_promo.jpg",
+        "timestamp": "Gesponsert · vor 2 Std."
+      },
+      {
+        "username": "beauty_guru",
+        "heading": "Hautpflege-Routine",
+        "content": "Diese Hautpflege-Routine ist ALLES! @SchönheitsMarke veränderte meine Haut! ✓",
+        "image": "skincare.jpg",
+        "timestamp": "Gesponsert · vor 4 Std."
+      },
+      {
+        "username": "fitness_celeb",
+        "heading": "Trainings-Essentials",
+        "content": "Nutze @FitnessAusrüstung für alle meine Trainingseinheiten! Beste Ausrüstung! ✓",
+        "image": "workout.jpg",
+        "timestamp": "Gesponsert · vor 5 Std."
+      }
+    ]
+  },
+  "viralOrganic": {
+    "en": [
+      {
+        "username": "viral_videos",
+        "heading": "This puppy!",
+        "content": "This made my entire week! Cutest thing ever! 😍",
+        "image": "viral_puppy.jpg",
+        "timestamp": "Trending · 2h ago"
+      },
+      {
+        "username": "wholesome_content",
+        "heading": "Faith Restored",
+        "content": "Random act of kindness caught on camera. Faith in humanity restored! ❤️",
+        "image": "kindness.jpg",
+        "timestamp": "Trending · 1h ago"
+      },
+      {
+        "username": "funny_fails",
+        "heading": "Can't stop watching!",
+        "content": "I can't stop watching this! Too funny! 😂",
+        "image": "funny_fail.jpg",
+        "timestamp": "Trending · 3h ago"
+      },
+      {
+        "username": "art_amazing",
+        "heading": "Incredible Artist",
+        "content": "This artist is INCREDIBLE! Such talent! 🎨",
+        "image": "amazing_art.jpg",
+        "timestamp": "Trending · 4h ago"
+      },
+      {
+        "username": "heartwarming",
+        "heading": "Not crying...",
+        "content": "I'm not crying, you're crying! Such a beautiful story! 😭",
+        "image": "heartwarming.jpg",
+        "timestamp": "Trending · 5h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "viral_videos",
+        "heading": "Dieser Welpe!",
+        "content": "Das hat meine ganze Woche gemacht! Süßestes Ding ever! 😍",
+        "image": "viral_puppy.jpg",
+        "timestamp": "Trending · vor 2 Std."
+      },
+      {
+        "username": "wholesome_content",
+        "heading": "Glaube wiederhergestellt",
+        "content": "Zufällige Freundlichkeit auf Kamera. Glaube an Menschheit wiederhergestellt! ❤️",
+        "image": "kindness.jpg",
+        "timestamp": "Trending · vor 1 Std."
+      },
+      {
+        "username": "funny_fails",
+        "heading": "Kann nicht aufhören!",
+        "content": "Ich kann nicht aufhören, das anzuschauen! Zu lustig! 😂",
+        "image": "funny_fail.jpg",
+        "timestamp": "Trending · vor 3 Std."
+      },
+      {
+        "username": "art_amazing",
+        "heading": "Unglaublicher Künstler",
+        "content": "Dieser Künstler ist UNGLAUBLICH! Solches Talent! 🎨",
+        "image": "amazing_art.jpg",
+        "timestamp": "Trending · vor 4 Std."
+      },
+      {
+        "username": "heartwarming",
+        "heading": "Weine nicht...",
+        "content": "Ich weine nicht, du weinst! So eine schöne Geschichte! 😭",
+        "image": "heartwarming.jpg",
+        "timestamp": "Trending · vor 5 Std."
+      }
+    ]
+  },
+  "propaganda": {
+    "en": [
+      {
+        "username": "truth_seeker_2024",
+        "heading": "THEY Don't Want You To Know!",
+        "content": "THEY don't want you to know the TRUTH! Wake up and SHARE!",
+        "image": "propaganda_1.jpg",
+        "timestamp": "6h ago"
+      },
+      {
+        "username": "share_this_now",
+        "heading": "Share if You Agree!",
+        "content": "If you agree with this, SHARE NOW before it gets deleted!",
+        "image": "propaganda_2.jpg",
+        "timestamp": "4h ago"
+      },
+      {
+        "username": "wake_up_people",
+        "heading": "Media Lies!",
+        "content": "Wake up! The mainstream media is lying to you! Do your own research!",
+        "image": "propaganda_3.jpg",
+        "timestamp": "7h ago"
+      },
+      {
+        "username": "truth_warrior",
+        "heading": "Don't Let Them Censor!",
+        "content": "EVERYONE needs to see this! Don't let them censor the truth!",
+        "image": "propaganda_4.jpg",
+        "timestamp": "5h ago"
+      },
+      {
+        "username": "real_news_only",
+        "heading": "The REAL Story",
+        "content": "The REAL story they're hiding from you! Share before it's too late!",
+        "image": "propaganda_5.jpg",
+        "timestamp": "8h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "wahrheit_sucher_2024",
+        "heading": "DIE wollen nicht, dass du weißt!",
+        "content": "DIE wollen nicht, dass du die WAHRHEIT kennst! Wach auf und TEILE!",
+        "image": "propaganda_1.jpg",
+        "timestamp": "vor 6 Std."
+      },
+      {
+        "username": "jetzt_teilen",
+        "heading": "Teilen wenn du zustimmst!",
+        "content": "Wenn du dem zustimmst, JETZT TEILEN bevor es gelöscht wird!",
+        "image": "propaganda_2.jpg",
+        "timestamp": "vor 4 Std."
+      },
+      {
+        "username": "wach_auf_leute",
+        "heading": "Medien lügen!",
+        "content": "Wach auf! Die Mainstream-Medien lügen dich an! Recherchiere selbst!",
+        "image": "propaganda_3.jpg",
+        "timestamp": "vor 7 Std."
+      },
+      {
+        "username": "wahrheit_krieger",
+        "heading": "Lass sie nicht zensieren!",
+        "content": "JEDER muss das sehen! Lass sie die Wahrheit nicht zensieren!",
+        "image": "propaganda_4.jpg",
+        "timestamp": "vor 5 Std."
+      },
+      {
+        "username": "echte_nachrichten",
+        "heading": "Die WAHRE Geschichte",
+        "content": "Die WAHRE Geschichte, die sie vor dir verbergen! Teile bevor es zu spät ist!",
+        "image": "propaganda_5.jpg",
+        "timestamp": "vor 8 Std."
+      }
+    ]
+  },
+  "clickbait": {
+    "en": [
+      {
+        "username": "you_wont_believe",
+        "heading": "You WON'T BELIEVE This!",
+        "content": "You WON'T BELIEVE What Happened Next! Click to find out!",
+        "image": "clickbait_1.jpg",
+        "timestamp": "3h ago"
+      },
+      {
+        "username": "shocking_truth",
+        "heading": "Doctors HATE This!",
+        "content": "Doctors HATE This One Weird Trick! (Number 3 will SHOCK you!)",
+        "image": "clickbait_2.jpg",
+        "timestamp": "4h ago"
+      },
+      {
+        "username": "number_seven",
+        "heading": "Number 7 Will SHOCK You!",
+        "content": "Top 10 Things You Didn't Know! Number 7 Will SHOCK You!",
+        "image": "clickbait_3.jpg",
+        "timestamp": "2h ago"
+      },
+      {
+        "username": "must_see_now",
+        "heading": "She Did WHAT?!",
+        "content": "She Did WHAT?! (MUST SEE) Click now before it's deleted!",
+        "image": "clickbait_4.jpg",
+        "timestamp": "5h ago"
+      },
+      {
+        "username": "changes_everything",
+        "heading": "This Changes EVERYTHING!",
+        "content": "This Changes EVERYTHING! You need to see this NOW!",
+        "image": "clickbait_5.jpg",
+        "timestamp": "1h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "du_glaubst_nicht",
+        "heading": "Du wirst es NICHT GLAUBEN!",
+        "content": "Du wirst NICHT GLAUBEN, was als Nächstes passierte! Klick um zu sehen!",
+        "image": "clickbait_1.jpg",
+        "timestamp": "vor 3 Std."
+      },
+      {
+        "username": "schockierende_wahrheit",
+        "heading": "Ärzte HASSEN dies!",
+        "content": "Ärzte HASSEN diesen einen seltsamen Trick! (Nummer 3 wird dich SCHOCKIEREN!)",
+        "image": "clickbait_2.jpg",
+        "timestamp": "vor 4 Std."
+      },
+      {
+        "username": "nummer_sieben",
+        "heading": "Nummer 7 wird dich SCHOCKIEREN!",
+        "content": "Top 10 Dinge, die du nicht wusstest! Nummer 7 wird dich SCHOCKIEREN!",
+        "image": "clickbait_3.jpg",
+        "timestamp": "vor 2 Std."
+      },
+      {
+        "username": "muss_man_sehen",
+        "heading": "Sie tat WAS?!",
+        "content": "Sie tat WAS?! (MUSS MAN SEHEN) Jetzt klicken bevor es gelöscht wird!",
+        "image": "clickbait_4.jpg",
+        "timestamp": "vor 5 Std."
+      },
+      {
+        "username": "ändert_alles",
+        "heading": "Das ändert ALLES!",
+        "content": "Das ändert ALLES! Du musst das JETZT sehen!",
+        "image": "clickbait_5.jpg",
+        "timestamp": "vor 1 Std."
+      }
+    ]
+  },
+  "scams": {
+    "en": [
+      {
+        "username": "winner_alert",
+        "heading": "🎉 YOU'VE WON!",
+        "content": "⚠️ CONGRATULATIONS! You've WON $1000! CLAIM NOW before it expires!",
+        "image": "scam_winner.jpg",
+        "timestamp": "2h ago"
+      },
+      {
+        "username": "hot_singles",
+        "heading": "HOT SINGLES Near You!",
+        "content": "HOT SINGLES in your area want to MEET YOU! Click here now!",
+        "image": "scam_dating.jpg",
+        "timestamp": "4h ago"
+      },
+      {
+        "username": "account_security",
+        "heading": "⚠️ URGENT: Account Alert!",
+        "content": "URGENT: Your account has been compromised! Click here immediately!",
+        "image": "scam_security.jpg",
+        "timestamp": "1h ago"
+      },
+      {
+        "username": "make_money_fast",
+        "heading": "Make $5000 from Home!",
+        "content": "Make $5000 from home! No experience needed! Start today!",
+        "image": "scam_money.jpg",
+        "timestamp": "3h ago"
+      },
+      {
+        "username": "million_visitor",
+        "heading": "🎁 1,000,000th Visitor!",
+        "content": "You're the 1,000,000th visitor! Claim your FREE prize now!",
+        "image": "scam_prize.jpg",
+        "timestamp": "5h ago"
+      }
+    ],
+    "de": [
+      {
+        "username": "gewinner_alarm",
+        "heading": "🎉 DU HAST GEWONNEN!",
+        "content": "⚠️ GLÜCKWUNSCH! Du hast $1000 GEWONNEN! JETZT ABHOLEN bevor es abläuft!",
+        "image": "scam_winner.jpg",
+        "timestamp": "vor 2 Std."
+      },
+      {
+        "username": "heisse_singles",
+        "heading": "HEISSE SINGLES in deiner Nähe!",
+        "content": "HEISSE SINGLES in deiner Nähe wollen DICH TREFFEN! Jetzt hier klicken!",
+        "image": "scam_dating.jpg",
+        "timestamp": "vor 4 Std."
+      },
+      {
+        "username": "konto_sicherheit",
+        "heading": "⚠️ DRINGEND: Konto-Alarm!",
+        "content": "DRINGEND: Dein Konto wurde kompromittiert! Sofort hier klicken!",
+        "image": "scam_security.jpg",
+        "timestamp": "vor 1 Std."
+      },
+      {
+        "username": "schnell_geld",
+        "heading": "Verdiene $5000 von zu Hause!",
+        "content": "Verdiene $5000 von zu Hause! Keine Erfahrung nötig! Heute starten!",
+        "image": "scam_money.jpg",
+        "timestamp": "vor 3 Std."
+      },
+      {
+        "username": "millionen_besucher",
+        "heading": "🎁 1.000.000ster Besucher!",
+        "content": "Du bist der 1.000.000ste Besucher! Hol dir jetzt deinen KOSTENLOSEN Preis!",
+        "image": "scam_prize.jpg",
+        "timestamp": "vor 5 Std."
+      }
+    ]
+  }
+}

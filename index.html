@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thumbs Up Inc. - Social Media Business Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="language-switcher">
+            <label for="language-select">Language:</label>
+            <select id="language-select">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </div>
+        <h1>THUMBS UP INC.</h1>
+        <p class="subtitle">Manage the algorithm. Maximize profit. Keep them scrolling.</p>
+    </header>
+
+    <!-- Main Game Container -->
+    <main id="game-container" class="hidden">
+        <!-- Left Panel: User Avatar -->
+        <section class="panel left-panel">
+            <h2 data-i18n="userTitle">USER</h2>
+            
+            <div class="avatar-container">
+                <div id="avatar" class="avatar">
+                    <!-- SVG Avatar will be inserted here by JavaScript -->
+                    <svg id="avatar-svg" width="200" height="200" viewBox="0 0 200 200">
+                        <!-- Phone in hand -->
+                        <g id="phone-group">
+                            <rect x="70" y="120" width="60" height="100" rx="8" fill="#333" stroke="#000" stroke-width="2"/>
+                            <rect x="75" y="125" width="50" height="80" fill="#4A90E2"/>
+                            <circle cx="100" cy="213" r="5" fill="#666"/>
+                        </g>
+                        
+                        <!-- Body -->
+                        <ellipse cx="100" cy="140" rx="40" ry="50" fill="#FFD700" stroke="#000" stroke-width="2"/>
+                        
+                        <!-- Head -->
+                        <circle id="head" cx="100" cy="60" r="35" fill="#FFE4B5" stroke="#000" stroke-width="2"/>
+                        
+                        <!-- Eyes -->
+                        <g id="eyes">
+                            <circle cx="88" cy="55" r="4" fill="#000"/>
+                            <circle cx="112" cy="55" r="4" fill="#000"/>
+                        </g>
+                        
+                        <!-- Mouth (changes with happiness) -->
+                        <g id="mouth">
+                            <path id="mouth-path" d="M 85 70 Q 100 75 115 70" stroke="#000" stroke-width="2" fill="none"/>
+                        </g>
+                        
+                        <!-- Anger overlay (hidden by default) -->
+                        <g id="anger-overlay" opacity="0">
+                            <circle cx="100" cy="60" r="35" fill="red" opacity="0.3"/>
+                            <path d="M 75 45 L 85 50" stroke="red" stroke-width="3"/>
+                            <path d="M 115 50 L 125 45" stroke="red" stroke-width="3"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric">
+                    <label>
+                        <span data-i18n="engagementLabel">📊 Engagement:</span>
+                        <span class="info-icon" data-tooltip-key="tooltipEngagement">ⓘ</span>
+                    </label>
+                    <div class="meter">
+                        <div id="engagement-bar" class="meter-fill" style="width: 100%"></div>
+                    </div>
+                    <span id="engagement-value" class="metric-value">100%</span>
+                </div>
+
+                <div class="metric">
+                    <label>
+                        <span data-i18n="happinessLabel">😊 Happiness:</span>
+                        <span class="info-icon" data-tooltip-key="tooltipHappiness">ⓘ</span>
+                    </label>
+                    <div class="meter">
+                        <div id="happiness-bar" class="meter-fill" style="width: 100%"></div>
+                    </div>
+                    <span id="happiness-value" class="metric-value">100%</span>
+                </div>
+
+                <div class="metric">
+                    <label>
+                        <span data-i18n="angerLabel">😠 Anger:</span>
+                        <span class="info-icon" data-tooltip-key="tooltipAnger">ⓘ</span>
+                    </label>
+                    <div class="meter anger-meter">
+                        <div id="anger-bar" class="meter-fill" style="width: 0%"></div>
+                    </div>
+                    <span id="anger-value" class="metric-value">0%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Center Panel: Feed Preview -->
+        <section class="panel center-panel">
+            <h2 data-i18n="feedTitle">FEED PREVIEW</h2>
+            <div id="feed-container" class="feed-container">
+                <!-- Posts will be dynamically generated here -->
+            </div>
+        </section>
+
+        <!-- Right Panel: Control Panel -->
+        <section class="panel right-panel">
+            <div class="stats-header">
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="moneyLabel">💰 Money:</span>
+                    <span id="money-display" class="stat-value">$0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="timeLabel">⏱️ Time:</span>
+                    <span id="timer-display" class="stat-value">10:00</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label" data-i18n="engagementLabelShort">📊 Engagement:</span>
+                    <span id="engagement-display" class="stat-value">100%</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <h3 data-i18n="contentMixTitle">CONTENT MIX</h3>
+            <p class="instructions" data-i18n="contentMixInstructions">Adjust sliders to control what users see. Total must not exceed 100%.</p>
+
+            <div id="sliders-container" class="sliders-container">
+                <!-- Sliders will be dynamically generated here with tooltips -->
+            </div>
+
+            <div class="total-display">
+                <strong data-i18n="totalLabel">Total:</strong> <span id="total-percentage">100%</span>
+                <span id="total-warning" class="warning hidden" data-i18n="totalWarning">⚠️ Cannot exceed 100%</span>
+            </div>
+
+            <hr>
+
+            <div class="info-box">
+                <h4 data-i18n="strategyTitle">Current Strategy:</h4>
+                <p id="strategy-info">100% organic content - earning $0/sec</p>
+            </div>
+
+            <hr>
+
+            <button id="dashboard-button" class="btn btn-primary">📊 Open Dashboard</button>
+            
+            <div style="margin-top: var(--spacing-sm); text-align: center; font-size: 0.9rem; color: var(--neutral-gray);">
+                <span data-i18n="levelLabel">Level:</span> <strong id="current-level">1</strong>/5
+            </div>
+        </section>
+    </main>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="modal-overlay">
+        <div class="modal-content start-modal">
+            <h2 data-i18n="welcomeTitle">🎮 Welcome to Thumbs Up Inc.</h2>
+            <p class="modal-text" data-i18n="welcomeText">
+                You are the algorithm controlling a social media feed. Your goal is to maximize profit 
+                while keeping users engaged enough that they don't quit.
+            </p>
+            <div class="modal-text">
+                <strong data-i18n="howToPlayTitle">How to Play:</strong>
+                <ul>
+                    <li data-i18n="howToPlay1">Use sliders to control what content appears in the feed</li>
+                    <li data-i18n="howToPlay2">Organic content keeps users happy but earns $0</li>
+                    <li data-i18n="howToPlay3">Ads generate revenue but make users unhappy</li>
+                    <li data-i18n="howToPlay4">Keep engagement above 20% or the user quits!</li>
+                    <li data-i18n="howToPlay5">Survive for 10 minutes to win</li>
+                </ul>
+            </div>
+            <button id="start-button" class="btn btn-primary" data-i18n="startButton">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="modal-overlay hidden">
+        <div class="modal-content gameover-modal">
+            <h2 id="gameover-title" data-i18n="gameOverTitle">😞 USER HAS LEFT THE PLATFORM!</h2>
+            <div id="gameover-reason" class="modal-text">
+                Engagement dropped too low.
+            </div>
+            <hr>
+            <div class="final-stats">
+                <h3 data-i18n="finalScoreTitle">Final Score</h3>
+                <div class="stat-row">
+                    <span data-i18n="moneyEarnedLabel">💰 Money Earned:</span>
+                    <span id="final-money" class="stat-highlight">$0</span>
+                </div>
+                <div class="stat-row">
+                    <span data-i18n="timeSurvivedLabel">⏱️ Time Survived:</span>
+                    <span id="final-time">0:00 / 10:00</span>
+                </div>
+                <div class="stat-row">
+                    <span data-i18n="finalEngagementLabel">📊 Final Engagement:</span>
+                    <span id="final-engagement">0%</span>
+                </div>
+            </div>
+            <div class="gameover-buttons">
+                <button id="play-again-button" class="btn btn-primary" data-i18n="playAgainButton">Play Again</button>
+                <button id="continue-playing-button" class="btn btn-secondary" data-i18n="continuePlayingButton">Continue Playing</button>
+                <button id="view-reflection-button" class="btn btn-secondary" data-i18n="viewReflectionButton">View Reflection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reflection Screen -->
+    <div id="reflection-screen" class="modal-overlay hidden">
+        <div class="modal-content reflection-modal">
+            <h2 data-i18n="reflectionTitle">🤔 Reflection</h2>
+            
+            <div class="reflection-content">
+                <div class="reflection-section">
+                    <h3 data-i18n="reflectionQuestion1Title">What did you notice?</h3>
+                    <p data-i18n="reflectionQuestion1Text" class="reflection-text">
+                        During the game, you had to balance profit against user well-being. 
+                        What strategies did you use? Did you prioritize money or happiness?
+                    </p>
+                </div>
+
+                <div class="reflection-section">
+                    <h3 data-i18n="reflectionQuestion2Title">Real-World Connection</h3>
+                    <p data-i18n="reflectionQuestion2Text" class="reflection-text">
+                        Real social media platforms face similar decisions. They must balance:
+                    </p>
+                    <ul class="reflection-list">
+                        <li data-i18n="reflectionPoint1">Advertising revenue vs. user experience</li>
+                        <li data-i18n="reflectionPoint2">Engagement (time on platform) vs. user happiness</li>
+                        <li data-i18n="reflectionPoint3">Viral content vs. quality content</li>
+                        <li data-i18n="reflectionPoint4">Short-term profits vs. long-term trust</li>
+                    </ul>
+                </div>
+
+                <div class="reflection-section">
+                    <h3 data-i18n="reflectionQuestion3Title">Think About It</h3>
+                    <p data-i18n="reflectionQuestion3Text" class="reflection-text">
+                        How does this game compare to your real social media use? 
+                        What content do you see most often? How does it make you feel?
+                        What responsibility do platforms have to their users?
+                    </p>
+                </div>
+
+                <div class="reflection-section highlight-box">
+                    <p data-i18n="reflectionConclusion" class="reflection-text">
+                        <strong>Remember:</strong> Behind every feed is an algorithm making choices. 
+                        Understanding these choices helps you become a more informed digital citizen.
+                    </p>
+                </div>
+            </div>
+
+            <button id="back-to-start-button" class="btn btn-primary" data-i18n="backToStartButton">Back to Start</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Overlay -->
+    <div id="dashboard-overlay" class="dashboard-overlay hidden">
+        <div class="dashboard-content">
+            <h2 data-i18n="dashboardTitle">📊 PERFORMANCE DASHBOARD</h2>
+            
+            <div class="dashboard-stats-grid">
+                <div class="dashboard-stat-card">
+                    <h3 data-i18n="dashTotalEarnings">💰 Total Earnings</h3>
+                    <div class="dashboard-stat-value" id="dash-total-money">$0</div>
+                </div>
+                <div class="dashboard-stat-card">
+                    <h3 data-i18n="dashMoneyRate">💵 Money Per Minute</h3>
+                    <div class="dashboard-stat-value" id="dash-money-rate">$0</div>
+                </div>
+                <div class="dashboard-stat-card">
+                    <h3 data-i18n="dashTimeElapsed">⏱️ Time Elapsed</h3>
+                    <div class="dashboard-stat-value" id="dash-time-elapsed">0:00</div>
+                </div>
+            </div>
+
+            <div class="dashboard-chart">
+                <h3 data-i18n="dashRevenueBreakdown">Revenue Breakdown</h3>
+                <div id="revenue-chart"></div>
+            </div>
+
+            <div class="dashboard-chart">
+                <h3 data-i18n="dashUserExperience">User Experience</h3>
+                <div class="dashboard-stats-grid">
+                    <div class="dashboard-stat-card">
+                        <h3 data-i18n="dashCurrentHappiness">😊 Current Happiness</h3>
+                        <div class="dashboard-stat-value" id="dash-happiness">100%</div>
+                    </div>
+                    <div class="dashboard-stat-card">
+                        <h3 data-i18n="dashCurrentAnger">😠 Current Anger</h3>
+                        <div class="dashboard-stat-value" id="dash-anger">0%</div>
+                    </div>
+                    <div class="dashboard-stat-card">
+                        <h3 data-i18n="dashCurrentEngagement">📊 Current Engagement</h3>
+                        <div class="dashboard-stat-value" id="dash-engagement">100%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-chart">
+                <h3 data-i18n="dashContentEffects">Content Type Effects Reference</h3>
+                <table class="effects-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="tableContentType">Content Type</th>
+                            <th data-i18n="tableRevenue">Revenue</th>
+                            <th data-i18n="tableHappiness">Happiness</th>
+                            <th data-i18n="tableAnger">Anger</th>
+                            <th data-i18n="tableEngagement">Engagement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="effects-table-body">
+                        <!-- Will be populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <button id="close-dashboard" class="btn btn-primary" data-i18n="resumeGame">Resume Game</button>
+        </div>
+    </div>
+
+    <!-- Unlock Popup (will be shown dynamically) -->
+    <div id="unlock-popup-container"></div>
+
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
