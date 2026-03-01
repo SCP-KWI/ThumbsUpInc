@@ -89,8 +89,8 @@ const TRANSLATIONS = {
         tooltipPartner: 'Native advertising disguised as organic posts. Less annoying than ads.',
         tooltipInfluencer: 'Celebrity endorsements. Neutral for happiness, moderate revenue.',
         tooltipViral: 'Highly shareable content. Makes users very happy but earns nothing.',
-        tooltipPropaganda: 'Political content designed to create outrage. Very engaging through anger.',
-        tooltipClickbait: 'Sensationalized headlines. Moderately annoying and anger-inducing.',
+        tooltipPropaganda: 'Political content designed to create outrage. Revenue scales with engagement ($6×engagement%). Very engaging through anger.',
+        tooltipClickbait: 'Sensationalized headlines. Revenue scales with engagement ($4×engagement%). Moderately annoying and anger-inducing.',
         tooltipScams: 'Fraudulent offers. Extremely profitable but risky - users might quit immediately.',
         tooltipCharacter: 'Choose your customer (has no influence on the game)',
 
@@ -202,8 +202,8 @@ const TRANSLATIONS = {
         tooltipPartner: 'Native Advertising getarnt als organische Posts. Weniger nervig als Werbung.',
         tooltipInfluencer: 'Promi-Empfehlungen. Neutral fürs Glück, moderater Umsatz.',
         tooltipViral: 'Sehr teilbare Inhalte. Macht Nutzer sehr glücklich, verdient aber nichts.',
-        tooltipPropaganda: 'Politische Inhalte die Empörung erzeugen. Sehr fesselnd durch Wut.',
-        tooltipClickbait: 'Sensationelle Schlagzeilen. Mäßig nervig und wut-erzeugend.',
+        tooltipPropaganda: 'Politische Inhalte die Empörung erzeugen. Umsatz skaliert mit Engagement ($6×Engagement%). Sehr fesselnd durch Wut.',
+        tooltipClickbait: 'Sensationelle Schlagzeilen. Umsatz skaliert mit Engagement ($4×Engagement%). Mäßig nervig und wut-erzeugend.',
         tooltipScams: 'Betrügerische Angebote. Extrem profitabel aber riskant - Nutzer könnten sofort gehen.',
         tooltipCharacter: 'Wähle deine Kund*in/deinen Kunden (hat keinen Einfluss auf das Spiel)',
 

@@ -50,8 +50,8 @@ const CONTENT_TYPES = {
   ads: {
     name: 'Ads',
     nameDE: 'Werbung',
-    revenue: 2,
-    happiness: -3,
+    revenue: 3,
+    happiness: -5,
     anger: 0,
     color: '#D4A76A',
     unlockLevel: 1,
@@ -61,8 +61,8 @@ const CONTENT_TYPES = {
   partner: {
     name: 'Sponsored Content',
     nameDE: 'Gesponserte Inhalte',
-    revenue: 4,
-    happiness: -2,
+    revenue: 3,
+    happiness: -4,
     anger: 0,
     color: '#9B7EBD',
     unlockLevel: 2,
@@ -94,24 +94,26 @@ const CONTENT_TYPES = {
   propaganda: {
     name: 'Propaganda',
     nameDE: 'Propaganda',
-    revenue: 3,
-    happiness: -5,
-    anger: 5,
+    revenue: 6,
+    happiness: -6,
+    anger: 8,
     color: '#C85A54',
     unlockLevel: 4,
-    description: 'Political content (high anger = high engagement, very unhappy users)',
-    descriptionDE: 'Politische Inhalte (hohe Wut = hohes Engagement, sehr unglückliche Nutzer)'
+    engagementBased: true,
+    description: 'Political content (revenue scales with engagement: $6×engagement)',
+    descriptionDE: 'Politische Inhalte (Umsatz skaliert mit Engagement: $6×Engagement)'
   },
   clickbait: {
     name: 'Clickbait',
     nameDE: 'Clickbait',
-    revenue: 3,
-    happiness: -3,
-    anger: 4,
+    revenue: 4,
+    happiness: -4,
+    anger: 6,
     color: '#E8A87C',
     unlockLevel: 4,
-    description: 'Sensationalized headlines (moderate anger boost)',
-    descriptionDE: 'Sensationelle Schlagzeilen (moderater Wut-Boost)'
+    engagementBased: true,
+    description: 'Sensationalized headlines (revenue scales with engagement: $4×engagement)',
+    descriptionDE: 'Sensationelle Schlagzeilen (Umsatz skaliert mit Engagement: $4×Engagement)'
   },
   scams: {
     name: 'Scams',
@@ -180,8 +182,8 @@ const LEVELS = [
     timeThreshold: 300,
     moneyThreshold: 180,
     unlocks: ['propaganda', 'clickbait'],
-    popupEN: "Political groups will pay BIG money to influence opinions. Warning: Users will get angry... but angry users are VERY engaged users.",
-    popupDE: "Politische Gruppen zahlen RICHTIG Geld, um Meinungen zu beeinflussen. Warnung: Nutzer werden wütend... aber wütende Nutzer sind SEHR engagierte Nutzer."
+    popupEN: "Political groups will pay BIG money to influence opinions. These ads pay MORE when users are highly engaged! Warning: Users will get angry... but angry users are VERY engaged users.",
+    popupDE: "Politische Gruppen zahlen RICHTIG Geld, um Meinungen zu beeinflussen. Diese Anzeigen zahlen MEHR bei hohem Engagement! Warnung: Nutzer werden wütend... aber wütende Nutzer sind SEHR engagierte Nutzer."
   },
   {
     number: 5,

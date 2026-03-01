@@ -539,10 +539,17 @@ class ThumbsUpGame {
       // Get perView translation
       const perView = this.externalTranslations[this.currentLang]?.perView || this.translations[this.currentLang]?.perView || "/view";
 
+      // Show engagement-based revenue for propaganda/clickbait
+      let revenueDisplay;
+      if (ct.engagementBased) {
+        const currentRevenue = (ct.revenue * (this.state.engagement / 100)).toFixed(2);
+        revenueDisplay = `💰$${currentRevenue}${perView} (=$${ct.revenue}×engagement)`;
+      } else {
+        revenueDisplay = `💰$${ct.revenue}${perView}`;
+      }
+
       const effects =
-        "💰$" +
-        ct.revenue +
-        perView + " | 😊" +
+        revenueDisplay + " | 😊" +
         happinessStr +
         " | 😠" +
         angerStr;
@@ -616,10 +623,17 @@ class ThumbsUpGame {
       // Get perView translation
       const perView = this.externalTranslations[this.currentLang]?.perView || this.translations[this.currentLang]?.perView || "/view";
 
+      // Calculate revenue display (engagement-based for propaganda/clickbait)
+      let revenueDisplay;
+      if (ct.engagementBased) {
+        const engagementScaledRevenue = (ct.revenue * (this.state.engagement / 100)).toFixed(2);
+        revenueDisplay = `💰$${engagementScaledRevenue}${perView}`;
+      } else {
+        revenueDisplay = `💰$${ct.revenue}${perView}`;
+      }
+
       const effects =
-        "💰$" +
-        ct.revenue +
-        perView + " | 😊" +
+        revenueDisplay + " | 😊" +
         happinessStr +
         " | 😠" +
         angerStr;
@@ -639,7 +653,7 @@ class ThumbsUpGame {
                 <label for="${contentType}-slider">
                     <span class="slider-name">${name}</span>
                     <span class="info-icon" data-tooltip-key="${tooltipKey}">ⓘ</span>
-                    <span class="slider-info">${effects}</span>
+                    <span id="${contentType}-slider-info" class="slider-info">${effects}</span>
                 </label>
                 <div class="slider-controls">
                     <input type="range" id="${contentType}-slider" class="slider" min="0" max="100" value="${this.state.contentMix[contentType]}">
@@ -951,10 +965,19 @@ class ThumbsUpGame {
       const ct = CONTENT_TYPES[contentType];
       const name = this.currentLang === "de" ? ct.nameDE : ct.name;
 
+      // Show engagement-based revenue for propaganda/clickbait
+      let revenueDisplay;
+      if (ct.engagementBased) {
+        const currentRevenue = (ct.revenue * (this.state.engagement / 100)).toFixed(2);
+        revenueDisplay = `$${currentRevenue} ($${ct.revenue}×eng)`;
+      } else {
+        revenueDisplay = `$${ct.revenue}`;
+      }
+
       const row = document.createElement("tr");
       row.innerHTML = `
                 <td>${name}</td>
-                <td>$${ct.revenue}</td>
+                <td>${revenueDisplay}</td>
                 <td>${ct.happiness >= 0 ? "+" : ""}${ct.happiness}</td>
                 <td>${ct.anger >= 0 ? "+" : ""}${ct.anger}</td>
             `;
@@ -1041,6 +1064,9 @@ class ThumbsUpGame {
       this.state.currentLevel;
 
     this.updateAvatarState();
+
+    // Update engagement-based revenue displays
+    this.updateEngagementBasedDisplays();
   }
 
   updateMeter(elementId, value, reversed = false) {
@@ -1084,6 +1110,28 @@ class ThumbsUpGame {
   // ============================================
   updateAvatarState() {
     this.updatePortrait();
+  }
+
+  // ============================================
+  // UPDATE ENGAGEMENT-BASED DISPLAYS
+  // ============================================
+  updateEngagementBasedDisplays() {
+    // Get perView translation
+    const perView = this.externalTranslations[this.currentLang]?.perView || this.translations[this.currentLang]?.perView || "/view";
+
+    // Update slider info for engagement-based content
+    for (const contentType of this.state.unlockedContent) {
+      const ct = CONTENT_TYPES[contentType];
+      if (ct && ct.engagementBased) {
+        const sliderInfo = document.getElementById(`${contentType}-slider-info`);
+        if (sliderInfo) {
+          const engagementScaledRevenue = (ct.revenue * (this.state.engagement / 100)).toFixed(2);
+          const happinessStr = ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
+          const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
+          sliderInfo.textContent = `💰$${engagementScaledRevenue}${perView} | 😊${happinessStr} | 😠${angerStr}`;
+        }
+      }
+    }
   }
 
   updatePortrait() {

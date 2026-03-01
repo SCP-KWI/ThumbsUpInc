@@ -86,7 +86,7 @@ header .subtitle {
     gap: var(--spacing-md);
     max-width: 1400px;
     margin: 0 auto;
-    height: calc(100vh - 150px);
+    height: calc(118vh - 130px);
     transform: scale(0.85);
     transform-origin: top center;
 }
@@ -102,7 +102,6 @@ header .subtitle {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     height: 100%;
 }
 
@@ -332,7 +331,7 @@ hr {
     font-size: 0.85rem;
     font-weight: normal;
     line-height: 1.4;
-    z-index: 1000;
+    z-index: 10000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     pointer-events: none;
 }
@@ -346,7 +345,7 @@ hr {
     transform: translateX(-50%);
     border: 6px solid transparent;
     border-top-color: var(--dark-gray);
-    z-index: 1001;
+    z-index: 10001;
     pointer-events: none;
 }
 
