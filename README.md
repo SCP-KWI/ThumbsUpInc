@@ -1,7 +1,5 @@
 # Thumbs Up Inc. - Social Media Business Simulator
 
-**Version:** 3.0 (Complete Edition)
-**Author:** Philip (Kantonsschule Wiedikon)
 **Target Audience:** 15-year-old students in CS class
 **Languages:** English & German
 
@@ -10,80 +8,6 @@
 An educational game that teaches students about social media business models by having them play as "the algorithm" managing a social media feed. Students must balance profit maximization with user engagement to understand how platforms monetize attention.
 
 Players experience the ethical tensions of social media platforms firsthand: higher profits often come at the cost of user wellbeing, while keeping users happy may mean sacrificing revenue.
-
-## Features
-
-### Core Gameplay
-- ✅ **3-column responsive layout** (User Avatar, Feed Preview, Control Panel)
-- ✅ **5-level progression system** with content unlocking
-- ✅ **8 content types** with unique mechanics and revenue models
-- ✅ **10-minute timed gameplay** with victory/loss conditions
-- ✅ **Dynamic metrics system** (Engagement, Happiness, Anger)
-- ✅ **Real-time revenue calculation** based on content mix and engagement
-- ✅ **Game over mechanics** (low engagement or scam backfire)
-
-### User Interface
-- ✅ **Character selection** (Chloe, Kitty, Nick, Rob) with emotional portraits
-- ✅ **9 emotional states** (happy1-3, neutral, sad1-3, angry1-3, bored)
-- ✅ **Auto-scrolling feed** with realistic social media posts
-- ✅ **Interactive sliders** with 100% total constraint
-- ✅ **Visual feedback** through color-coded meters and animations
-- ✅ **Dashboard overlay** with detailed statistics and charts
-- ✅ **Tooltips** explaining all game mechanics
-
-### Content & Localization
-- ✅ **Bilingual support** (English/German) with language switcher
-- ✅ **Enhanced post templates** with usernames, timestamps, and images
-- ✅ **Profile images** (90+ unique avatars across 8 categories)
-- ✅ **Post images** for organic content (music, homework, etc.)
-- ✅ **Fully translated UI** including tooltips and help text
-
-### Educational Components
-- ✅ **Reflection screen** prompting students to think about real-world implications
-- ✅ **Statistics tracking** showing average happiness, anger, and content distribution
-- ✅ **Continue playing mode** for experimentation after winning
-- ✅ **Progressive content unlocks** teaching escalating monetization strategies
-
-## File Structure
-
-```
-/thumbs-up-inc/
-├── index.html          # Main HTML structure with modals and overlays
-├── styles.css          # Complete styling with responsive design
-├── script.js           # Game logic, state management, UI updates
-├── config.js           # Balance constants, content types, level definitions
-├── translations.js     # English and German translations
-├── posts.json          # Post templates with enhanced structure
-├── /portraits/         # Character and profile images
-│   ├── /chloe/        # Character portraits (9 emotions)
-│   ├── /kitty/
-│   ├── /nick/
-│   ├── /rob/
-│   ├── /regular/      # Profile images for organic content
-│   ├── /companies/    # Profile images for ads
-│   ├── /sponsored/    # Profile images for sponsored content
-│   ├── /influencers/  # Profile images for influencer posts
-│   ├── /viral/        # Profile images for viral content
-│   ├── /propaganda/   # Profile images for propaganda
-│   ├── /news/         # Profile images for clickbait
-│   └── /scammers/     # Profile images for scams
-├── /posts/            # Post content images
-│   ├── music.jpg
-│   ├── homework.jpg
-│   └── ...
-└── README.md          # This file
-```
-
-## Setup Instructions
-
-1. **Download all files and folders** to a single directory
-2. **Preserve folder structure** (especially `/portraits/` and `/posts/`)
-3. **Open `index.html`** in a modern web browser
-4. **Select language** (English or German)
-5. **Choose character** (optional - purely cosmetic)
-6. **Click "Start Game"** to begin
-
-No server or installation required - runs entirely in the browser!
 
 ## How to Play
 
@@ -94,7 +18,6 @@ No server or installation required - runs entirely in the browser!
 
 ### Controls
 - Use **sliders** to adjust what percentage of each content type appears in the feed
-- **Total must not exceed 100%** - adjusting one slider reduces others proportionally
 - Content appears in the feed based on your mix percentages
 - Watch the three metrics (Engagement, Happiness, Anger) on the left panel
 
@@ -119,54 +42,40 @@ No server or installation required - runs entirely in the browser!
 Unlocks at: **Game Start**
 
 **Organic Content** (Blue)
-- Revenue: $0/view
-- Happiness: +2
-- Anger: 0
+- *What it is:* Genuine posts from friends, family, and followed accounts — the original purpose of social media.
 - Strategy: Baseline content that keeps users happy but earns nothing
 
 **Ads** (Gold)
-- Revenue: $3/view
-- Happiness: -5
-- Anger: 0
+- *What it is:* Clearly labelled paid advertisements — the most transparent form of monetization on platforms.
 - Strategy: Direct monetization with happiness penalty
 
 ### Level 2: Native Advertising
 Unlocks at: **90 seconds OR $60**
 
 **Sponsored Content** (Purple)
-- Revenue: $3/view
-- Happiness: -4
-- Anger: 0
+- *What it is:* Paid posts styled to look like organic content, making advertising harder to distinguish from genuine posts.
 - Strategy: Disguised advertising, slightly less annoying than direct ads
 
 ### Level 3: The Influencer Economy
 Unlocks at: **180 seconds OR $150**
 
 **Influencer Partnerships** (Pink)
-- Revenue: $1/view
-- Happiness: +1
-- Anger: 0
+- *What it is:* Creators paid to promote products to their followers — blurring the line between personal recommendation and advertisement.
 - Strategy: Lower revenue but positive for happiness - a balanced choice
 
 **Viral Organic Content** (Green)
-- Revenue: $0/view
-- Happiness: +3
-- Anger: 0
+- *What it is:* Trending posts that spread rapidly because many users share them — often feel-good or entertaining content.
 - Strategy: Makes users very happy but earns nothing
 
 ### Level 4: The Outrage Machine
 Unlocks at: **300 seconds OR $280**
 
 **Propaganda** (Red)
-- Revenue: **$6×(engagement%)/view** (engagement-based!)
-- Happiness: -6
-- Anger: +8
+- *What it is:* Politically or ideologically charged content designed to provoke strong emotion and shape beliefs — highly engaging precisely because it makes people angry.
 - Strategy: High revenue that scales with engagement. Creates anger which boosts engagement - a dangerous feedback loop!
 
 **Clickbait** (Orange)
-- Revenue: **$4×(engagement%)/view** (engagement-based!)
-- Happiness: -4
-- Anger: +6
+- *What it is:* Sensationalist headlines engineered to provoke curiosity or outrage, prioritising clicks over accuracy or value.
 - Strategy: Moderate revenue that scales with engagement. Less extreme than propaganda.
 
 **Note:** At 100% engagement, Propaganda earns $6/view. At 50% engagement, only $3/view. These values update live!
@@ -175,50 +84,9 @@ Unlocks at: **300 seconds OR $280**
 Unlocks at: **420 seconds OR $500**
 
 **Scams** (Dark Red)
-- Revenue: $10/view
-- Happiness: -15
-- Anger: 0
+- *What it is:* Fraudulent content that tricks users into giving away money or personal data — the most harmful content on real platforms, and notoriously difficult to moderate at scale.
 - **Special:** 5% chance per scam post = instant game over!
 - Strategy: Extremely profitable but very risky. Do you dare?
-
-## Game Mechanics
-
-### Metrics Explained
-
-**📊 Engagement (0-100%)**
-- How much time/attention the user spends scrolling
-- Decays at -0.04 per update tick (natural boredom)
-- Influenced by happiness: above 50% happiness → engagement rises, below 50% → engagement falls
-- **Anger is very engaging!** Boosts engagement more than happiness
-- Game over at 0% engagement
-
-**😊 Happiness (0-100%)**
-- User's emotional wellbeing
-- Increased by organic, viral, and influencer content
-- Decreased by ads, sponsored content, propaganda, clickbait, scams
-- Threshold at 50%: above = good for engagement, below = bad for engagement
-
-**😠 Anger (0-100%)**
-- User frustration level
-- Increased dramatically by propaganda and clickbait
-- **Very engaging** - angry users scroll more!
-- Naturally decays over time (people calm down)
-- Creates ethical dilemma: profit through outrage?
-
-### Revenue Calculation
-
-Standard content:
-```
-Revenue per tick = base_revenue × (content_percentage/100) × (engagement/100)
-```
-
-Engagement-based content (Propaganda & Clickbait):
-```
-Revenue per tick = (base_revenue × engagement/100) × (content_percentage/100) × (engagement/100)
-                  = base_revenue × (content_percentage/100) × (engagement/100)²
-```
-
-This means propaganda and clickbait earn MORE when engagement is high - creating a strategic synergy with anger-inducing content!
 
 ## Customization
 
@@ -332,84 +200,6 @@ After playing, students should discuss:
 6. Should algorithms be designed to maximize engagement or wellbeing?
 7. How can you be a more informed consumer of social media?
 
-## Technical Details
-
-### Browser Compatibility
-Tested and working on:
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-Requires:
-- ES6+ JavaScript support
-- CSS Grid and Flexbox
-- LocalStorage for settings persistence
-
-### Performance
-- Update interval: 400ms
-- Post generation: 10 seconds
-- Smooth animations and transitions
-- Maximum 5 posts in feed DOM for performance
-
-### Responsive Design
-- Optimized for desktop browsers (1920×1080 reference)
-- Scales to 85% for better fit
-- Grid layout adapts to screen size
-- Scrollable panels prevent overflow
-
-## Troubleshooting
-
-**Images not loading:**
-- Ensure `/portraits/` and `/posts/` folders are in the same directory as `index.html`
-- Check that folder structure matches exactly
-- Verify image file names match those in `posts.json`
-
-**Language not switching:**
-- Check browser console for JavaScript errors
-- Verify `translations.js` is loaded before `script.js`
-- Try hard refresh (Ctrl+Shift+R or Cmd+Shift+R)
-
-**Game feels too easy/hard:**
-- Adjust `ENGAGEMENT_DECAY_RATE` in `config.js` (lower = easier)
-- Modify `HAPPINESS_ENGAGEMENT_MULTIPLIER` (higher = easier)
-- Change level unlock thresholds
-
-**Revenue displays not updating:**
-- This is expected for Propaganda/Clickbait - they update every game tick
-- Other content types have fixed revenue per view
-- Check Dashboard for detailed revenue breakdown
-
-## Credits
-
-**Game Design & Development:** Philip
-**Institution:** Kantonsschule Wiedikon
-**Purpose:** Computer Science Education
-**Target Group:** 15-year-old students
-
-**Special Thanks:**
-- Students for playtesting and feedback
-- Teaching staff for educational guidance
-
 ## License
 
-Educational use only. Free for classroom and teaching purposes.
-
-## Version History
-
-**3.0 (Complete Edition)** - Current
-- Full bilingual support (English/German)
-- 5-level progression system with 8 content types
-- Character selection with emotional portraits
-- Enhanced post templates with images and profile pictures
-- Engagement-based revenue for propaganda/clickbait
-- Dashboard with statistics and charts
-- Reflection screen with educational prompts
-- Continue playing mode
-
-**2.0** - Not released
-- Initial multi-level implementation
-
-**1.0 (MVP)** - Initial release
-- Basic 2-content type gameplay
-- Single-language prototype
+CC-BY-NC [[https://creativecommons.org/licenses/by-nc/4.0/]]
