@@ -87,6 +87,7 @@ header .subtitle {
     max-width: 1400px;
     margin: 0 auto;
     height: calc(118vh - 130px);
+    min-height: 1000px;
     transform: scale(0.85);
     transform-origin: top center;
 }

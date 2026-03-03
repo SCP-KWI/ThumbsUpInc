@@ -321,14 +321,19 @@ class ThumbsUpGame {
       spotlight.style.width  = `${rect.width  + pad * 2}px`;
       spotlight.style.height = `${rect.height + pad * 2}px`;
 
-      const bubbleW  = 280;
-      const gap      = 20;
-      const bubbleH  = 160;
-      const left = step.tail === 'left'
+      // Read actual rendered dimensions (forces reflow so size reflects current content)
+      const bubbleW = bubble.offsetWidth;
+      const bubbleH = bubble.offsetHeight;
+      const gap     = 20;
+
+      let left = step.tail === 'left'
         ? rect.right + gap
         : rect.left - bubbleW - gap;
       let top = rect.top + rect.height / 2 - bubbleH / 2;
-      top = Math.max(8, Math.min(top, window.innerHeight - bubbleH - 8));
+
+      // Clamp within the visible viewport on both axes
+      left = Math.max(8, Math.min(left, window.innerWidth  - bubbleW - 8));
+      top  = Math.max(8, Math.min(top,  window.innerHeight - bubbleH - 8));
 
       bubble.style.left = `${left}px`;
       bubble.style.top  = `${top}px`;
