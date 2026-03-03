@@ -1235,6 +1235,36 @@ hr {
 }
 
 /* ============================================
+   SMALL SCREEN WARNING
+   ============================================ */
+
+.small-screen-warning {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
+.small-screen-warning h2 {
+    font-size: 1.8rem;
+    color: var(--primary-blue);
+}
+
+.small-screen-warning p {
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+/* ============================================
    TUTORIAL SYSTEM
    ============================================ */
 

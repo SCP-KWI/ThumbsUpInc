@@ -94,6 +94,10 @@ const TRANSLATIONS = {
         tooltipScams: 'Fraudulent offers. Extremely profitable but risky - users might quit immediately.',
         tooltipCharacter: 'Choose your customer (has no influence on the game)',
 
+        // Screen size warning
+        smallScreenTitle: '🖥️ Screen Too Small',
+        smallScreenText: 'Thumbs Up Inc. is designed for desktop screens. Please open it on a device with a screen width of at least 1000px.',
+
         // Tutorial
         tutorialOk: 'Ok',
         tutorialEngagement: 'The goal of the game is to keep your user on the platform. When engagement falls to 0, your user loses interest in Thumbs Up Inc and leaves the app.',
@@ -213,6 +217,10 @@ const TRANSLATIONS = {
         tooltipClickbait: 'Sensationelle Schlagzeilen. Umsatz skaliert mit Engagement ($4×Engagement%). Mässig nervig und wut-erzeugend.',
         tooltipScams: 'Betrügerische Angebote. Extrem profitabel aber riskant - Nutzer könnten sofort gehen.',
         tooltipCharacter: 'Wähle deine Kund*in/deinen Kunden (hat keinen Einfluss auf das Spiel)',
+
+        // Screen size warning
+        smallScreenTitle: '🖥️ Bildschirm zu klein',
+        smallScreenText: 'Thumbs Up Inc. ist für Desktop-Bildschirme konzipiert. Bitte öffne es auf einem Gerät mit einer Bildschirmbreite von mindestens 1000px.',
 
         // Tutorial
         tutorialOk: 'Ok',

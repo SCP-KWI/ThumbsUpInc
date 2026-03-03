@@ -173,6 +173,18 @@ class ThumbsUpGame {
       .getElementById("character-select")
       .addEventListener("change", (e) => this.switchCharacter(e.target.value));
     document.getElementById("character-select").value = this.currentCharacter;
+
+    window.addEventListener("resize", () => this.checkScreenSize());
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    const warning = document.getElementById("small-screen-warning");
+    if (window.innerWidth < 1000) {
+      warning.classList.remove("hidden");
+    } else {
+      warning.classList.add("hidden");
+    }
   }
 
   // ============================================
