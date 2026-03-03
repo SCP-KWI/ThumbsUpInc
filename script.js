@@ -262,10 +262,7 @@ class ThumbsUpGame {
       () => this.gameLoop(),
       GAME_CONFIG.UPDATE_INTERVAL,
     );
-    this.feedGenerationInterval = setInterval(
-      () => this.generateFeedPost(),
-      GAME_CONFIG.POST_GENERATION_INTERVAL,
-    );
+    this.scheduleFeedPost();
     for (let i = 0; i < 3; i++) this.generateFeedPost();
     this.updateUI();
     this.populateEffectsTable();
@@ -273,7 +270,7 @@ class ThumbsUpGame {
 
   resetGame() {
     if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
-    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+    if (this.feedGenerationInterval) clearTimeout(this.feedGenerationInterval);
     this.state = {
       isPlaying: false,
       isPaused: false,
@@ -327,7 +324,7 @@ class ThumbsUpGame {
 
   endGame(reason) {
     if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
-    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+    if (this.feedGenerationInterval) clearTimeout(this.feedGenerationInterval);
     this.state.isPlaying = false;
 
     const timeSurvived = GAME_CONFIG.GAME_DURATION - this.state.timeRemaining;
@@ -811,6 +808,17 @@ class ThumbsUpGame {
     return `portraits/${folder}/${folder}_r${row}_c${col}.png`;
   }
 
+  scheduleFeedPost() {
+    let interval = GAME_CONFIG.POST_GENERATION_INTERVAL;
+    if (this.state.engagement < 25) interval *= 1.25;
+    else if (this.state.engagement > 75) interval *= 0.75;
+    this.feedGenerationInterval = setTimeout(() => {
+      if (!this.state.isPlaying) return;
+      this.generateFeedPost();
+      this.scheduleFeedPost();
+    }, interval);
+  }
+
   generateFeedPost() {
     if (!this.state.isPlaying) return;
 
@@ -1201,16 +1209,13 @@ class ThumbsUpGame {
     // Restart game loop without timer countdown
     this.lastUpdateTime = Date.now();
     if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
-    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+    if (this.feedGenerationInterval) clearTimeout(this.feedGenerationInterval);
 
     this.gameLoopInterval = setInterval(
       () => this.gameLoopInfinite(),
       GAME_CONFIG.UPDATE_INTERVAL,
     );
-    this.feedGenerationInterval = setInterval(
-      () => this.generateFeedPost(),
-      GAME_CONFIG.POST_GENERATION_INTERVAL,
-    );
+    this.scheduleFeedPost();
   }
 
   // ============================================
@@ -1309,7 +1314,7 @@ class ThumbsUpGame {
 
     // Reset game state
     if (this.gameLoopInterval) clearInterval(this.gameLoopInterval);
-    if (this.feedGenerationInterval) clearInterval(this.feedGenerationInterval);
+    if (this.feedGenerationInterval) clearTimeout(this.feedGenerationInterval);
 
     this.state = {
       isPlaying: false,
