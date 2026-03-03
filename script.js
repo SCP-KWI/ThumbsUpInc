@@ -199,12 +199,14 @@ class ThumbsUpGame {
 
   applyLanguage() {
     const t = this.translations[this.currentLang];
+    const ext = (this.externalTranslations[this.currentLang]) || {};
 
     // Update all elements with data-i18n attributes
     document.querySelectorAll("[data-i18n]").forEach((element) => {
       const key = element.getAttribute("data-i18n");
-      if (t[key]) {
-        element.textContent = t[key];
+      const value = t[key] || ext[key];
+      if (value) {
+        element.textContent = value;
       }
     });
 
@@ -245,7 +247,9 @@ class ThumbsUpGame {
   }
 
   t(key) {
-    return this.translations[this.currentLang][key] || key;
+    return this.translations[this.currentLang][key]
+      || (this.externalTranslations[this.currentLang] || {})[key]
+      || key;
   }
 
   // ============================================
@@ -256,16 +260,90 @@ class ThumbsUpGame {
     document.getElementById("start-screen").classList.add("hidden");
     document.getElementById("game-container").classList.remove("hidden");
     this.generateSliders();
+    this.populateEffectsTable();
     this.state.isPlaying = true;
-    this.lastUpdateTime = Date.now();
-    this.gameLoopInterval = setInterval(
-      () => this.gameLoop(),
-      GAME_CONFIG.UPDATE_INTERVAL,
-    );
-    this.scheduleFeedPost();
     for (let i = 0; i < 3; i++) this.generateFeedPost();
     this.updateUI();
-    this.populateEffectsTable();
+    this.showTutorial(() => {
+      this.lastUpdateTime = Date.now();
+      this.gameLoopInterval = setInterval(
+        () => this.gameLoop(),
+        GAME_CONFIG.UPDATE_INTERVAL,
+      );
+      this.scheduleFeedPost();
+    });
+  }
+
+  showTutorial(onComplete) {
+    const steps = [
+      { targetId: 'engagement-metric', tail: 'left',  textKey: 'tutorialEngagement' },
+      { targetId: 'emotions-metrics',  tail: 'left',  textKey: 'tutorialEmotions'   },
+      { targetId: 'feed-container',    tail: 'left',  textKey: 'tutorialFeed'        },
+      { targetId: 'sliders-container', tail: 'right', textKey: 'tutorialSliders'     },
+    ];
+
+    const overlay   = document.getElementById('tutorial-overlay');
+    const spotlight = document.getElementById('tutorial-spotlight');
+    const bubble    = document.getElementById('tutorial-bubble');
+    const textEl    = document.getElementById('tutorial-text');
+    const okBtn     = document.getElementById('tutorial-ok-btn');
+
+    overlay.classList.remove('hidden');
+    spotlight.classList.remove('hidden');
+    bubble.classList.remove('hidden');
+
+    let stepIndex = 0;
+
+    const showStep = (i) => {
+      const step = steps[i];
+      textEl.setAttribute('data-i18n', step.textKey);
+      textEl.textContent = this.t(step.textKey);
+      bubble.setAttribute('data-tail', step.tail);
+
+      const target = document.getElementById(step.targetId);
+      const rect   = target.getBoundingClientRect();
+      const pad    = 8;
+
+      spotlight.style.left   = `${rect.left   - pad}px`;
+      spotlight.style.top    = `${rect.top    - pad}px`;
+      spotlight.style.width  = `${rect.width  + pad * 2}px`;
+      spotlight.style.height = `${rect.height + pad * 2}px`;
+
+      const bubbleW  = 280;
+      const gap      = 20;
+      const bubbleH  = 160;
+      const left = step.tail === 'left'
+        ? rect.right + gap
+        : rect.left - bubbleW - gap;
+      let top = rect.top + rect.height / 2 - bubbleH / 2;
+      top = Math.max(8, Math.min(top, window.innerHeight - bubbleH - 8));
+
+      bubble.style.left = `${left}px`;
+      bubble.style.top  = `${top}px`;
+    };
+
+    showStep(0);
+
+    if (this._tutorialOkHandler) {
+      okBtn.removeEventListener('click', this._tutorialOkHandler);
+    }
+
+    this._tutorialOkHandler = () => {
+      stepIndex++;
+      if (stepIndex < steps.length) {
+        showStep(stepIndex);
+      } else {
+        overlay.classList.add('hidden');
+        spotlight.classList.add('hidden');
+        bubble.classList.add('hidden');
+        textEl.removeAttribute('data-i18n');
+        okBtn.removeEventListener('click', this._tutorialOkHandler);
+        this._tutorialOkHandler = null;
+        onComplete();
+      }
+    };
+
+    okBtn.addEventListener('click', this._tutorialOkHandler);
   }
 
   resetGame() {

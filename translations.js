@@ -94,6 +94,13 @@ const TRANSLATIONS = {
         tooltipScams: 'Fraudulent offers. Extremely profitable but risky - users might quit immediately.',
         tooltipCharacter: 'Choose your customer (has no influence on the game)',
 
+        // Tutorial
+        tutorialOk: 'Ok',
+        tutorialEngagement: 'The goal of the game is to keep your user on the platform. When engagement falls to 0, your user loses interest in Thumbs Up Inc and leaves the app.',
+        tutorialEmotions: 'Happiness and anger drive your user\'s engagement. Make your users happy and/or angry to engage them with Thumbs Up Inc!',
+        tutorialFeed: 'Here you can see the feed presented to your user. Posts can earn you money and will make the user happier, sadder or angrier.',
+        tutorialSliders: 'With these sliders you can control the content mix your user will see. Increase the percentages for each content type to increase the likelihood such a post will be shown in the feed. Next to each content type you can see how much it will earn you and the impact such a post has on the user.',
+
         // Reflection Screen
         reflectionTitle: '💭 Reflection & Real-World Connection',
         statsTitle: '📊 Your Game Statistics',
@@ -206,6 +213,13 @@ const TRANSLATIONS = {
         tooltipClickbait: 'Sensationelle Schlagzeilen. Umsatz skaliert mit Engagement ($4×Engagement%). Mässig nervig und wut-erzeugend.',
         tooltipScams: 'Betrügerische Angebote. Extrem profitabel aber riskant - Nutzer könnten sofort gehen.',
         tooltipCharacter: 'Wähle deine Kund*in/deinen Kunden (hat keinen Einfluss auf das Spiel)',
+
+        // Tutorial
+        tutorialOk: 'Ok',
+        tutorialEngagement: 'Das Ziel des Spiels ist es, deine Nutzer*in auf der Plattform zu halten. Wenn das Engagement auf 0 fällt, verliert dein*e Nutzer*in das Interesse an Thumbs Up Inc und verlässt die App.',
+        tutorialEmotions: 'Freude und Wut treiben das Engagement dein*er Nutzer*in an. Mache dein*e Nutzer*in glücklich und/oder wütend, um sie bei Thumbs Up Inc zu engagieren!',
+        tutorialFeed: 'Hier siehst du den Feed, der dein*er Nutzer*in präsentiert wird. Posts können dir Geld einbringen und werden den/die Nutzer*in glücklicher, trauriger oder wütender machen.',
+        tutorialSliders: 'Mit diesen Schiebereglern kannst du den Inhalts-Mix steuern, den dein*e Nutzer*in sehen wird. Erhöhe die Prozentsätze für jeden Inhaltstyp, um die Wahrscheinlichkeit zu erhöhen, dass ein solcher Post im Feed erscheint. Neben jedem Inhaltstyp siehst du, wie viel er dir einbringt und welche Auswirkungen ein solcher Post auf dein*e Nutzer*in hat.',
 
         // Reflection Screen
         reflectionTitle: '💭 Reflexion & Realwelt-Verbindung',
