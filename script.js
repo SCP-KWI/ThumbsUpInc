@@ -276,14 +276,30 @@ class ThumbsUpGame {
     this.state.isPlaying = true;
     for (let i = 0; i < 3; i++) this.generateFeedPost();
     this.updateUI();
-    this.showTutorial(() => {
-      this.lastUpdateTime = Date.now();
-      this.gameLoopInterval = setInterval(
-        () => this.gameLoop(),
-        GAME_CONFIG.UPDATE_INTERVAL,
-      );
-      this.scheduleFeedPost();
-    });
+
+    const startTutorial = () => {
+      // Wait one animation frame so the browser has laid out the newly visible
+      // game container (and settled any image-driven layout shifts) before
+      // measuring element positions for the tutorial spotlight.
+      requestAnimationFrame(() => {
+        this.showTutorial(() => {
+          this.lastUpdateTime = Date.now();
+          this.gameLoopInterval = setInterval(
+            () => this.gameLoop(),
+            GAME_CONFIG.UPDATE_INTERVAL,
+          );
+          this.scheduleFeedPost();
+        });
+      });
+    };
+
+    const avatarImg = document.getElementById('avatar-portrait');
+    if (avatarImg.complete) {
+      startTutorial();
+    } else {
+      avatarImg.addEventListener('load',  startTutorial, { once: true });
+      avatarImg.addEventListener('error', startTutorial, { once: true });
+    }
   }
 
   showTutorial(onComplete) {
