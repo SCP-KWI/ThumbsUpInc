@@ -24,7 +24,7 @@ const TRANSLATIONS = {
         contentMixTitle: 'CONTENT MIX',
         contentMixInstructions: 'Adjust sliders to control what users see. Total must not exceed 100%.',
         totalLabel: 'Total:',
-        totalWarning: '⚠️ Cannot exceed 100%',
+        totalWarning: 'Cannot exceed 100%',
         strategyTitle: 'Current Strategy:',
         levelLabel: 'Level:',
         perView: '/view',
@@ -39,7 +39,7 @@ const TRANSLATIONS = {
         backToStart: 'Back to Start',
         
         // Welcome Screen
-        welcomeTitle: '🎮 Welcome to Thumbs Up Inc.',
+        welcomeTitle: ' 👍️ Welcome to Thumbs Up Inc. 👍️',
         welcomeText: 'You are the algorithm controlling a social media feed. Your goal is to maximize profit while keeping users engaged enough that they don\'t quit.',
         howToPlayTitle: 'How to Play:',
         howToPlay1: 'Use sliders to control what content appears in the feed',
@@ -77,7 +77,7 @@ const TRANSLATIONS = {
         tableEngagement: 'Engagement',
         
         // Unlock Popup
-        newContentUnlocked: '🎉 NEW CONTENT UNLOCKED!',
+        newContentUnlocked: 'NEW CONTENT UNLOCKED!',
         gotIt: 'Got it',
         
         // Tooltips
@@ -148,7 +148,7 @@ const TRANSLATIONS = {
         contentMixTitle: 'INHALTS-MIX',
         contentMixInstructions: 'Passe Schieberegler an, um zu kontrollieren, was Nutzer sehen. Gesamt darf 100% nicht überschreiten.',
         totalLabel: 'Gesamt:',
-        totalWarning: '⚠️ Darf 100% nicht überschreiten',
+        totalWarning: 'Darf 100% nicht überschreiten',
         strategyTitle: 'Aktuelle Strategie:',
         levelLabel: 'Level:',
         perView: '/Ansicht',
@@ -163,7 +163,7 @@ const TRANSLATIONS = {
         backToStart: 'Zurück zum Start',
         
         // Welcome Screen
-        welcomeTitle: '🎮 Willkommen bei Thumbs Up Inc.',
+        welcomeTitle: '👍️ Willkommen bei Thumbs Up Inc. 👍️',
         welcomeText: 'Du bist der Algorithmus, der einen Social-Media-Feed kontrolliert. Dein Ziel ist es, den Profit zu maximieren und die Nutzer engagiert genug zu halten, dass sie nicht aufgeben.',
         howToPlayTitle: 'Wie man spielt:',
         howToPlay1: 'Verwende Schieberegler, um zu kontrollieren, welche Inhalte im Feed erscheinen',
@@ -175,7 +175,7 @@ const TRANSLATIONS = {
         // Game Over Screen
         userLeftTitle: '😞 NUTZER HAT DIE PLATTFORM VERLASSEN!',
         userLeftReason: 'Engagement ist zu stark gesunken. Der Nutzer hat deine Plattform verlassen.',
-        congratsTitle: '🎉 GLÜCKWUNSCH!',
+        congratsTitle: 'GLÜCKWUNSCH!',
         congratsReason: 'Du hast die vollen 10 Minuten überlebt! Du hast erfolgreich den Profit maximiert und den Nutzer engagiert gehalten.',
         scamQuitReason: 'Der Nutzer ist auf einen Betrug hereingefallen und hat angewidert die Plattform verlassen!',
         finalScoreTitle: 'Endpunktzahl',
