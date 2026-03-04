@@ -118,7 +118,7 @@ const CONTENT_TYPES = {
   scams: {
     name: 'Scams',
     nameDE: 'Betrug',
-    revenue: 10,
+    revenue: 2,
     happiness: -15,
     anger: 0,
     color: '#8B4646',
