@@ -135,6 +135,7 @@ class ThumbsUpGame {
     // Initialize
     this.loadPostTemplates();
     this.setupEventListeners();
+    this.setupTooltip();
     this.initializeTooltips();
     this.setupPhase3EventListeners();
     this.applyLanguage();
@@ -482,7 +483,7 @@ class ThumbsUpGame {
     this.updateUI();
   }
 
-  updateEngagement(deltaTime) {
+  updateEngagement(_deltaTime) {
     // Base decay: user gets bored over time (per update tick)
     const decay = GAME_CONFIG.ENGAGEMENT_DECAY_RATE;
 
@@ -504,7 +505,7 @@ class ThumbsUpGame {
     this.state.engagement = this.clamp(this.state.engagement, 0, 100);
   }
 
-  updateEmotions(deltaTime) {
+  updateEmotions(_deltaTime) {
     let happinessChange = 0;
     let angerChange = 0;
 
@@ -530,7 +531,7 @@ class ThumbsUpGame {
     this.state.anger = this.clamp(this.state.anger, 0, 100);
   }
 
-  calculateMoney(deltaTime) {
+  calculateMoney(_deltaTime) {
     for (const [type, percentage] of Object.entries(this.state.contentMix)) {
       if (percentage > 0 && CONTENT_TYPES[type]) {
         const revenue = CONTENT_TYPES[type].revenue;
@@ -729,7 +730,7 @@ class ThumbsUpGame {
                 <div class="slider-controls">
                     <input type="range" id="${contentType}-slider" class="slider" min="0" max="100" value="${this.state.contentMix[contentType]}">
                     <span id="${contentType}-percentage" class="percentage-display">${this.state.contentMix[contentType]}%</span>
-                    <label class="lock-label" title="Lock slider">
+                    <label class="lock-label" data-tooltip-key="tooltipLockSlider">
                         <input type="checkbox" class="lock-checkbox" id="${contentType}-lock"${isLocked ? " checked" : ""}>
                         <span class="lock-icon"></span>
                     </label>
@@ -1114,16 +1115,48 @@ class ThumbsUpGame {
   // ADD NEW METHOD: initializeTooltips
   // ============================================
   initializeTooltips() {
-    // Get translations for tooltips
     const t =
       this.externalTranslations[this.currentLang] ||
       this.externalTranslations["en"];
 
-    // Apply tooltip texts to all info icons
-    document.querySelectorAll(".info-icon").forEach((icon) => {
-      const tooltipKey = icon.getAttribute("data-tooltip-key");
+    // Apply tooltip texts to all elements with data-tooltip-key
+    document.querySelectorAll("[data-tooltip-key]").forEach((el) => {
+      const tooltipKey = el.getAttribute("data-tooltip-key");
       if (tooltipKey && t[tooltipKey]) {
-        icon.setAttribute("data-tooltip", t[tooltipKey]);
+        el.setAttribute("data-tooltip", t[tooltipKey]);
+      }
+    });
+  }
+
+  setupTooltip() {
+    const tooltip = document.getElementById("global-tooltip");
+    if (!tooltip) return;
+
+    document.addEventListener("mouseover", (e) => {
+      const target = e.target.closest("[data-tooltip]");
+      if (!target) return;
+      const text = target.getAttribute("data-tooltip");
+      if (!text) return;
+      tooltip.textContent = text;
+      tooltip.classList.remove("hidden");
+      // Position after making visible so offsetWidth/Height are real
+      requestAnimationFrame(() => {
+        const rect = target.getBoundingClientRect();
+        const tipW = tooltip.offsetWidth;
+        const tipH = tooltip.offsetHeight;
+        let left = rect.left + rect.width / 2 - tipW / 2;
+        let top = rect.top - tipH - 10;
+        if (top < 8) top = rect.bottom + 10;
+        left = Math.max(8, Math.min(left, window.innerWidth - tipW - 8));
+        tooltip.style.left = left + "px";
+        tooltip.style.top = top + "px";
+      });
+    });
+
+    document.addEventListener("mouseout", (e) => {
+      const target = e.target.closest("[data-tooltip]");
+      if (target && !target.contains(e.relatedTarget)) {
+        tooltip.classList.add("hidden");
       }
     });
   }

@@ -93,6 +93,7 @@ const TRANSLATIONS = {
         tooltipClickbait: 'Sensationalized headlines. Revenue scales with engagement ($4×engagement%). Moderately annoying and anger-inducing.',
         tooltipScams: 'Fraudulent offers. Extremely profitable but risky - users might quit immediately.',
         tooltipCharacter: 'Choose your customer (has no influence on the game)',
+        tooltipLockSlider: 'Lock a slider in place',
 
         // Screen size warning
         smallScreenTitle: '🖥️ Screen Too Small',
@@ -217,6 +218,7 @@ const TRANSLATIONS = {
         tooltipClickbait: 'Sensationelle Schlagzeilen. Umsatz skaliert mit Engagement ($4×Engagement%). Mässig nervig und wut-erzeugend.',
         tooltipScams: 'Betrügerische Angebote. Extrem profitabel aber riskant - Nutzer könnten sofort gehen.',
         tooltipCharacter: 'Wähle deine Kund*in/deinen Kunden (hat keinen Einfluss auf das Spiel)',
+        tooltipLockSlider: 'Schieberegler fixieren',
 
         // Screen size warning
         smallScreenTitle: '🖥️ Bildschirm zu klein',

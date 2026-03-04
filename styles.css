@@ -317,13 +317,9 @@ hr {
     background: var(--primary-orange);
 }
 
-/* Tooltip on hover */
-.info-icon[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 8px);
-    transform: translateX(-50%);
+/* Global JS-driven tooltip (position: fixed to escape overflow/transform clipping) */
+.global-tooltip {
+    position: fixed;
     background: var(--dark-gray);
     color: var(--white);
     padding: var(--spacing-sm);
@@ -333,21 +329,8 @@ hr {
     font-size: 0.85rem;
     font-weight: normal;
     line-height: 1.4;
-    z-index: 10000;
+    z-index: 99999;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    pointer-events: none;
-}
-
-/* Tooltip arrow */
-.info-icon[data-tooltip]:hover::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 2px);
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: var(--dark-gray);
-    z-index: 10001;
     pointer-events: none;
 }
 
