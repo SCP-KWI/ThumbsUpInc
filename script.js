@@ -15,6 +15,7 @@ class ThumbsUpGame {
       timeElapsed: 0,
       currentLevel: 1,
       unlockedContent: ["organic", "ads"],
+      lockedSliders: new Set(),
       contentMix: {
         organic: 100,
         ads: 0,
@@ -102,7 +103,7 @@ class ThumbsUpGame {
         startButton: "Start Game",
         playAgain: "Play Again",
         resumeGame: "Resume Game",
-        openDashboard: "📊 Open Dashboard",
+        openDashboard: "📊 Pause / Open Dashboard",
       },
       de: {
         title: "THUMBS UP INC.",
@@ -127,7 +128,7 @@ class ThumbsUpGame {
         startButton: "Spiel starten",
         playAgain: "Nochmal spielen",
         resumeGame: "Spiel fortsetzen",
-        openDashboard: "📊 Dashboard öffnen",
+        openDashboard: "📊 Pause / Dashboard öffnen",
       },
     };
 
@@ -393,6 +394,7 @@ class ThumbsUpGame {
       timeElapsed: 0,
       currentLevel: 1,
       unlockedContent: ["organic", "ads"],
+      lockedSliders: new Set(),
       contentMix: {
         organic: 100,
         ads: 0,
@@ -706,6 +708,12 @@ class ThumbsUpGame {
   // SLIDER CONTROLS
   // ============================================
 
+  arrowHtml(value) {
+    if (value > 0) return '<span class="val-up">▲</span>';
+    if (value < 0) return '<span class="val-down">▼</span>';
+    return '<span class="val-neutral">—</span>';
+  }
+
   generateSliders() {
     const container = document.getElementById("sliders-container");
     container.innerHTML = "";
@@ -723,11 +731,6 @@ class ThumbsUpGame {
 
       const name = this.currentLang === "de" ? ct.nameDE : ct.name;
 
-      // Build effects string safely
-      const happinessStr =
-        ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
-      const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
-
       // Get perView translation
       const perView = this.externalTranslations[this.currentLang]?.perView || this.translations[this.currentLang]?.perView || "/view";
 
@@ -740,11 +743,7 @@ class ThumbsUpGame {
         revenueDisplay = `💰$${ct.revenue}${perView}`;
       }
 
-      const effects =
-        revenueDisplay + " | 😊" +
-        happinessStr +
-        " | 😠" +
-        angerStr;
+      const effects = `${revenueDisplay} | 😊${this.arrowHtml(ct.happiness)} | 😠${this.arrowHtml(ct.anger)}`;
 
       // Get tooltip key based on content type
       // Special case: viralOrganic -> tooltipViral
@@ -755,6 +754,7 @@ class ThumbsUpGame {
         tooltipKey = "tooltip" + contentType.charAt(0).toUpperCase() + contentType.slice(1);
       }
 
+      const isLocked = this.state.lockedSliders.has(contentType);
       const sliderGroup = document.createElement("div");
       sliderGroup.className = "slider-group";
       sliderGroup.innerHTML = `
@@ -766,6 +766,10 @@ class ThumbsUpGame {
                 <div class="slider-controls">
                     <input type="range" id="${contentType}-slider" class="slider" min="0" max="100" value="${this.state.contentMix[contentType]}">
                     <span id="${contentType}-percentage" class="percentage-display">${this.state.contentMix[contentType]}%</span>
+                    <label class="lock-label" title="Lock slider">
+                        <input type="checkbox" class="lock-checkbox" id="${contentType}-lock"${isLocked ? " checked" : ""}>
+                        <span class="lock-icon"></span>
+                    </label>
                 </div>
             `;
 
@@ -778,6 +782,17 @@ class ThumbsUpGame {
           this.updateSlider(contentType, parseInt(e.target.value));
         });
       }
+
+      const lockCheckbox = document.getElementById(`${contentType}-lock`);
+      if (lockCheckbox) {
+        lockCheckbox.addEventListener("change", (e) => {
+          if (e.target.checked) {
+            this.state.lockedSliders.add(contentType);
+          } else {
+            this.state.lockedSliders.delete(contentType);
+          }
+        });
+      }
     }
 
     this.updateSliderDisplay();
@@ -785,9 +800,6 @@ class ThumbsUpGame {
   }
 
   updateSlider(type, value) {
-    const oldValue = this.state.contentMix[type];
-    const change = value - oldValue;
-
     // Update the changed slider
     this.state.contentMix[type] = value;
 
@@ -797,38 +809,58 @@ class ThumbsUpGame {
       total += this.state.contentMix[contentType];
     }
 
-    // If total exceeds 100%, reduce other sliders proportionally
+    // If total exceeds 100%, reduce other non-locked sliders proportionally
     if (total > 100) {
       const excess = total - 100;
-      const otherSliders = this.state.unlockedContent.filter(
-        (ct) => ct !== type,
+      const adjustable = this.state.unlockedContent.filter(
+        (ct) => ct !== type && !this.state.lockedSliders.has(ct),
       );
 
-      // Calculate total value of other sliders
-      let otherTotal = 0;
-      for (const ct of otherSliders) {
-        otherTotal += this.state.contentMix[ct];
+      let adjustableTotal = 0;
+      for (const ct of adjustable) {
+        adjustableTotal += this.state.contentMix[ct];
       }
 
-      // Reduce each other slider proportionally
-      if (otherTotal > 0) {
-        for (const ct of otherSliders) {
-          const proportion = this.state.contentMix[ct] / otherTotal;
-          const reduction = excess * proportion;
+      if (adjustableTotal > 0) {
+        for (const ct of adjustable) {
+          const proportion = this.state.contentMix[ct] / adjustableTotal;
           this.state.contentMix[ct] = Math.max(
             0,
-            this.state.contentMix[ct] - reduction,
+            this.state.contentMix[ct] - excess * proportion,
           );
         }
       } else {
-        // If all other sliders are 0, cap this slider at 100
-        this.state.contentMix[type] = 100;
+        // No adjustable sliders can absorb — cap this slider at what's left
+        let lockedTotal = 0;
+        for (const ct of this.state.unlockedContent) {
+          if (ct !== type && this.state.lockedSliders.has(ct)) {
+            lockedTotal += this.state.contentMix[ct];
+          }
+        }
+        this.state.contentMix[type] = Math.max(0, 100 - lockedTotal);
       }
     }
 
     // Round all values
     for (const ct of this.state.unlockedContent) {
       this.state.contentMix[ct] = Math.round(this.state.contentMix[ct]);
+    }
+
+    // Rounding can push the total slightly over 100; shed the excess 1pt at a
+    // time from the largest adjustable (non-locked) slider until total <= 100
+    let roundedTotal = this.state.unlockedContent.reduce(
+      (sum, ct) => sum + this.state.contentMix[ct], 0
+    );
+    if (roundedTotal > 100) {
+      const adjustable = [...this.state.unlockedContent]
+        .filter(ct => !this.state.lockedSliders.has(ct) && this.state.contentMix[ct] > 0)
+        .sort((a, b) => this.state.contentMix[b] - this.state.contentMix[a]);
+      let i = 0;
+      while (roundedTotal > 100 && i < adjustable.length) {
+        this.state.contentMix[adjustable[i]]--;
+        roundedTotal--;
+        i = (i + 1) % adjustable.length;
+      }
     }
 
     this.updateSliderDisplay();
@@ -866,42 +898,49 @@ class ThumbsUpGame {
   }
 
   updateStrategyInfo() {
-    let moneyPerSec = 0;
+    const ticksPerSecond = 1000 / GAME_CONFIG.UPDATE_INTERVAL;
+    const perSec = this.currentLang === "de" ? "/sek" : "/sec";
+
+    // Accumulate content-mix driven rates per tick
+    let moneyPerTick = 0;
+    let happinessPerTick = 0;
+    let angerPerTick = 0;
 
     for (const [type, percentage] of Object.entries(this.state.contentMix)) {
       if (percentage > 0 && CONTENT_TYPES[type]) {
-        moneyPerSec +=
-          CONTENT_TYPES[type].revenue *
-          (percentage / 100) *
-          (this.state.engagement / 100);
+        const ct = CONTENT_TYPES[type];
+        const freq = percentage / 100;
+        moneyPerTick    += ct.revenue   * freq * (this.state.engagement / 100);
+        happinessPerTick += (freq * ct.happiness) / 10;
+        angerPerTick     += (freq * ct.anger)     / 10;
       }
     }
 
-    // Convert from money per tick to money per second
-    const ticksPerSecond = 1000 / GAME_CONFIG.UPDATE_INTERVAL;
-    moneyPerSec *= ticksPerSecond;
+    // Convert to per-second rates
+    const moneyPerSec    = moneyPerTick * ticksPerSecond;
+    const happyPerSec    = happinessPerTick * ticksPerSecond;
+    // Anger: net of content contribution minus natural decay
+    const netAngerPerSec = (angerPerTick - (this.state.anger > 0 ? GAME_CONFIG.ANGER_DECAY_RATE : 0)) * ticksPerSecond;
+    // Engagement: decay + happiness effect + anger effect
+    const engPerSec      = (
+      -GAME_CONFIG.ENGAGEMENT_DECAY_RATE
+      + (this.state.happiness - 50) * GAME_CONFIG.HAPPINESS_ENGAGEMENT_MULTIPLIER
+      + this.state.anger            * GAME_CONFIG.ANGER_ENGAGEMENT_MULTIPLIER
+    ) * ticksPerSecond;
 
-    const organicPct = this.state.contentMix.organic;
-    let strategy = "";
+    // Format a rate value as ▲1.2 / ▼1.2 / –
+    const stat = (v) => {
+      if (v >  0.049) return `▲${Math.abs(v).toFixed(1)}`;
+      if (v < -0.049) return `▼${Math.abs(v).toFixed(1)}`;
+      return "–";
+    };
 
-    if (organicPct === 100) {
-      strategy =
-        this.currentLang === "de"
-          ? "100% organischer Inhalt - verdient $0/sek"
-          : "100% organic content - earning $0/sec";
-    } else if (moneyPerSec === 0) {
-      strategy =
-        this.currentLang === "de"
-          ? "Noch keine Monetarisierung - verdient $0/sek"
-          : "No monetization yet - earning $0/sec";
-    } else {
-      strategy =
-        this.currentLang === "de"
-          ? `Verdient ~$${moneyPerSec.toFixed(2)}/sek`
-          : `Earning ~$${moneyPerSec.toFixed(2)}/sec`;
-    }
+    const moneyStr = moneyPerSec < 0.005
+      ? `$0${perSec}`
+      : `~$${moneyPerSec.toFixed(2)}${perSec}`;
 
-    document.getElementById("strategy-info").textContent = strategy;
+    document.getElementById("strategy-info").innerHTML =
+      `💰 ${moneyStr}<br>📊 ${stat(engPerSec)} | 😊 ${stat(happyPerSec)} | 😠 ${stat(netAngerPerSec)}`;
   }
 
   // ============================================
@@ -1249,9 +1288,7 @@ class ThumbsUpGame {
         const sliderInfo = document.getElementById(`${contentType}-slider-info`);
         if (sliderInfo) {
           const engagementScaledRevenue = (ct.revenue * (this.state.engagement / 100)).toFixed(2);
-          const happinessStr = ct.happiness >= 0 ? "+" + ct.happiness : ct.happiness;
-          const angerStr = ct.anger >= 0 ? "+" + ct.anger : ct.anger;
-          sliderInfo.textContent = `💰$${engagementScaledRevenue}${perView} | 😊${happinessStr} | 😠${angerStr}`;
+          sliderInfo.innerHTML = `💰$${engagementScaledRevenue}${perView} | 😊${this.arrowHtml(ct.happiness)} | 😠${this.arrowHtml(ct.anger)}`;
         }
       }
     }
@@ -1438,6 +1475,7 @@ class ThumbsUpGame {
       timeElapsed: 0,
       currentLevel: 1,
       unlockedContent: ["organic", "ads"],
+      lockedSliders: new Set(),
       contentMix: {
         organic: 100,
         ads: 0,

@@ -35,7 +35,7 @@ const TRANSLATIONS = {
         continuePlayingButton: 'Continue Playing',
         viewReflectionButton: 'View Reflection',
         resumeGame: 'Resume Game',
-        openDashboard: '📊 Open Dashboard',
+        openDashboard: '📊 Pause / Open Dashboard',
         backToStart: 'Back to Start',
         
         // Welcome Screen
@@ -159,7 +159,7 @@ const TRANSLATIONS = {
         continuePlayingButton: 'Weiterspielen',
         viewReflectionButton: 'Reflexion ansehen',
         resumeGame: 'Spiel fortsetzen',
-        openDashboard: '📊 Dashboard öffnen',
+        openDashboard: '📊 Pause / Dashboard öffnen',
         backToStart: 'Zurück zum Start',
         
         // Welcome Screen
