@@ -279,10 +279,16 @@ class ThumbsUpGame {
     for (let i = 0; i < 3; i++) this.generateFeedPost();
     this.updateUI();
 
-    const startTutorial = () => {
-      // Wait one animation frame so the browser has laid out the newly visible
-      // game container (and settled any image-driven layout shifts) before
-      // measuring element positions for the tutorial spotlight.
+    const avatarImg = document.getElementById('avatar-portrait');
+
+    // Use a named handler so we can remove BOTH load and error once either fires,
+    // preventing the stale error listener from re-triggering the tutorial later
+    // when updatePortrait() changes the src to a missing emotion image.
+    const onAvatarReady = () => {
+      avatarImg.removeEventListener('load',  onAvatarReady);
+      avatarImg.removeEventListener('error', onAvatarReady);
+      // Wait one rAF so the browser has laid out the newly visible game container
+      // before measuring element positions for the tutorial spotlight.
       requestAnimationFrame(() => {
         this.showTutorial(() => {
           this.lastUpdateTime = Date.now();
@@ -295,12 +301,11 @@ class ThumbsUpGame {
       });
     };
 
-    const avatarImg = document.getElementById('avatar-portrait');
     if (avatarImg.complete) {
-      startTutorial();
+      onAvatarReady();
     } else {
-      avatarImg.addEventListener('load',  startTutorial, { once: true });
-      avatarImg.addEventListener('error', startTutorial, { once: true });
+      avatarImg.addEventListener('load',  onAvatarReady);
+      avatarImg.addEventListener('error', onAvatarReady);
     }
   }
 
