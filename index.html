@@ -165,34 +165,12 @@
         </div>
     </div>
 
-    <!-- Game Over Screen -->
+    <!-- Game Over Screen (hidden, kept for legacy element references) -->
     <div id="gameover-screen" class="modal-overlay hidden">
         <div class="modal-content gameover-modal">
-            <h2 id="gameover-title" data-i18n="gameOverTitle">😞 USER HAS LEFT THE PLATFORM!</h2>
-            <div id="gameover-reason" class="modal-text">
-                Engagement dropped too low.
-            </div>
-            <hr>
-            <div class="final-stats">
-                <h3 data-i18n="finalScoreTitle">Final Score</h3>
-                <div class="stat-row">
-                    <span data-i18n="moneyEarnedLabel">💰 Money Earned:</span>
-                    <span id="final-money" class="stat-highlight">$0</span>
-                </div>
-                <div class="stat-row">
-                    <span data-i18n="timeSurvivedLabel">⏱️ Time Survived:</span>
-                    <span id="final-time">0:00 / 10:00</span>
-                </div>
-                <div class="stat-row">
-                    <span data-i18n="finalEngagementLabel">📊 Final Engagement:</span>
-                    <span id="final-engagement">0%</span>
-                </div>
-            </div>
-            <div class="gameover-buttons">
-                <button id="play-again-button" class="btn btn-primary" data-i18n="playAgainButton">Play Again</button>
-                <button id="continue-playing-button" class="btn btn-secondary" data-i18n="continuePlayingButton">Continue Playing</button>
-                <button id="view-reflection-button" class="btn btn-secondary" data-i18n="viewReflectionButton">View Reflection</button>
-            </div>
+            <span id="final-money" class="hidden">$0</span>
+            <span id="final-time" class="hidden">0:00 / 10:00</span>
+            <span id="final-engagement" class="hidden">0%</span>
         </div>
     </div>
 
@@ -272,7 +250,10 @@
                 </div>
             </div>
 
-            <button id="back-to-start-button" class="btn btn-primary" data-i18n="backToStartButton">Back to Start</button>
+            <div class="gameover-buttons">
+                <button id="play-again-button" class="btn btn-primary" data-i18n="playAgainButton">Play Again</button>
+                <button id="continue-playing-button" class="btn btn-secondary" data-i18n="continuePlayingButton">Continue Playing</button>
+            </div>
         </div>
     </div>
 

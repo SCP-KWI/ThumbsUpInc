@@ -430,7 +430,7 @@ class ThumbsUpGame {
       emotionSamples: 0,
     };
     document.getElementById("feed-container").innerHTML = "";
-    document.getElementById("gameover-screen").classList.add("hidden");
+    document.getElementById("reflection-screen").classList.add("hidden");
     document.getElementById("start-screen").classList.remove("hidden");
     document.getElementById("game-container").classList.add("hidden");
   }
@@ -440,45 +440,8 @@ class ThumbsUpGame {
     if (this.feedGenerationInterval) clearTimeout(this.feedGenerationInterval);
     this.state.isPlaying = false;
 
-    const timeSurvived = GAME_CONFIG.GAME_DURATION - this.state.timeRemaining;
-    const minutesSurvived = Math.floor(timeSurvived / 60);
-    const secondsSurvived = Math.floor(timeSurvived % 60);
-
-    if (reason === "engagement") {
-      document.getElementById("gameover-title").textContent =
-        this.currentLang === "de"
-          ? "😞 NUTZER HAT DIE PLATTFORM VERLASSEN!"
-          : "😞 USER HAS LEFT THE PLATFORM!";
-      document.getElementById("gameover-reason").textContent =
-        this.currentLang === "de"
-          ? "Engagement ist zu stark gesunken. Der Nutzer hat deine Plattform verlassen."
-          : "Engagement dropped too low. The user quit your platform.";
-    } else if (reason === "scam") {
-      document.getElementById("gameover-title").textContent =
-        this.currentLang === "de"
-          ? "😞 NUTZER HAT DIE PLATTFORM VERLASSEN!"
-          : "😞 USER HAS LEFT THE PLATFORM!";
-      document.getElementById("gameover-reason").textContent =
-        this.currentLang === "de"
-          ? "Der Nutzer ist auf einen Betrug hereingefallen und hat angewidert die Plattform verlassen!"
-          : "The user fell for a scam and quit in disgust!";
-    } else if (reason === "complete") {
-      document.getElementById("gameover-title").textContent =
-        this.currentLang === "de" ? "🎉 GLÜCKWUNSCH!" : "🎉 CONGRATULATIONS!";
-      document.getElementById("gameover-reason").textContent =
-        this.currentLang === "de"
-          ? "Du hast die vollen 10 Minuten überlebt! Du hast erfolgreich den Profit maximiert und den Nutzer engagiert gehalten."
-          : "You survived the full 10 minutes! You've successfully maximized profit while keeping the user engaged.";
-    }
-
-    document.getElementById("final-money").textContent = this.formatMoney(
-      this.state.money,
-    );
-    document.getElementById("final-time").textContent =
-      `${minutesSurvived}:${secondsSurvived.toString().padStart(2, "0")} / 10:00`;
-    document.getElementById("final-engagement").textContent =
-      Math.round(this.state.engagement) + "%";
-    document.getElementById("gameover-screen").classList.remove("hidden");
+    this.endReason = reason;
+    this.showReflectionScreen();
   }
 
   // ============================================
@@ -1169,26 +1132,12 @@ class ThumbsUpGame {
   // ADD NEW METHOD: setupPhase3EventListeners
   // ============================================
   setupPhase3EventListeners() {
-    // Continue Playing button
+    // Continue Playing button (in reflection screen)
     const continueBtn = document.getElementById("continue-playing-button");
     if (continueBtn) {
       continueBtn.addEventListener("click", () =>
         this.continuePlayingInfinite(),
       );
-    }
-
-    // View Reflection button
-    const reflectionBtn = document.getElementById("view-reflection-button");
-    if (reflectionBtn) {
-      reflectionBtn.addEventListener("click", () =>
-        this.showReflectionScreen(),
-      );
-    }
-
-    // Back to Start button
-    const backBtn = document.getElementById("back-to-start-button");
-    if (backBtn) {
-      backBtn.addEventListener("click", () => this.backToStart());
     }
   }
 
@@ -1338,8 +1287,7 @@ class ThumbsUpGame {
   }
 
   continuePlayingInfinite() {
-    // Hide game over screen
-    document.getElementById("gameover-screen").classList.add("hidden");
+    document.getElementById("reflection-screen").classList.add("hidden");
 
     // Show game container
     document.getElementById("game-container").classList.remove("hidden");
@@ -1397,13 +1345,7 @@ class ThumbsUpGame {
   // ADD NEW METHOD: showReflectionScreen
   // ============================================
   showReflectionScreen() {
-    // Hide game over screen
-    document.getElementById("gameover-screen").classList.add("hidden");
-
-    // Populate statistics
     this.populateReflectionStats();
-
-    // Show reflection screen
     document.getElementById("reflection-screen").classList.remove("hidden");
   }
 
