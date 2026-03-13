@@ -17,7 +17,7 @@ const GAME_CONFIG = {
   HAPPINESS_ENGAGEMENT_MULTIPLIER: 0.01, // Per percentage point away from 50%
   ANGER_ENGAGEMENT_MULTIPLIER: 0.008, // Anger is more engaging than happiness!
   ANGER_DECAY_RATE: 0.1, // Anger naturally decays per update (people calm down)
-  SCAM_ENGAGEMENT_DRAIN_PER_SEC: 1, // Engagement lost per second at 100% scam content (scales with scam %)
+  SCAM_ENGAGEMENT_DRAIN_PER_SEC: 2, // Engagement lost per second at 100% scam content (scales with scam %)
   
   // Feed settings
   POST_GENERATION_INTERVAL: 10000, // Generate new post every 2 seconds
