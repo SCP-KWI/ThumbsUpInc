@@ -505,8 +505,15 @@ class ThumbsUpGame {
     const angerEffect =
       this.state.anger * GAME_CONFIG.ANGER_ENGAGEMENT_MULTIPLIER;
 
+    // Scam content directly drains engagement (users leave when they get scammed)
+    // Scales proportionally with scam content percentage
+    const scamDrain =
+      (this.state.contentMix.scams / 100) *
+      GAME_CONFIG.SCAM_ENGAGEMENT_DRAIN_PER_SEC *
+      (GAME_CONFIG.UPDATE_INTERVAL / 1000);
+
     // Apply all changes (per update tick, not per second)
-    this.state.engagement += -decay + happinessEffect + angerEffect;
+    this.state.engagement += -decay + happinessEffect + angerEffect - scamDrain;
     this.state.engagement = this.clamp(this.state.engagement, 0, 100);
   }
 
