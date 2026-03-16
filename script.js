@@ -1438,6 +1438,17 @@ class ThumbsUpGame {
       row.innerHTML = `<td colspan="3" style="text-align: center; font-style: italic;">No posts shown</td>`;
       tbody.appendChild(row);
     }
+
+    // Total revenue row
+    const totalRevenue = Object.values(this.state.revenueByType).reduce((sum, v) => sum + v, 0);
+    const totalRow = document.createElement("tr");
+    totalRow.style.cssText = "border-top: 2px solid #fff; font-weight: bold;";
+    totalRow.innerHTML = `
+      <td>Total</td>
+      <td></td>
+      <td>$${totalRevenue.toFixed(2)}</td>
+    `;
+    tbody.appendChild(totalRow);
   }
 
   // ============================================
